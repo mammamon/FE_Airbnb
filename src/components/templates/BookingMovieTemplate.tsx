@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import {
   bookedChairListThunk,
   getChairListThunk,
-} from "store/quanLyDatVe/thunk";
+} from "store/RoomBookedStore/thunk";
 import { toast } from 'react-toastify'
 import { Button, Card, Image, Skeleton } from "components";
 import { Col, Row } from "antd";

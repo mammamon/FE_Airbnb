@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { AccountSchema, AccountSchemaType } from 'schema/AccountSchema'
 import { AppDispatch } from 'store'
-import { updateThunk } from 'store/quanLyNguoiDung/thunk';
+import { updateThunk } from 'store/UserStore/thunk';
 
 export const AccountInfo = () => {
     const { user } = useAuth()

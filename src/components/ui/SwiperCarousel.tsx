@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination } from 'swiper/modules';
-import { Banner } from '../../types/QuanLyBanner';
+import { Banner } from '../../types/UserType';
 import { useEffect, useState } from 'react';
 import { quanLyBannerServices } from '../../services/quanLyBanner';
 

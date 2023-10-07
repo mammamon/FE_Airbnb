@@ -16,7 +16,7 @@ export const RegisterSchema = z.object({
     confirmMatKhau: z.string().nonempty('Vui lòng nhập lại mật khẩu'),
     email: z.string().nonempty('Vui lòng nhập email').email('Vui lòng nhập đúng email'),
     soDt: z
-        .string()
+        .string()   
         .nonempty('Vui lòng nhập số điện thoại')
         .regex(/^\d{10}$/, 'Số điện thoại phải chứa 10 chữ số'),
 

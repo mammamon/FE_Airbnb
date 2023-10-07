@@ -4,7 +4,7 @@ import { Avatar, Button, Input, Popover } from 'components';
 import { PATH } from 'constant';
 import { useAuth } from 'hooks';
 import {  useAppDispatch } from 'store';
-import { quanLyNguoiDungActions } from 'store/quanLyNguoiDung';
+import { quanLyNguoiDungActions } from 'store/UserStore';
 import {useState,useEffect} from "react"
 import cn from 'classnames'
 

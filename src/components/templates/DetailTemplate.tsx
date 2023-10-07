@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { RootState, useAppDispatch } from "store";
-import { getMovieDetailThunk } from "store/quanLyRap";
+import { getMovieDetailThunk } from "store/RoomDetailStore";
 import { formatTime } from "utils";
 import cs from "classnames";
 import { checkDate } from "utils";
