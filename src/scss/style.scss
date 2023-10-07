@@ -1,0 +1,20 @@
+// style.scss
+
+// Import variables
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
+
+// Import base styles
+@import 'base/reset';
+
+// Import layout styles
+
+// Import component styles
+
+// Import page styles
+@import 'pages/home';
+@import 'pages/admin';
+
+// Import theme styles
+
+// Import vendor styles

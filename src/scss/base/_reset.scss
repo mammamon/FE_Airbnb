@@ -1,0 +1,49 @@
+// _reset.scss
+
+:root {
+    --fs-root: 16px;
+    --w-max-root: 1536px;
+
+}
+
+* {
+    font-family: $primaryFont;
+    box-sizing: border-box;
+    @include mp-0;
+    @include transition(all ease .5s);
+}
+
+html,
+body {
+    font-size: var(--fs-root);
+    max-width: var(--w-max-root);
+    scroll-behavior: smooth;
+}
+
+a,
+a:hover {
+    list-style: none;
+}
+
+li {
+    text-decoration: none;
+    color: inherit;
+}
+
+//h1 - h6 styling
+@for $i from 1 through length($font-sizes) {
+    h#{$i} {
+        font-size: map-get($font-sizes, $i);
+        font-weight: map-get($font-weights, $i);
+    }
+}
+
+p {
+    @extend h4;
+    color: $secondaryColor;
+}
+
+ol,
+ul {
+    padding-left: 0;
+}

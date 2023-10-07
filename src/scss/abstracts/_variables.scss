@@ -1,0 +1,49 @@
+// _variables.scss
+
+//Colors
+$primaryColor: #ff385c;
+$secondaryColor: #717171;
+
+//font-family
+$primaryFont: 'Circular', sans-serif;
+
+@font-face {
+  font-family: 'Circular';
+  src: url('../../../public/fonts/CircularStd-Book.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Circular';
+  src: url('../../../public/fonts/CircularStd-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Circular';
+  src: url('../../../public/fonts/CircularStd-Light.otf') format('opentype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+//font-size (major third typescale)
+$font-sizes: (
+  1: 2.5rem,
+  2: 2rem,
+  3: 1rem,
+  4: .875rem,
+  5: .75rem,
+  6: .625rem
+);
+
+//font-weight
+$font-weights: (
+  1: 700,
+  2: 700,
+  3: 600,
+  4: 400,
+  5: 400,
+  6: 300
+);
