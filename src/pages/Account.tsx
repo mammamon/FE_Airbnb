@@ -1,5 +1,5 @@
-import { AccountTemplate } from 'components'
+import { AccountTemplate } from "components";
 
 export const Account = () => {
-    return <AccountTemplate />
-}
+  return <AccountTemplate />;
+};

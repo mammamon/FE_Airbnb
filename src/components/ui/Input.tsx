@@ -14,9 +14,11 @@ type InputProps = {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectOptions?: string[];
+
 };
 
 export const Input = ({
+
   label,
   id,
   register,
@@ -27,6 +29,7 @@ export const Input = ({
   name,
   selectOptions, 
 }: InputProps) => {
+
   return (
     <div className={className}>
       {!!label && (

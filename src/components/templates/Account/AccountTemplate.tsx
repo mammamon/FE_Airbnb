@@ -1,5 +1,4 @@
-import { AccountBookedHistory, Tabs } from 'components'
-import { AccountInfo } from './AccountInfo'
+import {  BookedManageTemplate, LocateManageTemplate, RoomManageTemplate, Tabs, UserManage } from 'components'
 
 export const AccountTemplate = () => {
     return (
@@ -8,14 +7,24 @@ export const AccountTemplate = () => {
                 tabPosition="left"
                 items={[
                     {
-                        key: 'accountInfo',
-                        label: 'Thông tin tài khoản',
-                        children: <AccountInfo/>,
+                        key: 'userManage',
+                        label: 'Quản lý người dùng',
+                        children: <UserManage/>,
                     },
                     {
-                        key: 'accountHistoryBooking',
-                        label: 'Lịch sử đặt vé',
-                        children: <AccountBookedHistory />,
+                        key: 'locateManage',
+                        label: 'Quản lý thông tin vị trí',
+                        children: <LocateManageTemplate />,
+                    },
+                    {
+                        key: 'locateManage',
+                        label: 'Quản lý thông tin phòng',
+                        children: <RoomManageTemplate />,
+                    },
+                    {
+                        key: 'locateManage',
+                        label: 'Quản lý đặt phòng',
+                        children: <BookedManageTemplate />,
                     },
                 ]}
             />

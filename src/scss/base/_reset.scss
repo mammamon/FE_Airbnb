@@ -1,49 +1,76 @@
 // _reset.scss
 
 :root {
-    --fs-root: 16px;
-    --w-max-root: 1536px;
-
+  --fs-root: 16px;
+  --w-max-root: 1536px;
 }
 
 * {
-    font-family: $primaryFont;
-    box-sizing: border-box;
-    @include mp-0;
-    @include transition(all ease .5s);
+  font-family: $primaryFont;
+  box-sizing: border-box;
+  @include mp-0;
+  @include transition(all ease 0.5s);
 }
 
 html,
 body {
-    font-size: var(--fs-root);
-    max-width: var(--w-max-root);
-    scroll-behavior: smooth;
+  font-size: var(--fs-root);
+  max-width: var(--w-max-root);
+  scroll-behavior: smooth;
 }
 
 a,
 a:hover {
-    list-style: none;
+  list-style: none;
 }
 
 li {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 //h1 - h6 styling
 @for $i from 1 through length($font-sizes) {
-    h#{$i} {
-        font-size: map-get($font-sizes, $i);
-        font-weight: map-get($font-weights, $i);
-    }
+  h#{$i} {
+    font-size: map-get($font-sizes, $i);
+    font-weight: map-get($font-weights, $i);
+    margin: 0;
+  }
 }
 
 p {
-    @extend h4;
-    color: $secondaryColor;
+  @extend h4;
+  color: $secondaryColor;
 }
 
 ol,
 ul {
-    padding-left: 0;
+  padding-left: 0;
+}
+
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+html,
+body,
+ul,
+ol,
+li,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
 }

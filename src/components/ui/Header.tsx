@@ -4,7 +4,7 @@ import { Avatar, Button, Input, Popover } from 'components';
 import { PATH } from 'constant';
 import { useAuth } from 'hooks';
 import {  useAppDispatch } from 'store';
-import { quanLyNguoiDungActions } from 'store/UserStore';
+import { authManagementActions } from 'store/AuthStore';
 import {useState,useEffect} from "react"
 import cn from 'classnames'
 
@@ -117,7 +117,7 @@ export const Header = () => {
                       className="!h-[46px]"
                       type="primary"
                       onClick={() =>{
-                        dispatch(quanLyNguoiDungActions.logOut('abc'))
+                        dispatch(authManagementActions.logOut('abc'))
                         if(bookingId){
                           if(!localStorage.getItem("bookingId")){
                            navigate(PATH.login)

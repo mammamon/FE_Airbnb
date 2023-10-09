@@ -1,70 +1,70 @@
-import { Card, Skeleton } from 'components';
-import "animate.css"
-import SwiperCarousel from '../../components/ui/SwiperCarousel';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from 'store';
-import { getMovieListThunk } from 'store/CommentStore';
-import { quanLyBannerServices } from '../../services/quanLyBanner';
-import { getCinemaListThunk, getCinemaScheduleThunk } from 'store/RoomDetailStore';
-import { formatTime } from '../../utils/formatTime';
-import { generatePath, useNavigate } from "react-router-dom";
-import { PATH } from "constant";
+// import { Card, Skeleton } from 'components';
+// import "animate.css"
+// import SwiperCarousel from '../../components/ui/SwiperCarousel';
+// import { useEffect, useState } from 'react';
+// import { useSelector } from 'react-redux';
+// import { RootState, useAppDispatch } from 'store';
+// import { getMovieListThunk } from 'store/CommentStore';
+// import { quanLyBannerServices } from '../../services/quanLyBanner';
+// import { getCinemaListThunk, getCinemaScheduleThunk } from 'store/RoomDetailStore';
+// import { formatTime } from '../../utils/formatTime';
+// import { generatePath, useNavigate } from "react-router-dom";
+// import { PATH } from "constant";
 
 export const HomeTemplate = () => {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const { movieList, isFetchingMovieList } = useSelector((state: RootState) => state.quanLyPhim);
-    const { cinemaList, isFetchingCinemaList } = useSelector((state: RootState) => state.quanLyRap);
-    const [banners, setBanners] = useState([]);
-    const [selectedCinemaList, setSelectedCinemaList] = useState(null);
-    const [selectedCumRap, setSelectedCumRap] = useState(null);
-    const { cinemaSchedule } = useSelector((state: RootState) => state.quanLyRap);
-    const [selectedFilter, setSelectedFilter] = useState('tatCaPhim');
-    const [animationKey, setAnimationKey] = useState(0);
+    // const dispatch = useAppDispatch();
+    // const navigate = useNavigate();
+    // const { movieList, isFetchingMovieList } = useSelector((state: RootState) => state.quanLyPhim);
+    // const { cinemaList, isFetchingCinemaList } = useSelector((state: RootState) => state.quanLyRap);
+    // const [banners, setBanners] = useState([]);
+    // const [selectedCinemaList, setSelectedCinemaList] = useState(null);
+    // const [selectedCumRap, setSelectedCumRap] = useState(null);
+    // const { cinemaSchedule } = useSelector((state: RootState) => state.quanLyRap);
+    // const [selectedFilter, setSelectedFilter] = useState('tatCaPhim');
+    // const [animationKey, setAnimationKey] = useState(0);
 
-    useEffect(() => {
-        dispatch(getMovieListThunk(null));
-        dispatch(getCinemaListThunk());
+    // useEffect(() => {
+    //     dispatch(getMovieListThunk(null));
+    //     dispatch(getCinemaListThunk());
 
-        const fetchBanners = async () => {
-            const response = await quanLyBannerServices.getBanners();
-            setBanners(response.data.content);
-        };
-        fetchBanners();
-    }, [dispatch]);
+    //     const fetchBanners = async () => {
+    //         const response = await quanLyBannerServices.getBanners();
+    //         setBanners(response.data.content);
+    //     };
+    //     fetchBanners();
+    // }, [dispatch]);
 
-    useEffect(() => {
-        // tự động chọn rạp đầu tiên
-        if (cinemaList?.length > 0) {
-            setSelectedCinemaList(cinemaList[0].maHeThongRap);
-        }
-    }, [cinemaList]);
+    // useEffect(() => {
+    //     // tự động chọn rạp đầu tiên
+    //     if (cinemaList?.length > 0) {
+    //         setSelectedCinemaList(cinemaList[0].maHeThongRap);
+    //     }
+    // }, [cinemaList]);
 
-    useEffect(() => {
-        if (selectedCinemaList) {
-            dispatch(getCinemaScheduleThunk(selectedCinemaList));
-        }
-    }, [dispatch, selectedCinemaList]);
+    // useEffect(() => {
+    //     if (selectedCinemaList) {
+    //         dispatch(getCinemaScheduleThunk(selectedCinemaList));
+    //     }
+    // }, [dispatch, selectedCinemaList]);
 
-    useEffect(() => {
-        if (cinemaSchedule?.length > 0) {
-            const selectedCinemaSchedule = cinemaSchedule.find((schedule) => schedule.maHeThongRap === selectedCinemaList);
-            if (selectedCinemaSchedule && selectedCinemaSchedule.lstCumRap.length > 0) {
-                setSelectedCumRap(selectedCinemaSchedule.lstCumRap[0].maCumRap);
-            }
-        }
-    }, [cinemaSchedule, selectedCinemaList]);
+    // useEffect(() => {
+    //     if (cinemaSchedule?.length > 0) {
+    //         const selectedCinemaSchedule = cinemaSchedule.find((schedule) => schedule.maHeThongRap === selectedCinemaList);
+    //         if (selectedCinemaSchedule && selectedCinemaSchedule.lstCumRap.length > 0) {
+    //             setSelectedCumRap(selectedCinemaSchedule.lstCumRap[0].maCumRap);
+    //         }
+    //     }
+    // }, [cinemaSchedule, selectedCinemaList]);
 
-    // trigger animation khi click vào một trong 3 nút
-    const handleFilterClick = (filter) => {
-        setSelectedFilter(filter);
-        setAnimationKey((prevKey) => prevKey + 1);
-    };
+    // // trigger animation khi click vào một trong 3 nút
+    // const handleFilterClick = (filter) => {
+    //     setSelectedFilter(filter);
+    //     setAnimationKey((prevKey) => prevKey + 1);
+    // };
 
     return (
         <div>
-            <SwiperCarousel data={banners} />
+            {/* <SwiperCarousel data={banners} />
             <div className='btn-filter flex gap-[20px] justify-center mt-[40px] mb-[20px]'>
                 <button
                     className={selectedFilter === 'tatCaPhim' ? 'selected' : ''}
@@ -199,7 +199,7 @@ export const HomeTemplate = () => {
                         ))}
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

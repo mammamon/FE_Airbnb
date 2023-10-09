@@ -3,11 +3,11 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 export const AuthLayout = () => {
     // const { accessToken } = useSelector((state: RootState) => state.quanLyNguoiDung)
-    const { accessToken } = useAuth()
+    // const { accessToken } = useAuth()
 
-    if (accessToken) {
-        return <Navigate to="/" />
-    }
+    // if (accessToken) {
+    //     return <Navigate to="/" />
+    // }
 
     return (
         <div className="AuthLayout h-full">
