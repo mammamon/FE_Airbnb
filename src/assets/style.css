@@ -1,18 +1,18 @@
 @font-face {
   font-family: "Circular";
-  src: url("../../../fonts/CircularStd-Book.otf") format("opentype");
+  src: url("../../../public/fonts/CircularStd-Book.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Circular";
-  src: url("../../fonts/CircularStd-Bold.otf") format("opentype");
+  src: url("../../../public/fonts/CircularStd-Bold.otf") format("opentype");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: "Circular";
-  src: url("../../../fonts/CircularStd-Light.otf") format("opentype");
+  src: url("../../../public/fonts/CircularStd-Light.otf") format("opentype");
   font-weight: lighter;
   font-style: normal;
 }
@@ -21,7 +21,9 @@
   --w-max-root: 1536px;
 }
 
-* {
+*,
+*:before,
+*:after {
   font-family: "Circular", sans-serif;
   box-sizing: border-box;
   margin: 0;
@@ -41,10 +43,7 @@ body {
 }
 
 a,
-a:hover {
-  list-style: none;
-}
-
+a:hover,
 li {
   text-decoration: none;
   color: inherit;
@@ -53,31 +52,37 @@ li {
 h1 {
   font-size: 2.5rem;
   font-weight: 700;
+  margin: 0;
 }
 
 h2 {
   font-size: 2rem;
   font-weight: 700;
+  margin: 0;
 }
 
 h3 {
   font-size: 1rem;
   font-weight: 600;
+  margin: 0;
 }
 
 h4, p {
   font-size: 0.875rem;
   font-weight: 400;
+  margin: 0;
 }
 
 h5 {
   font-size: 0.75rem;
   font-weight: 400;
+  margin: 0;
 }
 
 h6 {
   font-size: 0.625rem;
   font-weight: 300;
+  margin: 0;
 }
 
 p {
