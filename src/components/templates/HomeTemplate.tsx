@@ -1,5 +1,5 @@
 // import { Card, Skeleton } from 'components';
-// import "animate.css"
+import "animate.css"
 // import SwiperCarousel from '../../components/ui/SwiperCarousel';
 // import { useEffect, useState } from 'react';
 // import { useSelector } from 'react-redux';

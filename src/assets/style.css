@@ -23,7 +23,9 @@
   --secondary-color:#717171;
 }
 
-* {
+*,
+*:before,
+*:after {
   font-family: "Circular", sans-serif;
   box-sizing: border-box;
   margin: 0;
@@ -43,10 +45,7 @@ body {
 }
 
 a,
-a:hover {
-  list-style: none;
-}
-
+a:hover,
 li {
   text-decoration: none;
   color: inherit;
@@ -95,34 +94,6 @@ p {
 ol,
 ul {
   padding-left: 0;
-}
-
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-h1,
-h2,
-h3,
-h4,
-p,
-h5,
-h6 {
-  margin: 0;
-}
-
-html,
-body,
-ul,
-ol,
-li,
-figure,
-blockquote,
-dl,
-dd {
-  margin: 0;
-  padding: 0;
 }
 
 .btn-filter button {

@@ -84,30 +84,48 @@ export const Header = () => {
           </div> */}
           <div className="header-user">
             <nav>
-           <NavLink to="">Đón tiếp khách</NavLink>
+              <NavLink className="mr-4" to="">
+                Đón tiếp khách
+              </NavLink>
             </nav>
             {!accessToken && (
-              <p className="flex items-center font-600">
-                <i className="fa-solid fa-user text-20"></i>
-                <span
-                  className="ml-10 cursor-pointer hover:text-[var(--primary-color)]"
-                  onClick={() => navigate(PATH.login)}
-                >
-                  Đăng nhập
-                </span>
-                <span className="inline-block h-[24px] w-[2px] bg-black mx-6"></span>
-                <span
-                  className="cursor-pointer hover:text-[var(--primary-color)]"
-                  onClick={() => navigate(PATH.register)}
-                >
-                  Đăng ký
-                </span>
-              </p>
+                <div className="dropdown">
+                  <button
+                    className="btn dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i className="fa-solid fa-bars"></i>
+                  </button>
+                  <NavLink to="">
+                  <i className="fa-solid fa-bag-shopping"></i>
+                  </NavLink>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a
+                      className=" dropdown-item cursor-pointer hover:text-[var(--primary-color)]"
+                      onClick={() => navigate(PATH.login)}
+                    >
+                      Đăng nhập
+                    </a>
+                    <a
+                      className="dropdown-item cursor-pointer hover:text-[var(--primary-color)]"
+                      onClick={() => navigate(PATH.register)}
+                    >
+                      Đăng ký
+                    </a>
+                  </div>
+                </div>
             )}
             {!!accessToken && (
               <Popover
                 content={
-                  <div className="p-10">
+                  <div className="p-10 w-auto !inset-[ 50px 0px 0px 0px]">
                     <p className="font-600 text-16">{/* {user?.hoTen} */}</p>
                     <hr className="my-16" />
                     <p
@@ -130,12 +148,11 @@ export const Header = () => {
                   </div>
                 }
                 trigger="click"
-                arrow={false}
               >
                 {isSmallScreen ? (
-                  <span className="!bg-transparent cursor-pointer text-[17px]">
+                  <p className="!bg-transparent cursor-pointer text-[17px]">
                     TÀI KHOẢN
-                  </span>
+                  </p>
                 ) : (
                   <Avatar
                     size="large"
@@ -161,7 +178,7 @@ const Container = styled.header`
   box-shadow: 0px 16px 10px -5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   background: #fff;
-  font-family: 'Circular-bold';
+  font-family: "Circular-bold";
   @media (max-width: 768px) {
     height: 280px;
     position: fixed;
@@ -200,7 +217,7 @@ const Container = styled.header`
     }
 
     .brand {
-      width:150px;
+      width: 150px;
       &:hover {
         cursor: pointer;
       }
@@ -216,7 +233,7 @@ const Container = styled.header`
     nav {
       display: flex;
       gap: 60px;
-      font-size: 18px;
+      font-size: 16px;
 
       @media (max-width: 1200px) {
         gap: 30px;
@@ -234,7 +251,7 @@ const Container = styled.header`
       a {
         font-weight: 500;
         &::after {
-          content: '';
+          content: "";
           display: block;
           height: 3px;
           background: var(--primary-color);
@@ -250,8 +267,28 @@ const Container = styled.header`
       }
     }
 
-    .header-user{
-      display:flex;
+    .header-user {
+      display: flex;
+      align-items: center;
+      .dropdown{
+        padding:5px 20px;
+        background-color:black;
+        border-radius:20px;
+        .btn{
+          padding:0;
+        }
+        .dropdown-menu{
+          &.show{
+            top:5px!important;
+            left:-25%!important;
+            min-width:0px;
+            width:auto;
+          }
+        }
+        .svg-inline--fa {
+          color:white;
+        }
+      }
     }
 
     .search {
@@ -285,13 +322,13 @@ const Container = styled.header`
         }
 
         @media (max-width: 768px) {
-          scale: .7;
+          scale: 0.7;
         }
       }
 
       @media (max-width: 768px) {
         &:before {
-          content: 'TÌM PHIM';
+          content: "TÌM PHIM";
           margin-right: 4px;
           font-size: 17px;
           cursor: pointer;
