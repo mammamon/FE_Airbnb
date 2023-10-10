@@ -80,7 +80,7 @@ export const RegisterTemplate = () => {
         register={register}
       />
 
-      {/* <Input
+      <Input
         type="date"
         className="mt-16"
         placeholder="Ngày sinh nhật"
@@ -90,14 +90,17 @@ export const RegisterTemplate = () => {
         register={register}
       />
 
+      
       <Input
+        label="Nam"
+        type="radio"
         className="mt-16"
-        placeholder="Giới tính"
+        value={true}
         id="gene"
         name="gene"
         error={errors?.gene?.message}
         register={register}
-      /> */}
+      /> 
 
       <div className="flex justify-center items-center">
         <button className="w-2/3 p-10 bg-red-500 text-white text-[20px] mt-20 rounded-10 hover:brightness-125">

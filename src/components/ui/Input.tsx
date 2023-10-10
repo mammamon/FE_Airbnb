@@ -11,14 +11,13 @@ type InputProps = {
   placeholder?: string;
   className?: string;
   name?: string;
-  value?: string;
+  value?: string|boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectOptions?: string[];
 
 };
 
 export const Input = ({
-
   label,
   id,
   register,

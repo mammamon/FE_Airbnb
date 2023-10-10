@@ -1,24 +1,26 @@
 @font-face {
-  font-family: "Circular";
-  src: url("../../../fonts/CircularStd-Book.otf") format("opentype");
+  font-family: "Circular-normal";
+  src: url("../../../public/fonts/CircularStd-Book.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: "Circular";
-  src: url("../../fonts/CircularStd-Bold.otf") format("opentype");
+  font-family: "Circular-bold";
+  src: url("../../../public/fonts/CircularStd-Bold.otf") format("opentype");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
-  font-family: "Circular";
-  src: url("../../../fonts/CircularStd-Light.otf") format("opentype");
+  font-family: "Circular-lighter";
+  src: url("../../../public/fonts/CircularStd-Light.otf") format("opentype");
   font-weight: lighter;
   font-style: normal;
 }
 :root {
   --fs-root: 16px;
   --w-max-root: 1536px;
+  --primary-color:#ff385c;
+  --secondary-color:#717171;
 }
 
 * {
@@ -53,31 +55,37 @@ li {
 h1 {
   font-size: 2.5rem;
   font-weight: 700;
+  margin: 0;
 }
 
 h2 {
   font-size: 2rem;
   font-weight: 700;
+  margin: 0;
 }
 
 h3 {
   font-size: 1rem;
   font-weight: 600;
+  margin: 0;
 }
 
 h4, p {
   font-size: 0.875rem;
   font-weight: 400;
+  margin: 0;
 }
 
 h5 {
   font-size: 0.75rem;
   font-weight: 400;
+  margin: 0;
 }
 
 h6 {
   font-size: 0.625rem;
   font-weight: 300;
+  margin: 0;
 }
 
 p {
@@ -87,6 +95,34 @@ p {
 ol,
 ul {
   padding-left: 0;
+}
+
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+h5,
+h6 {
+  margin: 0;
+}
+
+html,
+body,
+ul,
+ol,
+li,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
 }
 
 .btn-filter button {
@@ -105,4 +141,4 @@ ul {
   .btn-filter button {
     font-size: 14px;
   }
-}/*# sourceMappingURL=style.css.map */
+}

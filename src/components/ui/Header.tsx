@@ -1,12 +1,12 @@
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { Avatar, Button, Input, Popover } from 'components';
-import { PATH } from 'constant';
-import { useAuth } from 'hooks';
-import {  useAppDispatch } from 'store';
-import { authManagementActions } from 'store/AuthStore';
-import {useState,useEffect} from "react"
-import cn from 'classnames'
+import { NavLink, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { Avatar, Button, Input, Popover } from "components";
+import { PATH } from "constant";
+import { useAuth } from "hooks";
+import { useAppDispatch } from "store";
+import { authManagementActions } from "store/AuthStore";
+import { useState, useEffect } from "react";
+import cn from "classnames";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -16,7 +16,6 @@ export const Header = () => {
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
   const [isInputVisible, setInputVisible] = useState(true);
-  const {bookingId} = useParams()
   const toggleInputVisibility = () => setInputVisible(!isInputVisible);
 
   const handleScroll = () => {
@@ -44,12 +43,12 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
     handleResize();
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -57,31 +56,36 @@ export const Header = () => {
     <>
       {isSmallScreen && (
         <ToggleButton onClick={toggleHeader}>
-          <i className={`fa ${isHeaderVisible ? 'fa-times' : 'fa-bars'}`}></i>
+          <i className={`fa ${isHeaderVisible ? "fa-times" : "fa-bars"}`}></i>
         </ToggleButton>
       )}
       <Container
         className={cn({
-          'header-fixed': scroll,
-          'header-hidden': !isHeaderVisible && isSmallScreen,
+          "header-fixed": scroll,
+          "header-hidden": !isHeaderVisible && isSmallScreen,
         })}
       >
         <div className="header-content">
-          <h1 className="brand"   onClick={() => navigate("/")}>
-            <span className="text-[var(--primary-color)]">CYBER</span>MOVIE
-          </h1>
+          <img
+            className="brand"
+            onClick={() => navigate("/")}
+            src="/images/airbnb.svg"
+            alt="logo"
+          />
           <nav>
-            <NavLink to="">LỊCH CHIẾU</NavLink>
-            <NavLink to="">PHIM</NavLink>
-            <NavLink to="">RẠP</NavLink>
-            <NavLink to="">TIN TỨC</NavLink>
+            <NavLink to="">Nơi ở</NavLink>
+            <NavLink to="">Trải nghiệm</NavLink>
+            <NavLink to="">Trải nghiệm thực tế</NavLink>
           </nav>
-          <div className="search">
+          {/* <div className="search">
             <Button onClick={toggleInputVisibility}>
               <i className="fa-solid fa-magnifying-glass"></i>
             </Button>
-          </div>
-          <div>
+          </div> */}
+          <div className="header-user">
+            <nav>
+           <NavLink to="">Đón tiếp khách</NavLink>
+            </nav>
             {!accessToken && (
               <p className="flex items-center font-600">
                 <i className="fa-solid fa-user text-20"></i>
@@ -104,7 +108,7 @@ export const Header = () => {
               <Popover
                 content={
                   <div className="p-10">
-                    <p className="font-600 text-16">{user?.hoTen}</p>
+                    <p className="font-600 text-16">{/* {user?.hoTen} */}</p>
                     <hr className="my-16" />
                     <p
                       className="text-16 cursor-pointer"
@@ -116,16 +120,9 @@ export const Header = () => {
                     <Button
                       className="!h-[46px]"
                       type="primary"
-                      onClick={() =>{
-                        dispatch(authManagementActions.logOut('abc'))
-                        if(bookingId){
-                          if(!localStorage.getItem("bookingId")){
-                           navigate(PATH.login)
-                           localStorage.setItem("bookingId",bookingId)
-                         }
-                        }
-                      }
-                      }
+                      onClick={() => {
+                        dispatch(authManagementActions.logOut("abc"));
+                      }}
                     >
                       <i className="fa-solid fa-arrow-right-from-bracket text-16"></i>
                       <span className="ml-10 font-500 text-16">Đăng xuất</span>
@@ -151,7 +148,9 @@ export const Header = () => {
             )}
           </div>
         </div>
-      {isInputVisible && <Input placeholder="Tìm kiếm tên phim" className='search-input' />}
+        {isInputVisible && (
+          <Input placeholder="Tìm kiếm tên phim" className="search-input" />
+        )}
       </Container>
     </>
   );
@@ -162,11 +161,12 @@ const Container = styled.header`
   box-shadow: 0px 16px 10px -5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   background: #fff;
+  font-family: 'Circular-bold';
   @media (max-width: 768px) {
     height: 280px;
     position: fixed;
     z-index: 999;
-    box-shadow: none;
+    // box-shadow: none;
     background: transparent;
   }
 
@@ -200,8 +200,7 @@ const Container = styled.header`
     }
 
     .brand {
-      font-weight: 700;
-      font-size: 30px;
+      width:150px;
       &:hover {
         cursor: pointer;
       }
@@ -249,6 +248,10 @@ const Container = styled.header`
           }
         }
       }
+    }
+
+    .header-user{
+      display:flex;
     }
 
     .search {
@@ -327,6 +330,4 @@ const ToggleButton = styled.button`
   @media (min-width: 769px) {
     display: none;
   }
-
-;`
-
+`;

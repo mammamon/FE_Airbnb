@@ -8,21 +8,21 @@ $secondaryColor: #717171;
 $primaryFont: 'Circular', sans-serif;
 
 @font-face {
-  font-family: 'Circular';
+  font-family: 'Circular-normal';
   src: url('../../../public/fonts/CircularStd-Book.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Circular';
+  font-family: 'Circular-bold';
   src: url('../../../public/fonts/CircularStd-Bold.otf') format('opentype');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Circular';
+  font-family: 'Circular-lighter';
   src: url('../../../public/fonts/CircularStd-Light.otf') format('opentype');
   font-weight: lighter;
   font-style: normal;

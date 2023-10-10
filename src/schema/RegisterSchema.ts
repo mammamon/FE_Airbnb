@@ -30,10 +30,11 @@ export const RegisterSchema = z
       .string()
       .nonempty("Vui lòng nhập số điện thoại")
       .regex(/^\d{10}$/, "Số điện thoại phải chứa 10 chữ số"),
-    // birthday: z.coerce.date({
-    //   invalid_type_error: "Vui lòng chọn ngày sinh nhật",
-    // }),
-    // gene: z.string().transform((val=>val==="male"?true:false)),
+    birthday: z.coerce.date({
+      invalid_type_error: "Vui lòng chọn ngày sinh nhật",
+    }),
+    gene: z.string()
+    .regex(/^(true|false)$/, "Vui lòng chọn giới tính"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Mật khẩu không khớp",
