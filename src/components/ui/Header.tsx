@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Avatar, Button, Input, Popover } from "components";
 import { PATH } from "constant";
@@ -7,6 +7,8 @@ import { useAppDispatch } from "store";
 import { authManagementActions } from "store/AuthStore";
 import { useState, useEffect } from "react";
 import cn from "classnames";
+import { Badge } from "antd";
+import { GlobalOutlined } from '@ant-design/icons';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ export const Header = () => {
     } else {
       setIsSmallScreen(false);
       setIsHeaderVisible(true);
-      setInputVisible(false);
+      setInputVisible(true);
     }
   };
 
@@ -84,11 +86,14 @@ export const Header = () => {
           </div> */}
           <div className="header-user">
             <nav>
-              <NavLink className="mr-4" to="">
+              <NavLink to="">
                 Đón tiếp khách
               </NavLink>
             </nav>
+            <GlobalOutlined type="button" />
+            
             {!accessToken && (
+              <Badge count={0} showZero offset={[-10,3]} size="small">
                 <div className="dropdown">
                   <button
                     className="btn dropdown-toggle"
@@ -121,6 +126,7 @@ export const Header = () => {
                     </a>
                   </div>
                 </div>
+            </Badge>
             )}
             {!!accessToken && (
               <Popover
@@ -165,16 +171,18 @@ export const Header = () => {
             )}
           </div>
         </div>
-        {isInputVisible && (
-          <Input placeholder="Tìm kiếm tên phim" className="search-input" />
-        )}
+        {/* {isInputVisible  && (
+          
+        )} */}
+
       </Container>
     </>
   );
 };
 
 const Container = styled.header`
-  height: 60px;
+  height: 150px;
+  padding-bottom:50px;
   box-shadow: 0px 16px 10px -5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   background: #fff;
@@ -268,8 +276,10 @@ const Container = styled.header`
     }
 
     .header-user {
+      width:250px;
       display: flex;
       align-items: center;
+      justify-content:space-around;
       .dropdown{
         padding:5px 20px;
         background-color:black;
