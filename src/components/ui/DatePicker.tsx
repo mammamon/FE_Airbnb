@@ -2,14 +2,12 @@ import { DatePicker as DatePickerA, DatePickerProps as DatePickerPropsA } from "
 
 type DatePickerProps = DatePickerPropsA
 
-
-export const defaultDateFormats = [  
-  "DD.MM.YYYY.",  
-  "DD.MM.YYYY",  
-  "DDMMYYYY",  
-  "DDMMYY",  
-];    
-
-  export const DatePicker = (props: DatePickerProps) => {
-    return <DatePickerA  format={defaultDateFormats} {...props} />
+export const DatePicker = (props: DatePickerProps) => {
+    return (
+      <DatePickerA 
+        format='DD.MM.YYYY' 
+        inputReadOnly={true} 
+        {...props} 
+      />
+    )
 }

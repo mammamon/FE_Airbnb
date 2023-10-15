@@ -11,6 +11,13 @@
     align-items: center;
 }
 
+@mixin font-style($family, $size, $color, $weight) {
+    font-family: $family;
+    font-size: $size;
+    color: $color;
+    font-weight: $weight;
+  }
+
 @mixin square ($square) {
     width: $square;
     height: $square;
@@ -62,3 +69,18 @@
     animation-iteration-count: $iteration-count;
     animation-direction: $direction;
 }
+
+@mixin placeholder($color) {
+    &::placeholder {
+      color: $color;
+    }
+  
+    &:-ms-input-placeholder {
+      color: $color;
+    }
+  
+    &::-webkit-input-placeholder {
+      color: $color;
+    }
+  }
+  
