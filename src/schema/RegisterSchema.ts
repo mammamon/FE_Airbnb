@@ -8,7 +8,6 @@ const maxYear = currentYear - 16;
 
 export const RegisterSchema = z
   .object({
-    id: z.number(),
     name: z
       .string()
       .nonempty("Vui lòng nhập họ tên")

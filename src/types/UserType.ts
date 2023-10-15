@@ -6,8 +6,8 @@ export type UserLogin = {
   phone: string;
   birthday: string;
   avatar: string;
-  gender: 'm' | 'f';
-  role: 'user' | 'admin';
+  gender: boolean;
+  role: string;
   accessToken: string
 }
 

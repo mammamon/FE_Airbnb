@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { RegisterSchema, RegisterSchemaType } from "schema";
 import { authServices } from "services";
 import { handleError } from "utils";
+import { apiInstance } from "constant";
 
 export const RegisterTemplate = () => {
   const {
@@ -17,21 +18,43 @@ export const RegisterTemplate = () => {
     mode: "onChange",
     resolver: zodResolver(RegisterSchema),
   });
-  
+
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
+    console.log('onSubmit called');
+    const api = apiInstance({
+      baseURL: import.meta.env.VITE_AUTH_API,
+    });
     try {
-        await authServices.register(values)
-        toast.success('Đăng ký thành công!', {
-            position: "top-right",
-            autoClose: 1000,
-        });
-        navigate(PATH.login)
+      // Tạo id ngẫu nhiên 6 chữ số
+      let id = Math.floor(Math.random() * 900000) + 100000;
+      const response = await api.get('/users');
+      const users = response.data;
+      const emailDitto = users.some((user) => user.email === values.email);
+      const idDitto = users.some((user) => user.id === id);
+      while (idDitto) {
+        id = Math.floor(Math.random() * 900000) + 100000;
+      }
+      if (emailDitto) {
+        throw new Error('Email đã tồn tại');
+      }
+      // Tạo object mới với id vừa tạo gửi đến server
+      const userWithId = { ...values, id };
+      await authServices.register(userWithId);
+      toast.success('Đăng ký thành công!', {
+        position: 'top-right',
+        autoClose: 1000,
+      });
+      navigate(PATH.login);
     } catch (err) {
-        handleError(err)
+      handleError(err);
     }
-}
+    console.log('onSubmit completed');
+  };
+  
+  
+  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -103,8 +126,8 @@ export const RegisterTemplate = () => {
           error={errors?.gender?.message}
           register={register}
           selectOptions={[
-            { label: 'Nam', value: 'm' },
-            { label: 'Nữ', value: 'f' }
+            { label: 'Nam', value: true },
+            { label: 'Nữ', value: false }
           ]}
         />
       </div>
@@ -117,13 +140,15 @@ export const RegisterTemplate = () => {
           error={errors?.role?.message}
           register={register}
           selectOptions={[
-            { label: 'Người dùng', value: 'user' },
-            { label: 'Quản trị viên', value: 'admin' }
+            { label: 'Người dùng', value: 'USER' },
+            { label: 'Quản trị viên', value: 'ADMIN' }
           ]}
         />
       </div>
       <div className="flex justify-center items-center">
-        <button type="submit" className="w-2/3 p-10 text-[20px] mt-2">
+        <button
+          type="submit"
+          className="w-2/3 p-10 text-[20px] mt-2">
           Đăng Ký
         </button>
       </div>

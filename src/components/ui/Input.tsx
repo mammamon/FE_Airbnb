@@ -5,7 +5,7 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 type SelectOption = {
   label: string;
-  value: string;
+  value: string | boolean;
 };
 
 type InputProps = {
@@ -40,7 +40,7 @@ export const Input = ({
           {...register?.(name)}
         >
           {selectOptions.map((option) => (
-            <option key={(option.value)} value={(option.value)}>
+            <option key={String(option.value)} value={String(option.value)}>
               {option.label}
             </option>
           ))}
