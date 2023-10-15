@@ -62,7 +62,7 @@ export const LoginTemplate = () => {
       />
       <div className="flex justify-center items-center">
         <Button
-          className="!w-2/3 !p-[6px] !bg-red-500 !text-white !text-[20px] !mt-20 !rounded-10 hover:brightness-125 !h-auto"
+          className="!w-2/3 !p-[6px] !bg-[#ff385c] !text-white !text-[20px] !mt-20 !rounded-10 hover:brightness-125 !h-auto"
           htmlType="submit"
           type="primary"
           danger

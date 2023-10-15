@@ -1,51 +1,47 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLInputTypeAttribute } from 'react';
-import { UseFormRegister } from 'react-hook-form';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+
+type SelectOption = {
+  label: string;
+  value: string;
+};
 
 type InputProps = {
-  label?: string;
   id?: string;
   type?: HTMLInputTypeAttribute;
-  register?: UseFormRegister<any>;
+  register?: UseFormRegister<FieldValues>;
   error?: string;
   placeholder?: string;
   className?: string;
   name?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  selectOptions?: string[];
-
+  selectOptions?: SelectOption[];
 };
 
 export const Input = ({
-
-  label,
   id,
   register,
-  type = 'text',
+  type,
   error,
   placeholder,
-  className = '',
   name,
-  selectOptions, 
+  selectOptions,
 }: InputProps) => {
 
   return (
-    <div className={className}>
-      {!!label && (
-        <label className="text-white" htmlFor={id}>
-          {label}
-        </label>
-      )}
-      {selectOptions ? ( 
+    <div className={`input-wrapper ${error ? 'input-invalid' : ''}`}>
+      {selectOptions ? (
         <select
           id={id}
-          className="p-10 w-50 ml-[20px] mt-[20px] text-white rounded-6 bg-[#333]"
+          className="p-[8px] text-black rounded-6 bg-[#ebebeb]"
           {...register?.(name)}
         >
           {selectOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
+            <option key={(option.value)} value={(option.value)}>
+              {option.label}
             </option>
           ))}
         </select>
@@ -54,11 +50,17 @@ export const Input = ({
           id={id}
           placeholder={placeholder}
           type={type}
-          className="p-10 w-full text-white rounded-6 bg-[#333]"
+          className="p-10 w-full text-black rounded-6 bg-white"
           {...register?.(name)}
         />
       )}
-      {!!error && <p className="text-red-500 text-[12.5px] mt-1">{error}</p>}
+      {!!error && (
+        <div className="tooltip">
+          <span className="tooltiptext">{error}</span>
+          {type !== 'date' && <FontAwesomeIcon icon={faExclamationCircle} className="input-error-icon" />}
+        </div>
+      )}
     </div>
   );
 };
+

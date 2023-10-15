@@ -17,25 +17,30 @@ export const RegisterTemplate = () => {
     mode: "onChange",
     resolver: zodResolver(RegisterSchema),
   });
-
+  
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
+    console.log("onSubmit function called");
     try {
-      await authServices.register(values);
-      toast.success("Đăng ký thành công!", {
-        position: "top-right",
-        autoClose: 1000,
-      });
-      navigate(PATH.login);
+        await authServices.register(values)
+        toast.success('Đăng ký thành công!', {
+            position: "top-right",
+            autoClose: 1000,
+        });
+        navigate(PATH.login)
     } catch (err) {
-      handleError(err);
+        handleError(err)
     }
-  };
+}
+
 
   return (
-    <form className="text-white" onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="font-600 text-30">Đăng ký</h2>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex items-center">
+        <h2>Đăng ký</h2>
+        <img src="../../../public/images/airbnb.svg" className="w-[130px] h-[32px]" />
+      </div>
       <Input
         className="mt-16"
         placeholder="Họ tên"
@@ -79,28 +84,48 @@ export const RegisterTemplate = () => {
         error={errors?.phone?.message}
         register={register}
       />
-
-      {/* <Input
-        type="date"
-        className="mt-16"
-        placeholder="Ngày sinh nhật"
-        id="birthday"
-        name="birthday"
-        error={errors?.birthday?.message}
-        register={register}
-      />
-
-      <Input
-        className="mt-16"
-        placeholder="Giới tính"
-        id="gene"
-        name="gene"
-        error={errors?.gene?.message}
-        register={register}
-      /> */}
-
+      <div className="flex">
+        <label className="p-10 w-1/2 text-black">Ngày sinh:</label>
+        <Input
+          type="date"
+          className="mt-16"
+          placeholder="Ngày sinh"
+          id="birthday"
+          name="birthday"
+          error={errors?.birthday?.message}
+          register={register}
+        />
+      </div>
+      <div className="flex">
+        <label className="p-10 w-1/2 text-black pt-[10px]">Giới tính:</label>
+        <Input
+          className="mt-16"
+          id="gender"
+          name="gender"
+          error={errors?.gender?.message}
+          register={register}
+          selectOptions={[
+            { label: 'Nam', value: 'm' },
+            { label: 'Nữ', value: 'f' }
+          ]}
+        />
+      </div>
+      <div className="flex">
+        <label className="p-10 w-1/2 text-black">Loại tài khoản:</label>
+        <Input
+          className="mt-16"
+          id="role"
+          name="role"
+          error={errors?.role?.message}
+          register={register}
+          selectOptions={[
+            { label: 'Người dùng', value: 'user' },
+            { label: 'Quản trị viên', value: 'admin' }
+          ]}
+        />
+      </div>
       <div className="flex justify-center items-center">
-        <button className="w-2/3 p-10 bg-red-500 text-white text-[20px] mt-20 rounded-10 hover:brightness-125">
+        <button type="submit" className="w-2/3 p-10 text-[20px] mt-2">
           Đăng Ký
         </button>
       </div>
