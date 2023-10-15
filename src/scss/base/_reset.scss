@@ -36,6 +36,7 @@ li {
     font-size: map-get($font-sizes, $i);
     font-weight: map-get($font-weights, $i);
     margin: 0;
+    line-height: inherit !important
   }
 }
 
@@ -49,11 +50,3 @@ ul {
   padding-left: 0;
 }
 
-input {
-  @include placeholder($secondaryColor);
-  border: 1px solid #222;
-  &:focus {
-    outline: 1px solid $primaryColor;
-    border: 1px solid transparent;
-  }
-}

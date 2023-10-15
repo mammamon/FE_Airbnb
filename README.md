@@ -1,3 +1,12 @@
+## How to run
+#Step 1:
+Sử dụng yarn: xóa package-lock.json ---> yarn install --> yarn start
+Sử dụng npm: xóa yarn.lock ---> npm install ---> npm start
+Hoặc xóa cả 2 file lock và xài cái nào cũng được
+
+#Step 2 (nội bộ):
+Chạy live scss compiler để cập nhật style.css
+
 ## Install Package
 1. TailwindCSS
 2. React-router-dom
@@ -25,5 +34,6 @@
 - Giới hạn độ tuổi được phép tạo tài khoản từ 16 đến 100 tuổi
 - ID được tạo ngẫu nhiên khi đăng ký thành công
 - Email và ID là unique cho mỗi tài khoản, email dùng để đăng nhập, id dùng để tạo path quản lý
+
 ## Known Bugs
 

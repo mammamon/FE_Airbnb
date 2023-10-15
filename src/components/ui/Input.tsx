@@ -16,7 +16,7 @@ type InputProps = {
   placeholder?: string;
   className?: string;
   name?: string;
-  value?: string|boolean;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectOptions?: SelectOption[];
 };
@@ -55,12 +55,11 @@ export const Input = ({
         />
       )}
       {!!error && (
-        <div className="tooltip">
-          <span className="tooltiptext">{error}</span>
+        <div className="tooltipError">
+          <span className="tooltipErrorText">{error}</span>
           {type !== 'date' && <FontAwesomeIcon icon={faExclamationCircle} className="input-error-icon" />}
         </div>
       )}
     </div>
   );
 };
-

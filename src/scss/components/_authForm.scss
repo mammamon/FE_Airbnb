@@ -1,3 +1,4 @@
+//authForm
 form {
     button {
         background-color: $primaryColor !important;
@@ -6,6 +7,16 @@ form {
 
         &:hover {
             background-color: #ff5a5f !important;
+        }
+    }
+
+    input {
+        @include placeholder($secondaryColor);
+        border: 1px solid #222;
+
+        &:focus {
+            outline: 1px solid $primaryColor;
+            border: 1px solid transparent;
         }
     }
 
@@ -28,8 +39,8 @@ form {
                 display: block;
             }
 
-            .tooltip {
-                .tooltiptext {
+            .tooltipError {
+                .tooltipErrorText {
                     margin: 4px 0;
                     width: 100%;
                     border-radius: 6px;
@@ -43,56 +54,3 @@ form {
         }
     }
 }
-.search-form {
-  &.header-fixed {
-    position: fixed;
-    width: 80%;
-    top: 110px;
-    left: 150px;
-    z-index: 999;
-  }
-  position: fixed;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
-  padding: 10px 15px;
-  border-radius: 50px;
-  align-items: center;
-  border: 1px solid black;
-  .search-input {
-    width: 25%;
-    border-right: 2px solid $grayLighter;
-    margin-left: 15px;
-    padding: 0 5px;
-    input {
-      display: inline-block;
-      width: 100%;
-      &:focus {
-        outline: none;
-      }
-    }
-    &:nth-child(4) {
-      border-right: none !important;
-      margin-right: 0;
-    }
-  }
-  .search-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    color: white;
-    font-size: 25px;
-    text-align: center;
-    svg {
-      width: 100%;
-    }
-  }
-}
-
-.ant-select-dropdown{
-  position: fixed!important;
-  inset: 190px 0px auto 185px!important;
-}
-

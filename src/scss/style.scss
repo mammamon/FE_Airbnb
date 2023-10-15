@@ -12,7 +12,8 @@
 @import "./layouts/footer";
 
 // Import component styles
-@import "./components/form";
+@import "./components/authForm";
+@import "./components/searchForm";
 
 // Import page styles
 @import 'pages/home';

@@ -8,22 +8,22 @@ $grayLighter:#C5C5C5;
 $primaryFont: 'Circular', sans-serif;
 
 @font-face {
-  font-family: 'Circular-normal';
-  src: url('../../../public/fonts/CircularStd-Book.otf') format('opentype');
+  font-family: 'Circular';
+  src: url('../../../fonts/CircularStd-Book.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Circular-bold';
-  src: url('../../../public/fonts/CircularStd-Bold.otf') format('opentype');
+  src: url('../../../fonts/CircularStd-Bold.otf') format('opentype');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Circular-lighter';
-  src: url('../../../public/fonts/CircularStd-Light.otf') format('opentype');
+  font-family: 'Circular-light';
+  src: url('../../../fonts/CircularStd-Light.otf') format('opentype');
   font-weight: lighter;
   font-style: normal;
 }
