@@ -39,7 +39,7 @@ export const RegisterTemplate = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center">
         <h2>Đăng ký</h2>
-        <img src="../../../public/images/airbnb.svg" className="w-[130px] h-[32px]" />
+        <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
       </div>
       <Input
         className="mt-16"

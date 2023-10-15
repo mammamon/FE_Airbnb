@@ -1,11 +1,11 @@
 ## How to run
 #Step 1:
-Sử dụng yarn: xóa package-lock.json ---> yarn install --> yarn start
-Sử dụng npm: xóa yarn.lock ---> npm install ---> npm start
-Hoặc xóa cả 2 file lock và xài cái nào cũng được
+- Sử dụng yarn: xóa package-lock.json ---> yarn install --> yarn start
+- Sử dụng npm: xóa yarn.lock ---> npm install ---> npm start
+- Hoặc xóa cả 2 file lock và xài cái nào cũng được
 
-#Step 2 (nội bộ):
-Chạy live scss compiler để cập nhật style.css
+#Step 2:
+- Chạy live scss compiler để cập nhật style.css
 
 ## Install Package
 1. TailwindCSS
