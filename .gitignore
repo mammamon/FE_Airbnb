@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-# Convenient Ignore Files
-style.css
-package-lock.json
-yarn.lock
+# Ignore Specific Files
+/src/assets/style.css
+/package-lock.json
+/yarn.lock
