@@ -1,12 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { userLoginType } from "types";
+import { UserLogin, UserByAccessToken } from "types";
 import { loginThunk } from ".";
 import { getAccessToken } from "utils";
 
 type AuthInitialState = {
   accessToken?: string;
-  userLogin?: userLoginType;
-  // userBooked?:UserByAccessToken;
+  userLogin?: UserLogin | UserByAccessToken;
   isFetchingLogin?: boolean;
 };
 
@@ -39,15 +38,13 @@ const authSlice = createSlice({
       .addCase(loginThunk.fulfilled, (state, { payload }) => {
         console.log("payload: ", payload);
         // lưu accessToken xuống localstorage
-        localStorage.setItem("ACCESSTOKEN", payload.token);
-        state.accessToken = payload.token;
-
+        localStorage.setItem("ACCESSTOKEN", payload.accessToken);
+        state.accessToken = payload.accessToken;
         // set lại user
         state.userLogin = payload;
         state.isFetchingLogin = false;
       });
-
-   
+    
   },
 });
 

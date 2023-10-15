@@ -56,13 +56,9 @@ export const RegisterSchema = z
       path: ["role"],
     }),
   })
-  .refine((data) => {
-    console.log("Password:", data.password);
-    console.log("Confirm Password:", data.confirmPassword);
-    return data.password === data.confirmPassword;
-  }, {
+  .refine((data) => data.password === data.confirmPassword, {
     message: "Mật khẩu không khớp",
     path: ["confirmPassword"],
-  })
+  });
 
 export type RegisterSchemaType = z.infer<typeof RegisterSchema>;

@@ -21,7 +21,6 @@ export const RegisterTemplate = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
-    console.log("onSubmit function called");
     try {
         await authServices.register(values)
         toast.success('Đăng ký thành công!', {
@@ -34,10 +33,9 @@ export const RegisterTemplate = () => {
     }
 }
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <h2>Đăng ký</h2>
         <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
       </div>

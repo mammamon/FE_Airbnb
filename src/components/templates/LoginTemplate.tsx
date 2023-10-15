@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, Button } from "components";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoginSchema, LoginSchemaType } from "schema";
 import { RootState, useAppDispatch } from "store";
@@ -25,7 +25,6 @@ export const LoginTemplate = () => {
   );
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (value) => {
-    console.log("value: ", value);
     dispatch(loginThunk(value))
       .unwrap()
       .then(() => {
@@ -42,7 +41,10 @@ export const LoginTemplate = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="font-600 text-30 text-white">Đăng nhập</h2>
+      <div className="flex items-center justify-between">
+        <h2>Đăng nhập</h2>
+        <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
+      </div>
       <Input
         className="mt-16"
         placeholder="Email"
@@ -62,7 +64,7 @@ export const LoginTemplate = () => {
       />
       <div className="flex justify-center items-center">
         <Button
-          className="!w-2/3 !p-[6px] !bg-[#ff385c] !text-white !text-[20px] !mt-20 !rounded-10 hover:brightness-125 !h-auto"
+          className="!w-2/3 !p-[6px] !bg-[#ff385c] !text-white !text-[20px] !mt-[6px] !rounded-10 hover:brightness-125 !h-auto"
           htmlType="submit"
           type="primary"
           danger

@@ -36,4 +36,4 @@
 - Email và ID là unique cho mỗi tài khoản, email dùng để đăng nhập, id dùng để tạo path quản lý
 
 ## Known Bugs
-
+- Nút đăng ký bị lỗi sau khi merge (@.@)
