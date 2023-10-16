@@ -24,10 +24,10 @@ export const RegisterTemplate = () => {
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
     console.log('onSubmit called');
     const api = apiInstance({
-      baseURL: import.meta.env.VITE_AUTH_API,
+      baseURL: import.meta.env.VITE_API,
     });
     try {
-      // Tạo id ngẫu nhiên 6 chữ số
+      //tạo id ngẫu nhiên 6 số
       let id = Math.floor(Math.random() * 900000) + 100000;
       const response = await api.get('/users');
       const users = response.data;
@@ -39,9 +39,17 @@ export const RegisterTemplate = () => {
       if (emailDitto) {
         throw new Error('Email đã tồn tại');
       }
-      // Tạo object mới với id vừa tạo gửi đến server
-      const userWithId = { ...values, id };
-      await authServices.register(userWithId);
+      // tạo object mới chứa id vừa tạo
+      const newUser = {
+        ...values,
+        id,
+      };
+      // gán newUSer vào gender dạng boolean rồi trả về server
+      const newUserBooleanGender = {
+        ...newUser,
+        gender: newUser.gender,
+      };
+      await authServices.register(newUserBooleanGender);
       toast.success('Đăng ký thành công!', {
         position: 'top-right',
         autoClose: 1000,
@@ -52,9 +60,6 @@ export const RegisterTemplate = () => {
     }
     console.log('onSubmit completed');
   };
-  
-  
-  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

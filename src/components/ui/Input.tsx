@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLInputTypeAttribute } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
