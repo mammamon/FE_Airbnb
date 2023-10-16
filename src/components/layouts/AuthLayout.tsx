@@ -2,7 +2,6 @@ import { useAuth } from 'hooks'
 import { Navigate, Outlet } from 'react-router-dom'
 
 export const AuthLayout = () => {
-    // const { accessToken } = useSelector((state: RootState) => state.quanLyNguoiDung)
     const { accessToken } = useAuth()
 
     if (accessToken) {

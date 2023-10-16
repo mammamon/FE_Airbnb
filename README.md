@@ -29,11 +29,5 @@
 19. fontawesome
 20. moment
 
-## Features
-### 1. Register & login
-- Giới hạn độ tuổi được phép tạo tài khoản từ 16 đến 100 tuổi
-- ID được tạo ngẫu nhiên khi đăng ký thành công
-- Email và ID là unique cho mỗi tài khoản, email dùng để đăng nhập, id dùng để tạo path quản lý
-
 ## Known Bugs
-- Nút đăng ký không thể trigger onsubmit event (@-@)
+

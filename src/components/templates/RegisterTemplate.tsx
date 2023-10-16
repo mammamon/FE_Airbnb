@@ -22,43 +22,49 @@ export const RegisterTemplate = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
-    console.log('onSubmit called');
+    console.log('onsubmit start');
+    console.log('Input Values:', values);
     const api = apiInstance({
       baseURL: import.meta.env.VITE_API,
     });
+
     try {
-      //tạo id ngẫu nhiên 6 số
-      let id = Math.floor(Math.random() * 900000) + 100000;
       const response = await api.get('/users');
-      const users = response.data;
+      let users = [];
+      if (response.data && typeof response.data === 'object') {
+        if (Array.isArray(response.data)) {
+          users = response.data;
+        } else {
+          users.push(response.data);
+        }
+      } else {
+        throw new Error('user data không hợp lệ');
+      }
+      // console.log('danh sách user:', users);
+
       const emailDitto = users.some((user) => user.email === values.email);
-      const idDitto = users.some((user) => user.id === id);
-      while (idDitto) {
-        id = Math.floor(Math.random() * 900000) + 100000;
-      }
+      // console.log('Email check:', emailDitto);
       if (emailDitto) {
-        throw new Error('Email đã tồn tại');
+        throw new Error('Email already exists');
       }
-      // tạo object mới chứa id vừa tạo
+
+      // tạo object mới với gender chuyển sang boolean
       const newUser = {
         ...values,
-        id,
+        gender: values.gender === 'true' ? 'true' : 'false',
       };
-      // gán newUSer vào gender dạng boolean rồi trả về server
-      const newUserBooleanGender = {
-        ...newUser,
-        gender: newUser.gender,
-      };
-      await authServices.register(newUserBooleanGender);
+      // console.log('newUser:', newUser);
+      await authServices.register(newUser);
       toast.success('Đăng ký thành công!', {
         position: 'top-right',
         autoClose: 1000,
       });
+
       navigate(PATH.login);
+
     } catch (err) {
       handleError(err);
     }
-    console.log('onSubmit completed');
   };
 
   return (

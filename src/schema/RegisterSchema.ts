@@ -12,10 +12,6 @@ export const RegisterSchema = z.object({
   email: z.string()
     .nonempty("Vui lòng nhập email")
     .email("Vui lòng nhập đúng định dạng email"),
-  taiKhoan: z.string()
-    .nonempty("Vui lòng nhập tài khoản")
-    .min(6, "Nhập tối thiểu 6 ký tự")
-    .max(20, "Nhập tối đa 20 ký tự"),
   password: z.string()
     .nonempty("Vui lòng nhập mật khẩu")
     .regex(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, "Mật khẩu phải bao gồm ít nhất 8 ký tự, gồm chữ, số, chữ viết hoa và một ký tự đặc biệt (@$!%*?&)"),
