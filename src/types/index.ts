@@ -1,6 +1,7 @@
-export * from './UserLoginType'
+// export * from './UserLoginType'
 export * from './LocationType'
 // export * from './UserType'
+export * from './UserType'
 // export * from './CommentType'
 // export * from './RoomType'
 // export * from './LocationType'

@@ -1,26 +1,17 @@
-import {  BookedManageTemplate, LocateManageTemplate, RoomManageTemplate, Tabs, UserManage } from 'components'
+import { BookedManageTemplate, Tabs, AccountInfo } from 'components'
 
 export const AccountTemplate = () => {
     return (
         <div>
             <Tabs
-                tabPosition="left"
+                tabPosition="top"
                 items={[
                     {
-                        key: 'userManage',
-                        label: 'Quản lý người dùng',
-                        children: <UserManage/>,
+                        key: 'accountInfo',
+                        label: 'Thông tin tài khoản',
+                        children: <AccountInfo/>,
                     },
-                    {
-                        key: 'locateManage',
-                        label: 'Quản lý thông tin vị trí',
-                        children: <LocateManageTemplate />,
-                    },
-                    {
-                        key: 'locateManage',
-                        label: 'Quản lý thông tin phòng',
-                        children: <RoomManageTemplate />,
-                    },
+                    
                     {
                         key: 'locateManage',
                         label: 'Quản lý đặt phòng',

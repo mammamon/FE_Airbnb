@@ -7,14 +7,19 @@ const TokenCybersoft =
 export const apiInstance = (config?: CreateAxiosDefaults) => {
     const api = axios.create(config)
     api.interceptors.request.use((config) => {
+        const headers = {
+            TokenCybersoft,
+            Authorization: 'Bearer ' + getAccessToken() || '',
+        } as unknown as AxiosRequestHeaders;
+
+        console.log('Request Headers:', headers);
+
         return {
             ...config,
-            headers: {
-                TokenCybersoft,
-                Authorization: 'Bearer ' + getAccessToken() || '',
-            } as unknown as AxiosRequestHeaders,
+            headers: headers,
         }
     })
 
     return api
 }
+

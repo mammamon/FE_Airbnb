@@ -37,6 +37,7 @@ li {
     font-size: map-get($font-sizes, $i);
     font-weight: map-get($font-weights, $i);
     margin: 0;
+    line-height: inherit !important
   }
 }
 

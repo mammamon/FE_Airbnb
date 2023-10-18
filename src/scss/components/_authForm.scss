@@ -1,0 +1,57 @@
+//authForm
+form {
+    button {
+        background-color: $primaryColor !important;
+        color: #fff !important;
+        border-radius: 10px !important;
+
+        &:hover {
+            background-color: #ff5a5f !important;
+        }
+    }
+
+    input {
+        @include placeholder($secondaryColor);
+        border: 1px solid #222;
+
+        &:focus {
+            outline: 1px solid $primaryColor;
+            border: 1px solid transparent;
+        }
+    }
+
+    .input-wrapper {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 1.8rem;
+
+        .input-error-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: $primaryColor;
+        }
+
+        &.input-invalid {
+            .input-error-icon {
+                display: block;
+            }
+
+            .tooltipError {
+                .tooltipErrorText {
+                    margin: 4px 0;
+                    padding-left: 4px;
+                    width: 100%;
+                    border-radius: 6px;
+                    position: absolute;
+                    z-index: 1;
+                    line-height: 1;
+                    top: 100%;
+                    @include font-style('tahoma', 11px, $primaryColor, 500);
+                }
+            }
+        }
+    }
+}

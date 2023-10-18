@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { userLoginType } from "types";
+import { UserLogin, UserByAccessToken } from "types";
 import { loginThunk } from ".";
+import { getUserByAccessTokenThunk } from "store/UserStore";
 import { getAccessToken } from "utils";
 
 type AuthInitialState = {
   accessToken?: string;
-  userLogin?: userLoginType;
-  // userBooked?:UserByAccessToken;
+  userLogin?: UserLogin | UserByAccessToken;
   isFetchingLogin?: boolean;
 };
 
@@ -16,7 +16,7 @@ const initialState: AuthInitialState = {
 };
 
 const authSlice = createSlice({
-  name: "authManagement",
+  name: "userManage",
   initialState,
   reducers: {
     logOut: (state, { payload }: PayloadAction<string>) => {
@@ -28,7 +28,6 @@ const authSlice = createSlice({
   }, // xử lý action đồng bộ
   extraReducers(builder) {
     // xử lý action bất đồng bộ (call API)
-
     builder
       .addCase(loginThunk.pending, (state) => {
         state.isFetchingLogin = true;
@@ -39,19 +38,24 @@ const authSlice = createSlice({
       .addCase(loginThunk.fulfilled, (state, { payload }) => {
         console.log("payload: ", payload);
         // lưu accessToken xuống localstorage
-        localStorage.setItem("ACCESSTOKEN", payload.token);
-        state.accessToken = payload.token;
-
+        localStorage.setItem("ACCESSTOKEN", payload.accessToken);
+        state.accessToken = payload.accessToken;
         // set lại user
         state.userLogin = payload;
         state.isFetchingLogin = false;
-      });
+      })
+      .addCase(
+        getUserByAccessTokenThunk.fulfilled,
+        (state, { payload }) => {
+          console.log('Fulfilled payload:', payload);
+          state.userLogin = payload;
+        }
+      );
 
-   
   },
 });
 
 export const {
-  actions: authManagementActions,
-  reducer: authManagementReducer,
+  actions: userManageActions,
+  reducer: userManageReducer,
 } = authSlice;

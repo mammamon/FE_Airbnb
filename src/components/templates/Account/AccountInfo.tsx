@@ -1,78 +1,53 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "components";
-import { PATH } from "constant";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { RegisterSchema, RegisterSchemaType } from "schema";
-import { userServices } from "services";
-import { handleError} from "utils";
-import { apiInstance } from "constant";``
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Input } from 'components/ui'
+import { useAuth } from 'hooks'
+import { useEffect } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { AccountSchema, AccountSchemaType } from 'schema/AccountSchema'
+import { AppDispatch } from 'store'
+import { updateThunk } from 'store/UserStore'
 
-export const RegisterTemplate = () => {
+export const AccountInfo = () => {
+  const { user } = useAuth()
   const {
-    handleSubmit,
+    reset,
     register,
     formState: { errors },
-  } = useForm<RegisterSchemaType>({
-    mode: "onChange",
-    resolver: zodResolver(RegisterSchema),
-  });
-
-  const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
-    console.log('onsubmit start');
-    console.log('Input Values:', values);
-    const api = apiInstance({
-      baseURL: import.meta.env.VITE_API,
-    });
-
-    try {
-      const response = await api.get('/users');
-      let users = [];
-      if (response.data && typeof response.data === 'object') {
-        if (Array.isArray(response.data)) {
-          users = response.data;
-        } else {
-          users.push(response.data);
-        }
-      } else {
-        throw new Error('user data không hợp lệ');
-      }
-      // console.log('danh sách user:', users);
-
-      const emailDitto = users.some((user) => user.email === values.email);
-      // console.log('Email check:', emailDitto);
-      if (emailDitto) {
-        throw new Error('Email already exists');
-      }
-
-      // tạo object mới với gender chuyển sang boolean
-      const newUser = {
-        ...values,
-        gender: values.gender === 'true' ? 'true' : 'false',
-      };
-      // console.log('newUser:', newUser);
-      await userServices.register(newUser);
-      toast.success('Đăng ký thành công!', {
-        position: 'top-right',
-        autoClose: 1000,
-      });
-
-      navigate(PATH.login);
-
-    } catch (err) {
-      handleError(err);
+    handleSubmit,
+  } = useForm<AccountSchemaType>({
+    resolver: zodResolver(AccountSchema),
+    mode: 'onChange',
+  })
+  const dispatch = useDispatch<AppDispatch>();
+  const onSubmit: SubmitHandler<AccountSchemaType> = (value) => {
+    if (user) {
+      console.log('User:', user);
+      dispatch(updateThunk({ id: user.id, data: value }));
     }
-  };
+  }
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        name: user.name,
+        email: user.email,
+        password: '',
+        confirmPassword: '',
+        phone: user.phone,
+        birthday: user.birthday,
+        gender: user.gender ? 'true' : 'false',
+        // role: user.role,
+      });
+    }
+  }, [user, reset]);
+
+  // if (!user) {
+  //   return <div>Đang cập nhật...</div>
+  // }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex items-center justify-between">
-        <h2>Đăng ký</h2>
-        <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
-      </div>
       <Input
         className="mt-16"
         placeholder="Họ tên"
@@ -142,27 +117,26 @@ export const RegisterTemplate = () => {
           ]}
         />
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         <label className="p-10 w-1/2 text-black">Loại tài khoản:</label>
         <Input
           className="mt-16"
           id="role"
           name="role"
-          error={errors?.role?.message}
           register={register}
           selectOptions={[
             { label: 'Người dùng', value: 'USER' },
             { label: 'Quản trị viên', value: 'ADMIN' }
           ]}
         />
-      </div>
+      </div> */}
       <div className="flex justify-center items-center">
         <button
           type="submit"
           className="w-2/3 p-10 text-[20px] mt-2">
-          Đăng Ký
+          Cập nhật thông tin
         </button>
       </div>
     </form>
-  );
-};
+  )
+}

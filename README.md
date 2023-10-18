@@ -1,3 +1,11 @@
+## How to run
+#Step 1:
+- Sử dụng yarn: xóa package-lock.json ---> yarn install --> yarn start
+- Sử dụng npm: xóa yarn.lock ---> npm install ---> npm start
+
+#Step 2:
+- Chạy live scss compiler để cập nhật style.css
+
 ## Install Package
 1. TailwindCSS
 2. React-router-dom
@@ -17,6 +25,9 @@
 16. react-toastify
 17. swiper
 18. animate.css
+19. fontawesome
+20. moment
+21. Hover.js
 
 ## Known Bugs
 
