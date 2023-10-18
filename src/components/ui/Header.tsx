@@ -4,7 +4,7 @@ import { Avatar, Button, Input, Popover } from "components";
 import { PATH } from "constant";
 import { useAuth } from "hooks";
 import { useAppDispatch } from "store";
-import { authManagementActions } from "store/AuthStore";
+import { userManageActions } from "store/userStore";
 import { useState, useEffect } from "react";
 import cn from "classnames";
 import { Badge } from "antd";
@@ -132,7 +132,7 @@ export const Header = () => {
               <Popover
                 content={
                   <div className="p-10 w-auto !inset-[ 50px 0px 0px 0px]">
-                    <p className="font-600 text-16">{/* {user?.hoTen} */}</p>
+                    <p className="font-600 text-16">{user?.name}</p>
                     <hr className="my-16" />
                     <p
                       className="text-16 cursor-pointer"
@@ -145,7 +145,7 @@ export const Header = () => {
                       className="!h-[46px]"
                       type="primary"
                       onClick={() => {
-                        dispatch(authManagementActions.logOut("abc"));
+                        dispatch(userManageActions.logOut("abc"));
                       }}
                     >
                       <i className="fa-solid fa-arrow-right-from-bracket text-16"></i>

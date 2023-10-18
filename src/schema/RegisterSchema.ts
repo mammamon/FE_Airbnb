@@ -1,9 +1,5 @@
 import { z } from "zod";
-import moment from 'moment';
-
-const currentYear = moment().year();
-const minYear = currentYear - 100;
-const maxYear = currentYear - 16;
+import { isAgeValid } from "utils";
 
 export const RegisterSchema = z.object({
   name: z.string()
@@ -21,12 +17,7 @@ export const RegisterSchema = z.object({
     .regex(/^\d{10}$/, "Số điện thoại phải chứa 10 chữ số"),
   birthday: z.string()
     .nonempty({ message: 'Vui lòng chọn ngày sinh' })
-    .refine(value => {
-      const format = 'YYYY.MM.DD';
-      const date = moment(value, format);
-      const year = date.year();
-      return year >= minYear && year <= maxYear;
-    }, {
+    .refine(isAgeValid, {
       message: `Bạn chưa đủ 16 tuổi hoặc năm sinh không hợp lệ`,
     }),
   gender: z.string().refine(val => val === 'true' || val === 'false', {

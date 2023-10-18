@@ -13,6 +13,6 @@ export type UserLogin = {
 
 export type UserByAccessToken = Omit<UserLogin, 'accessToken'> & {
   account: {
-    role: 'user' | 'admin'
+    role: 'USER' | 'ADMIN'
   }
 }

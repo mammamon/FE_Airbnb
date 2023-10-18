@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoginSchema, LoginSchemaType } from "schema";
 import { RootState, useAppDispatch } from "store";
-import { loginThunk } from "store/AuthStore";
+import { loginThunk } from "store/UserStore";
 import { handleError } from "utils";
 
 export const LoginTemplate = () => {
@@ -21,7 +21,7 @@ export const LoginTemplate = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isFetchingLogin } = useSelector(
-    (state: RootState) => state.authManagement
+    (state: RootState) => state.userManage
   );
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (value) => {
