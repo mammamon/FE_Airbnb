@@ -2,7 +2,7 @@ export const PATH = {
     login: '/login',
     register: '/register',
     userInfo: '/userInfo',
-    roomList:'/roomList/:cityId',
+    roomList:'/:cityName',
     roomDetail:'/roomDetail/:roomId',
     account:'/account',
 }

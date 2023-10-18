@@ -1,6 +1,6 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Avatar, Button, Input, Popover } from "components";
+import { Avatar, Button, Popover, Search } from "components";
 import { PATH } from "constant";
 import { useAuth } from "hooks";
 import { useAppDispatch } from "store";
@@ -9,41 +9,39 @@ import { useState, useEffect } from "react";
 import cn from "classnames";
 import { Badge } from "antd";
 import { GlobalOutlined } from '@ant-design/icons';
+import { getLocalStorage } from "utils";
+// import { getLocalStorage } from "utils";
 
 export const Header = () => {
+  const param = useParams();
   const navigate = useNavigate();
-  const { accessToken, user } = useAuth();
+  const { accessToken,user} = useAuth();
   const dispatch = useAppDispatch();
   const [scroll, setScroll] = useState<boolean>(false);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
-  const [isInputVisible, setInputVisible] = useState(true);
-  const toggleInputVisibility = () => setInputVisible(!isInputVisible);
-
+  // const [localChoose,setLocalChoose] = useState( {...getLocalStorage("local")})
+  const isChooseLocal= Object.keys(param).length?true:false
   const handleScroll = () => {
     if (window.pageYOffset > 50) {
       setScroll(true);
     } else {
       setScroll(false);
     }
-  };
-
+  }; 
   const handleResize = () => {
     if (window.innerWidth <= 768) {
       setIsSmallScreen(true);
       setIsHeaderVisible(false);
-      setInputVisible(false);
     } else {
       setIsSmallScreen(false);
       setIsHeaderVisible(true);
-      setInputVisible(true);
     }
   };
 
   const toggleHeader = () => {
-    setIsHeaderVisible(!isHeaderVisible);
+    setIsHeaderVisible(!isHeaderVisible); 
   };
-
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
@@ -65,6 +63,7 @@ export const Header = () => {
         className={cn({
           "header-fixed": scroll,
           "header-hidden": !isHeaderVisible && isSmallScreen,
+          "header-local":isChooseLocal,
         })}
       >
         <div className="header-content">
@@ -73,17 +72,13 @@ export const Header = () => {
             onClick={() => navigate("/")}
             src="/images/airbnb.svg"
             alt="logo"
-          />
-          <nav>
+          />  
+          {!isChooseLocal&&<nav>
             <NavLink to="">Nơi ở</NavLink>
             <NavLink to="">Trải nghiệm</NavLink>
             <NavLink to="">Trải nghiệm thực tế</NavLink>
-          </nav>
-          {/* <div className="search">
-            <Button onClick={toggleInputVisibility}>
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </Button>
-          </div> */}
+          </nav>}
+          <Search/>
           <div className="header-user">
             <nav>
               <NavLink to="">
@@ -132,7 +127,7 @@ export const Header = () => {
               <Popover
                 content={
                   <div className="p-10 w-auto !inset-[ 50px 0px 0px 0px]">
-                    <p className="font-600 text-16">{/* {user?.hoTen} */}</p>
+                    <p className="font-600 text-16">{user?.user.name}</p>
                     <hr className="my-16" />
                     <p
                       className="text-16 cursor-pointer"
@@ -187,12 +182,17 @@ const Container = styled.header`
   transition: transform 0.3s ease;
   background: #fff;
   font-family: "Circular-bold";
+  
   @media (max-width: 768px) {
     height: 280px;
     position: fixed;
     z-index: 999;
     // box-shadow: none;
     background: transparent;
+  }
+  &.header-local{
+    padding-bottom:0px!important;
+    height: 100px;
   }
 
   &.header-fixed {
@@ -282,10 +282,13 @@ const Container = styled.header`
       justify-content:space-around;
       .dropdown{
         padding:5px 20px;
-        background-color:black;
+        color: var(--secondary-color);
+        background-color:white;
+        border: 2px solid var(--primary-color);
         border-radius:20px;
         .btn{
           padding:0;
+          margin-right:5px;
         }
         .dropdown-menu{
           &.show{
@@ -296,7 +299,7 @@ const Container = styled.header`
           }
         }
         .svg-inline--fa {
-          color:white;
+          color: var(--secondary-color);
         }
       }
     }

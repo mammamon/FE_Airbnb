@@ -1,5 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import { authManagementReducer } from './AuthStore'
+import { localRoomReducer } from './LocalRoomStore'
+import { roomRentReducer } from './RoomDetailStore'
 // import { quanLyNguoiDungReducer } from './quanLyNguoiDung'
 // import { quanLyPhimReducer } from './quanLyPhim'
 // import { quanLyRapReducer } from './quanLyRap'
@@ -7,7 +9,6 @@ import { authManagementReducer } from './AuthStore'
 
 export const rootReducer = combineReducers({
     authManagement: authManagementReducer,
-    // quanLyPhim: quanLyPhimReducer,
-    // quanLyRap: quanLyRapReducer,
-    // quanLyDatVe: quanLyDatVeReducer,
+    localRoom: localRoomReducer,
+    roomRent: roomRentReducer,
 })

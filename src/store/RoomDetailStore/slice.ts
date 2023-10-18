@@ -1,30 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { HeThongRap, ThongTinPhim} from 'types'; 
-import { getCinemaListThunk, getCinemaScheduleThunk, getMovieDetailThunk } from './thunk'; 
+import { RoomRentListByLocationType } from 'types/RoomType';
+import { getRoomRentThunk } from '.';
 
-type QuanLyRapInitialState = {
-  cinemaList?: HeThongRap[];
-  cinemaSchedule?: HeThongRap[];
-  movieDetail?: ThongTinPhim | undefined;
-  isFetchingCinemaList?: boolean;
+
+type RoomRentInitialState = {
+  roomRentList?: RoomRentListByLocationType;
+  // cinemaSchedule?: HeThongRap[];
+  // movieDetail?: ThongTinPhim | undefined;
+  isRoomRentList?: boolean;
 };
 
-const initialState: QuanLyRapInitialState = {};
-const quanLyRapSlice = createSlice({
-  name: 'quanLyRap',
+const initialState:  RoomRentInitialState = {};
+const roomRentSlice = createSlice({
+  name: 'roomRent',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCinemaListThunk.fulfilled, (state, action) => {
-      state.cinemaList = action.payload;
-    });
-    builder.addCase(getCinemaScheduleThunk.fulfilled, (state, action) => {
-      state.cinemaSchedule = action.payload; 
-    });
-    builder.addCase(getMovieDetailThunk.fulfilled, (state, action) => {
-      state.movieDetail = action.payload; 
+    builder.addCase(getRoomRentThunk.fulfilled, (state, action) => {
+      state.roomRentList = action.payload;
     });
   },
 });
 
-export const { actions: quanLyRapActions, reducer: quanLyRapReducer } = quanLyRapSlice;
+export const { actions: roomRentActions, reducer: roomRentReducer } = roomRentSlice;

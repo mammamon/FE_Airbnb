@@ -2,12 +2,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination } from 'swiper/modules';
-import { Banner } from '../../types/UserType';
 import { useEffect, useState } from 'react';
-import { quanLyBannerServices } from '../../services/quanLyBanner';
+import { localRoomServices } from 'services';
+import { localRoomListType } from 'types';
 
 type SwiperCarouselProps = {
-  data: Banner[];
+  data: localRoomListType[];
 };
 
 const SwiperCarousel: React.FC<SwiperCarouselProps> = ({ data }) => {
@@ -16,7 +16,7 @@ const SwiperCarousel: React.FC<SwiperCarouselProps> = ({ data }) => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        await quanLyBannerServices.getBanners();
+        await localRoomServices.getLocalRoomList();
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching banners:', error);
@@ -46,9 +46,9 @@ const SwiperCarousel: React.FC<SwiperCarouselProps> = ({ data }) => {
           loop={true}
           className="mySwiper"
         >
-          {data.map((banner) => (
-            <SwiperSlide key={banner.maBanner}>
-              <img src={banner.hinhAnh} alt="Banner" />
+          {data.map((local) => (
+            <SwiperSlide key={local.id}>
+              <img src={local.hinhAnh} alt="Banner" />
             </SwiperSlide>
           ))}
         </Swiper>

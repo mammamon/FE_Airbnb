@@ -5,6 +5,7 @@
   --w-max-root: 1536px;
   --primary-color:#ff385c;
   --secondary-color:#717171;
+
 }
 
 *,
@@ -47,4 +48,8 @@ p {
 ol,
 ul {
   padding-left: 0;
+}
+
+.hidden{
+  display: none;
 }

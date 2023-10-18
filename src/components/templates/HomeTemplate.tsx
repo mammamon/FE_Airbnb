@@ -1,22 +1,31 @@
-import {  Search } from 'components';
 import "animate.css"
 import SwiperCarousel from '../../components/ui/SwiperCarousel';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from 'store';
-import { generatePath, useNavigate } from "react-router-dom";
-import { PATH } from "constant";
-import { SearchOutlined } from '@ant-design/icons';
+import {  useAppDispatch } from 'store';
+import { getLocalRoomListThunk } from 'store/LocalRoomStore';
+import { localRoomServices } from 'services';
+import { getLocalStorage, removeLocalStorage } from 'utils';
 
 export const HomeTemplate = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    
+    const [banners, setBanners] = useState([]);
+    // window.onbeforeunload = function () { 
+    //     console.log("change")
+    // }
+   useEffect(()=>{
+    if(getLocalStorage("local")){
+        removeLocalStorage("local")
+    }
+    dispatch(getLocalRoomListThunk());
+    const fetchBanners = async () => {
+        const response = await localRoomServices.getLocalRoomList();
+        setBanners(response.data.content);
+    };
+    fetchBanners(); 
+   },[dispatch])
     return (
-        <div className='home-template w-full'>
-            <Search/>
-            
+        <div className='home-template'>
+            <SwiperCarousel data={banners}/>
         </div>
     )
 }

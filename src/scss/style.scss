@@ -13,8 +13,11 @@
 
 // Import component styles
 @import "./components/form";
+@import "./components/button";
+@import "./components/swiperCarousel";
 // Import page styles
 @import 'pages/home';
+@import 'pages/roomList';
 @import 'pages/admin';
 
 // Import theme styles
