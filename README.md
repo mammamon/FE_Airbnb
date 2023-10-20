@@ -27,7 +27,6 @@
 18. animate.css
 19. fontawesome
 20. moment
-21. Hover.js
 
 ## Known Bugs
-
+- Token bị lỗi undefined!

@@ -1,6 +1,10 @@
 import { BookedManageTemplate, Tabs, AccountInfo } from 'components'
+import { useEffect } from 'react'
 
 export const AccountTemplate = () => {
+    useEffect(() => {
+        document.title = 'Quản lý tài khoản';
+      }, []);
     return (
         <div>
             <Tabs
