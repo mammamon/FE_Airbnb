@@ -83,7 +83,7 @@ export const Header = () => {
                 Đón tiếp khách
               </NavLink>
             </nav>
-            <GlobalOutlined type="button" />
+            <GlobalOutlined type={"button"} />
             
             {!accessToken && (
               <Badge count={0} showZero offset={[-10,3]} size="small">

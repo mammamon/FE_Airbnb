@@ -1,55 +1,55 @@
-//search form
-.search-form {
-    &.header-fixed {
-      position: fixed;
-      width: 80%;
-      top: 110px;
-      left: 150px;
-      z-index: 999;
-    }
-    position: fixed;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    padding: 10px 15px;
-    border-radius: 50px;
-    align-items: center;
-    border: 1px solid black;
+// //search form
+// .search-form {
+//     &.header-fixed {
+//       position: fixed;
+//       width: 80%;
+//       top: 110px;
+//       left: 150px;
+//       z-index: 999;
+//     }
+//     position: fixed;
+//     background-color: white;
+//     display: flex;
+//     justify-content: space-between;
+//     width: 80%;
+//     padding: 10px 15px;
+//     border-radius: 50px;
+//     align-items: center;
+//     border: 1px solid black;
   
     
-    .search-input {
-      width: 25%;
-      border-right: 2px solid $grayLighter;
-      margin-left: 15px;
-      padding: 0 5px;
-      input {
-        display: inline-block;
-        width: 100%;
-        &:focus {
-          outline: none;
-        }
-      }
-      &:nth-child(4) {
-        border-right: none !important;
-        margin-right: 0;
-      }
-    }
-    .search-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: var(--primary-color);
-      color: white;
-      font-size: 25px;
-      text-align: center;
-      svg {
-        width: 100%;
-      }
-    }
-  }
+//     .search-input {
+//       width: 25%;
+//       border-right: 2px solid $grayLighter;
+//       margin-left: 15px;
+//       padding: 0 5px;
+//       input {
+//         display: inline-block;
+//         width: 100%;
+//         &:focus {
+//           outline: none;
+//         }
+//       }
+//       &:nth-child(4) {
+//         border-right: none !important;
+//         margin-right: 0;
+//       }
+//     }
+//     .search-icon {
+//       width: 50px;
+//       height: 50px;
+//       border-radius: 100%;
+//       background-color: var(--primary-color);
+//       color: white;
+//       font-size: 25px;
+//       text-align: center;
+//       svg {
+//         width: 100%;
+//       }
+//     }
+//   }
   
-  .ant-select-dropdown{
-    position: fixed!important;
-    inset: 190px 0px auto 185px!important;
-  }
+//   .ant-select-dropdown{
+//     position: fixed!important;
+//     inset: 180px 0px auto 300px!important;
+//   }

@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { localRoomListType } from "types";
-import { getLocalRoomListThunk } from ".";
+import { DataByLocalType, localRoomListType } from "types";
+import { getLocalRoomListThunk, getSearchPageThunk } from ".";
 
 type LocalRoomInitialState = {
   localRoomList?: localRoomListType[];
+  pageLocalRoomList?:DataByLocalType;
   isFetchingLocalRoomList?: boolean;
 };
 
@@ -27,6 +28,9 @@ const localRoomSlice = createSlice({
         state.localRoomList = action.payload;
         state.isFetchingLocalRoomList = false;
       });
+    builder.addCase(getSearchPageThunk.fulfilled, (state,action)=>{
+      state.pageLocalRoomList=action.payload
+    })
   },
 });
 

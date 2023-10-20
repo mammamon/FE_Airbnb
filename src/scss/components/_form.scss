@@ -30,6 +30,11 @@
         margin: 0;
         padding: 0;
         border-right: none;
+        
+        button{
+          color: red;
+          border-radius: 50%!important;
+        }
       }
       .ant-row{
         flex-direction: column  ;
