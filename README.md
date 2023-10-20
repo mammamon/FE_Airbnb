@@ -30,4 +30,4 @@
 21. Hover.js
 
 ## Known Bugs
-
+- Token bị lỗi undefined!
