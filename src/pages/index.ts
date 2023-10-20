@@ -3,7 +3,8 @@ export * from './Login'
 export * from './Register'
 export * from './RoomDetail'
 export * from './RoomList'
-export * from './UserInfo'
 export * from './Account'
+export * from './Admin'
+export * from './AccessDenied'
 
 
