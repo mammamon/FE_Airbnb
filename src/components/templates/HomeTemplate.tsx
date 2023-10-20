@@ -1,22 +1,54 @@
-import { Search } from 'components';
 import "animate.css"
 import SwiperCarousel from '../../components/ui/SwiperCarousel';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from 'store';
-import { generatePath, useNavigate} from "react-router-dom";
-import { PATH } from "constant";
-import { SearchOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import {  RootState, useAppDispatch } from 'store';
+import { getLocalRoomListThunk, getSearchPageThunk } from 'store/LocalRoomStore';
+import { localRoomServices } from 'services';
+import { getLocalStorage, removeLocalStorage } from 'utils';
+import { useSelector } from "react-redux";
+import { Avatar, List } from "antd";
 
 export const HomeTemplate = () => {
-        const dispatch = useAppDispatch();
-        const navigate = useNavigate();
-
-
-        return (
-            <div className='home-template w-full'>
-                <Search />
-
-            </div>
-        )
+    const {pageLocalRoomList}= useSelector((state: RootState)=>state.localRoom)
+    console.log(pageLocalRoomList)
+    const dispatch = useAppDispatch();
+    const [banners, setBanners] = useState([]);
+   useEffect(()=>{
+    if(getLocalStorage("local")){
+        removeLocalStorage("local")
     }
+    dispatch(getLocalRoomListThunk());
+    const fetchBanners = async () => {
+        const response = await localRoomServices.getLocalRoomList();
+        setBanners(response.data.content);
+    };
+    fetchBanners(); 
+    dispatch(getSearchPageThunk({pageIndex:1,pageSize:11}))
+   },[dispatch])
+    return (
+        <div className='home-template'>
+            <SwiperCarousel data={banners}/>
+            <List
+            className="mt-5"
+            itemLayout="horizontal"
+            dataSource={pageLocalRoomList.data}
+            pagination={{
+                pageSize: 3,align:"start"
+              }}
+            renderItem={(room) => (
+              <List.Item
+              className="!items-start"
+              >
+                <List.Item.Meta
+                  avatar={
+                    <Avatar shape="square" size={200} src={room.hinhAnh} />
+                  }
+                  title={<a>{room.tenViTri}, {room.tinhThanh}, {room.quocGia}</a>}
+                  
+                />
+              </List.Item>
+            )}
+          />
+        </div>
+    )
+}

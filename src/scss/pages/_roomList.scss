@@ -1,0 +1,17 @@
+.room-list-template{
+	.ant-list-item-meta-avatar {
+		flex: none;
+	}	
+	.ant-list-item-meta-content{
+		flex-grow: 1;
+		height: 200px;
+		display: flex;
+		flex-direction: column;
+		.ant-list-item-meta-title{
+			flex: none;
+		}
+		.ant-list-item-meta-description{
+			flex-grow: 1;
+		}
+	}
+}

@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { quanLyHeThongRapServices } from 'services';
+import { roomRentServices } from 'services';
 
-export const getCinemaListThunk = createAsyncThunk(
-  'quanLyRap/getCinemaList',
-  async (_, { rejectWithValue }) => {
+export const getRoomRentThunk = createAsyncThunk(
+  'api/phong-thue/getRoomDetailThunk',
+  async (maViTri:number, { rejectWithValue }) => {
     try {
-      const data = await quanLyHeThongRapServices.getCinemaList();
+      const data = await roomRentServices.getRoomRentListDetail(maViTri);
       return data.data.content;
     } catch (err) {
       return rejectWithValue(err);
@@ -13,26 +13,26 @@ export const getCinemaListThunk = createAsyncThunk(
   }
 );
 
-export const getCinemaScheduleThunk = createAsyncThunk(
-  'quanLyRap/getCinemaSchedule',
-  async (maHeThongRap: string, { rejectWithValue }) => {
-    try {
-      const data = await quanLyHeThongRapServices.getCinemaSchedule(maHeThongRap);
-      return data.data.content;
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  }
-);
+// export const getCinemaScheduleThunk = createAsyncThunk(
+//   'quanLyRap/getCinemaSchedule',
+//   async (maHeThongRap: string, { rejectWithValue }) => {
+//     try {
+//       const data = await quanLyHeThongRapServices.getCinemaSchedule(maHeThongRap);
+//       return data.data.content;
+//     } catch (err) {
+//       return rejectWithValue(err.message);
+//     }
+//   }
+// );
 
-export const getMovieDetailThunk = createAsyncThunk(
-  'quanLyRap/getMovieDetail',
-  async (MaPhim: string, { rejectWithValue }) => {
-    try {
-      const data = await quanLyHeThongRapServices.getMovieDetail(MaPhim);
-      return data.data.content;
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  }
-);
+// export const getMovieDetailThunk = createAsyncThunk(
+//   'quanLyRap/getMovieDetail',
+//   async (MaPhim: string, { rejectWithValue }) => {
+//     try {
+//       const data = await quanLyHeThongRapServices.getMovieDetail(MaPhim);
+//       return data.data.content;
+//     } catch (err) {
+//       return rejectWithValue(err.message);
+//     }
+//   }
+// );
