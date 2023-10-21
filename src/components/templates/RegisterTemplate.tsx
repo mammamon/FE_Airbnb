@@ -22,8 +22,6 @@ export const RegisterTemplate = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
-    console.log('onsubmit start');
-    console.log('Input Values:', values);
     const api = apiInstance({
       baseURL: import.meta.env.VITE_API,
     });

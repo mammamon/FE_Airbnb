@@ -1,5 +1,10 @@
 //authForm
-form {
+form,
+.ant-modal-content {
+    .ant-modal-footer {
+        display: none;
+    }
+
     button {
         background-color: $primaryColor !important;
         color: #fff !important;

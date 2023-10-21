@@ -8,6 +8,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
+  userLogin: JSON.parse(localStorage.getItem('user') || '{}'),
   isFetchingLogin: false,
 };
 
@@ -15,9 +16,15 @@ const userSlice = createSlice({
   name: "userManage",
   initialState,
   reducers: {
+    login: (state, action: PayloadAction<UserLogin>) => {
+      state.userLogin = action.payload;
+    },
     logOut: (state, { payload }: PayloadAction<string>) => {
       console.log("action: ", payload);
       state.userLogin = undefined;
+    },
+    setUserFromLocalStorage: (state, action: PayloadAction<UserLogin>) => {
+      state.userLogin = action.payload;
     },
   }, // xử lý action đồng bộ
   extraReducers(builder) {

@@ -2,13 +2,16 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { userServices } from 'services'
 import { LoginSchemaType, AccountSchemaType } from 'schema'
 import { sleep } from 'utils'
+import { userManageActions } from './slice'; 
 
 export const loginThunk = createAsyncThunk(
   'user/login',
-  async (payload: LoginSchemaType, { rejectWithValue }) => {
+  async (payload: LoginSchemaType, { dispatch, rejectWithValue }) => {
     try {
       const data = await userServices.login(payload)
       await sleep(800)
+      localStorage.setItem('user', JSON.stringify(data.data.content));
+      dispatch(userManageActions.login(data.data.content));
       return data.data.content
     } catch (err) {
       return rejectWithValue(err)

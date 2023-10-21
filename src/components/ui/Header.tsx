@@ -13,7 +13,7 @@ import { GlobalOutlined } from '@ant-design/icons';
 export const Header = () => {
   const param = useParams();
   const navigate = useNavigate();
-  const { accessToken,user} = useAuth();
+  const { user} = useAuth();
   const dispatch = useAppDispatch();
   const [scroll, setScroll] = useState<boolean>(false);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
@@ -85,7 +85,7 @@ export const Header = () => {
             </nav>
             <GlobalOutlined type={"button"} />
             
-            {!accessToken && (
+            {!user && (
               <Badge count={0} showZero offset={[-10,3]} size="small">
                 <div className="dropdown">
                   <button
@@ -121,7 +121,7 @@ export const Header = () => {
                 </div>
             </Badge>
             )}
-            {!!accessToken && (
+            {!!user && (
               <Popover
                 content={
                   <div className="p-10 w-auto !inset-[ 50px 0px 0px 0px]">

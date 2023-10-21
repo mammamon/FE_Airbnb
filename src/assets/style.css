@@ -268,47 +268,62 @@ ul li p .svg-inline--fa {
   background-color: var(--primary-color);
 }
 
-form button {
+form .ant-modal-footer,
+.ant-modal-content .ant-modal-footer {
+  display: none;
+}
+form button,
+.ant-modal-content button {
   background-color: #ff385c !important;
   color: #fff !important;
   border-radius: 10px !important;
 }
-form button:hover {
+form button:hover,
+.ant-modal-content button:hover {
   background-color: #ff5a5f !important;
 }
-form input {
+form input,
+.ant-modal-content input {
   border: 1px solid #222;
 }
-form input::placeholder {
+form input::placeholder,
+.ant-modal-content input::placeholder {
   color: #717171;
 }
-form input:-ms-input-placeholder {
+form input:-ms-input-placeholder,
+.ant-modal-content input:-ms-input-placeholder {
   color: #717171;
 }
-form input::-webkit-input-placeholder {
+form input::-webkit-input-placeholder,
+.ant-modal-content input::-webkit-input-placeholder {
   color: #717171;
 }
-form input:focus {
+form input:focus,
+.ant-modal-content input:focus {
   outline: 1px solid #ff385c;
   border: 1px solid transparent;
 }
-form .input-wrapper {
+form .input-wrapper,
+.ant-modal-content .input-wrapper {
   position: relative;
   display: inline-block;
   width: 100%;
   margin-bottom: 1.8rem;
 }
-form .input-wrapper .input-error-icon {
+form .input-wrapper .input-error-icon,
+.ant-modal-content .input-wrapper .input-error-icon {
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
   color: #ff385c;
 }
-form .input-wrapper.input-invalid .input-error-icon {
+form .input-wrapper.input-invalid .input-error-icon,
+.ant-modal-content .input-wrapper.input-invalid .input-error-icon {
   display: block;
 }
-form .input-wrapper.input-invalid .tooltipError .tooltipErrorText {
+form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
+.ant-modal-content .input-wrapper.input-invalid .tooltipError .tooltipErrorText {
   margin: 4px 0;
   padding-left: 4px;
   width: 100%;

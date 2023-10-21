@@ -2,9 +2,9 @@ import { useAuth } from 'hooks'
 import { Navigate, Outlet } from 'react-router-dom'
 
 export const AccessDeniedLayout = () => {
-    const { accessToken } = useAuth()
+    const { user } = useAuth()
 
-    if (accessToken) {
+    if (user) {
         return <Navigate to="/" />
     }
 
