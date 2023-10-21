@@ -31,13 +31,13 @@ export const AccountInfo = () => {
       method: 'POST',
       body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const onSubmit: SubmitHandler<AccountSchemaType> = (value) => {
@@ -48,19 +48,25 @@ export const AccountInfo = () => {
   }
 
   useEffect(() => {
-    if (user) {
-      reset({
-        name: user.name,
-        email: user.email,
-        password: '',
-        confirmPassword: '',
-        phone: user.phone,
-        birthday: user.birthday,
-        gender: user.gender ? 'true' : 'false',
-        // role: user.role,
-      });
+    try {
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        if (user && Object.keys(user).length > 0) {
+          reset({
+            name: user.name,
+            email: user.email,
+            password: '',
+            confirmPassword: '',
+            phone: user.phone,
+            birthday: user.birthday,
+            gender: user.gender ? 'true' : 'false',
+          });
+        }
+    } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
     }
-  }, [user, reset]);
+}, [reset]);
+
+
 
   return (
     <div className="acountInfoWrapper flex ">

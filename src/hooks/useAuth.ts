@@ -24,7 +24,7 @@ export const useAuth = () => {
         dispatch(userManageActions.logOut());
     };
 
-    console.log('User Login:', userLogin);
+    console.log('User data:', userLogin);   
 
     return {
         user: userLogin,

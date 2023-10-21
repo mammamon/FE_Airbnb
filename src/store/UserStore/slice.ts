@@ -8,10 +8,9 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  userLogin: JSON.parse(localStorage.getItem('user') || '{}'),
+  userLogin: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}') : undefined,
   isFetchingLogin: false,
 };
-
 const userSlice = createSlice({
   name: "userManage",
   initialState,
@@ -20,6 +19,7 @@ const userSlice = createSlice({
       state.userLogin = action.payload;
     },
     logOut: (state, { payload }: PayloadAction<string>) => {
+      localStorage.removeItem('user');
       console.log("action: ", payload);
       state.userLogin = undefined;
     },
