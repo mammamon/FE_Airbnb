@@ -1,5 +1,4 @@
 import { apiInstance } from 'constant/apiInstance'
-import { UserByAccessToken } from 'types'
 import { AccountSchemaType } from 'schema'
 import { LoginSchemaType, RegisterSchemaType } from 'schema'
 import { UserLogin } from 'types'
@@ -18,5 +17,4 @@ export const userServices = {
         const response = await api.put(`/users/${id}`, updatedData);
         return response;
     },
-    getUserByAccessToken: () => api.post<ApiResponse<UserByAccessToken>>('/users'),
 };

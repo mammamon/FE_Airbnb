@@ -8,11 +8,4 @@ export type UserLogin = {
   avatar: string;
   gender: boolean;
   role: string;
-  accessToken: string
-}
-
-export type UserByAccessToken = Omit<UserLogin, 'accessToken'> & {
-  account: {
-    role: 'USER' | 'ADMIN'
-  }
 }
