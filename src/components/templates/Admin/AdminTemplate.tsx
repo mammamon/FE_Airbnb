@@ -1,21 +1,31 @@
-import { BookedManageTemplate, Tabs, AccountInfo } from 'components'
+import { BookedManageTemplate, Tabs, AdminUserManage } from 'components'
 import { useEffect } from 'react'
 
 export const AdminTemplate = () => {
     useEffect(() => {
         document.title = 'Admin';
-      }, []);
+    }, []);
     return (
-        <div>
+        <div className='admin'>
             <Tabs
-                tabPosition="top"
+                tabPosition="left"
                 items={[
                     {
                         key: 'accountInfo',
-                        label: 'Thông tin tài khoản',
-                        children: <AccountInfo/>,
+                        label: 'Quản lý người dùng',
+                        children: <AdminUserManage />,
                     },
-                    
+
+                    {
+                        key: 'locateManage',
+                        label: 'Quản lý thông tin vị trí',
+                        // children: <BookedManageTemplate />,
+                    },
+                    {
+                        key: 'locateManage',
+                        label: 'Quản lý thông tin phòng',
+                        // children: <BookedManageTemplate />,
+                    },
                     {
                         key: 'locateManage',
                         label: 'Quản lý đặt phòng',

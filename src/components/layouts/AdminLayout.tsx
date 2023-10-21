@@ -1,15 +1,14 @@
-import { Footer, Header } from 'components'
+import { Header2 } from 'components/ui/Header2'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const AdminLayout = () => {
     return (
         <main>
-            <Header />
+            <Header2 />
             <MainWrapper id="main-content">
                 <Outlet />
             </MainWrapper>
-            <Footer />
         </main>
     )
 }
@@ -17,8 +16,5 @@ export const AdminLayout = () => {
 const MainWrapper = styled.div`
     max-width: var(--max-width);
     margin: auto;
-    padding: 60px;
-    @media (max-width: 768px) {
-        padding: 20px;
-    }
+    padding: 20px;
 `

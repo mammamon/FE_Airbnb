@@ -27,6 +27,7 @@
 18. animate.css
 19. fontawesome
 20. moment
+21. google-map-react
 
 ## Known Bugs
 - Token bị lỗi undefined!

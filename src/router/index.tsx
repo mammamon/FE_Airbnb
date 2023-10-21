@@ -13,7 +13,7 @@ export const router: RouteObject[] = [
                 element: <Home />,
             },
             {
-                path: PATH.roomList,
+                path: PATH.roomlList,
                 element: <RoomList />
             }
             ,

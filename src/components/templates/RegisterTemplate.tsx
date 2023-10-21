@@ -45,7 +45,7 @@ export const RegisterTemplate = () => {
       const emailDitto = users.some((user) => user.email === values.email);
       // console.log('Email check:', emailDitto);
       if (emailDitto) {
-        throw new Error('Email already exists');
+        throw new Error('Email đã tồn tại');
       }
 
       // tạo object mới với gender chuyển sang boolean
