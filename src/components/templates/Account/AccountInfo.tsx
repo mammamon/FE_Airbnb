@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input, Avatar } from 'components/ui'
-import { useAuth } from 'hooks'
+// import { useAuth } from 'hooks'
 import { useEffect, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +12,7 @@ export const AccountInfo = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   // const { user } = useAuth()
   const userLogin = useSelector((state: RootState) => state.userManage.userLogin)
+  console.log("userLogin: ", userLogin);
   const {
     setValue,
     register,
@@ -33,7 +34,7 @@ export const AccountInfo = () => {
   }
 
   useEffect(() => {
-    if (userLogin && Object.keys(userLogin).length > 0) { 
+    if (userLogin) { 
       setValue('name', userLogin.name); 
       setValue('email', userLogin.email); 
       setValue('password', '');
@@ -120,8 +121,8 @@ export const AccountInfo = () => {
             error={errors?.gender?.message}
             register={register}
             selectOptions={[
-              { label: 'Nam', value: true },
-              { label: 'Nữ', value: false }
+              { label: 'Nam', value: 'true' },
+              { label: 'Nữ', value: 'false' }
             ]}
           />
         </div>

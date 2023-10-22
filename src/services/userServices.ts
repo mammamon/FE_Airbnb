@@ -17,4 +17,6 @@ export const userServices = {
         const response = await api.put(`/users/${id}`, updatedData);
         return response;
     },
+    userPagination: (pageIndex: number, pageSize: number, keyword: string) =>
+        api.get(`users/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`),
 };

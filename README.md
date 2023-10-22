@@ -30,3 +30,5 @@
 21. google-map-react
 
 ## Known Bugs
+- Form không thể lấy lại dữ liệu người dùng
+- searchbar không thể filter data 
