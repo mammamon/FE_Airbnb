@@ -32,7 +32,6 @@ export const Input = ({
   placeholder,
   name,
   selectOptions,
-  defaultValue,
 }: InputProps) => {
   console.log('Register function:', register);
 
@@ -42,7 +41,6 @@ export const Input = ({
         <select
           id={id}
           className="p-[8px] text-black rounded-6 bg-[#ebebeb]"
-          defaultValue={defaultValue}
           {...register?.(name)}
           
         >
@@ -58,7 +56,6 @@ export const Input = ({
           placeholder={placeholder}
           type={type}
           className="p-10 w-full text-black rounded-6 bg-white"
-          defaultValue={defaultValue}
           {...register?.(name)}
         />
       )}

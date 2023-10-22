@@ -10,7 +10,7 @@ import { updateThunk } from 'store/UserStore'
 
 export const AccountInfo = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { user } = useAuth()
+  // const { user } = useAuth()
   const userLogin = useSelector((state: RootState) => state.userManage.userLogin)
   const {
     setValue,
@@ -23,7 +23,8 @@ export const AccountInfo = () => {
   })  
   const dispatch = useDispatch<AppDispatch>();
   
-
+  const { watch } = useForm();
+  console.log('Form state:', watch());
   const onSubmit: SubmitHandler<AccountSchemaType> = (value) => {
     if (userLogin) {
       console.log('UserLogin:', userLogin);
@@ -60,7 +61,6 @@ export const AccountInfo = () => {
           placeholder="Họ tên"
           id="name"
           name="name"
-          defaultValue={user.name}
           error={errors?.name?.message}
           register={register}
         />
@@ -69,7 +69,6 @@ export const AccountInfo = () => {
           placeholder="Email"
           id="email"
           name="email"
-          defaultValue={user.email}
           error={errors?.email?.message}
           register={register}
         />
@@ -97,7 +96,6 @@ export const AccountInfo = () => {
           placeholder="Số điện thoại"
           id="phone"
           name="phone"
-          defaultValue={user.phone}
           error={errors?.phone?.message}
           register={register}
         />
@@ -109,7 +107,6 @@ export const AccountInfo = () => {
             placeholder="Ngày sinh"
             id="birthday"
             name="birthday"
-            defaultValue={user.birthday}
             error={errors?.birthday?.message}
             register={register}
           />
@@ -134,7 +131,6 @@ export const AccountInfo = () => {
             className="mt-16"
             id="role"
             name="role"
-            defaultValue={user.role}
             register={register}
             selectOptions={[
               { label: 'Người dùng', value: 'USER' },
