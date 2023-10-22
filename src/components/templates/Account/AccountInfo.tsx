@@ -3,69 +3,46 @@ import { Input, Avatar } from 'components/ui'
 import { useAuth } from 'hooks'
 import { useEffect, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { AccountSchema, AccountSchemaType } from 'schema/AccountSchema'
-import { AppDispatch } from 'store'
+import { AppDispatch, RootState } from 'store'
 import { updateThunk } from 'store/UserStore'
 
 export const AccountInfo = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth()
+  const userLogin = useSelector((state: RootState) => state.userManage.userLogin)
   const {
-    reset,
+    setValue,
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<AccountSchemaType>({
     resolver: zodResolver(AccountSchema),
     mode: 'onChange',
-  })
+  })  
   const dispatch = useDispatch<AppDispatch>();
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append('avatar', file);
-
-    fetch('https://airbnbnew.cybersoft.edu.vn/api/users/upload-avatar', {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
+  
 
   const onSubmit: SubmitHandler<AccountSchemaType> = (value) => {
-    if (user) {
-      console.log('User:', user);
-      dispatch(updateThunk({ id: user.id, data: value }));
+    if (userLogin) {
+      console.log('UserLogin:', userLogin);
+      dispatch(updateThunk({ id: userLogin.id, data: value }));
     }
   }
 
   useEffect(() => {
-    try {
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (user && Object.keys(user).length > 0) {
-          reset({
-            name: user.name,
-            email: user.email,
-            password: '',
-            confirmPassword: '',
-            phone: user.phone,
-            birthday: user.birthday,
-            gender: user.gender ? 'true' : 'false',
-          });
-        }
-    } catch (error) {
-        console.error('Error parsing user data from localStorage:', error);
+    if (userLogin && Object.keys(userLogin).length > 0) { 
+      setValue('name', userLogin.name); 
+      setValue('email', userLogin.email); 
+      setValue('password', '');
+      setValue('confirmPassword', '');
+      setValue('phone', userLogin.phone); 
+      setValue('birthday', userLogin.birthday); 
+      setValue('gender', userLogin.gender ? 'true' : 'false'); 
     }
-}, [reset]);
-
+  }, [setValue, userLogin]);
+  
 
 
   return (
@@ -73,7 +50,7 @@ export const AccountInfo = () => {
       <div className="w-1/2 flex flex-column items-center">
         <div className="bg-gray-300 rounded-full flex items-center mb-3">
           <Avatar className="cursor-pointer" size={120} icon={<i className="fas fa-user"></i>} onClick={() => fileInputRef.current?.click()} />
-          <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={handleFileChange} />
+          <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" />
         </div>
         <h3>cập nhật hình ảnh</h3>
       </div>
@@ -83,6 +60,7 @@ export const AccountInfo = () => {
           placeholder="Họ tên"
           id="name"
           name="name"
+          defaultValue={user.name}
           error={errors?.name?.message}
           register={register}
         />
@@ -91,6 +69,7 @@ export const AccountInfo = () => {
           placeholder="Email"
           id="email"
           name="email"
+          defaultValue={user.email}
           error={errors?.email?.message}
           register={register}
         />
@@ -118,6 +97,7 @@ export const AccountInfo = () => {
           placeholder="Số điện thoại"
           id="phone"
           name="phone"
+          defaultValue={user.phone}
           error={errors?.phone?.message}
           register={register}
         />
@@ -129,6 +109,7 @@ export const AccountInfo = () => {
             placeholder="Ngày sinh"
             id="birthday"
             name="birthday"
+            defaultValue={user.birthday}
             error={errors?.birthday?.message}
             register={register}
           />
@@ -147,19 +128,20 @@ export const AccountInfo = () => {
             ]}
           />
         </div>
-        {/* <div className="flex">
-        <label className="p-10 w-1/2 text-black">Loại tài khoản:</label>
-        <Input
-          className="mt-16"
-          id="role"
-          name="role"
-          register={register}
-          selectOptions={[
-            { label: 'Người dùng', value: 'USER' },
-            { label: 'Quản trị viên', value: 'ADMIN' }
-          ]}
-        />
-      </div> */}
+        <div className="flex">
+          <label className="p-10 w-1/2 text-black">Loại tài khoản:</label>
+          <Input
+            className="mt-16"
+            id="role"
+            name="role"
+            defaultValue={user.role}
+            register={register}
+            selectOptions={[
+              { label: 'Người dùng', value: 'USER' },
+              { label: 'Quản trị viên', value: 'ADMIN' }
+            ]}
+          />
+        </div>
         <div className="flex justify-center items-center">
           <button
             type="submit"

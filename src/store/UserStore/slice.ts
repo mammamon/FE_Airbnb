@@ -20,7 +20,7 @@ const userSlice = createSlice({
     },
     logOut: (state, { payload }: PayloadAction<string>) => {
       localStorage.removeItem('user');
-      console.log("action: ", payload);
+      console.log("logOut: ", payload);
       state.userLogin = undefined;
     },
     setUserFromLocalStorage: (state, action: PayloadAction<UserLogin>) => {

@@ -18,6 +18,7 @@ type InputProps = {
   className?: string;
   name?: string;
   value?: string;
+  defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement>) => void; // Add this line
   selectOptions?: SelectOption[];
@@ -31,7 +32,9 @@ export const Input = ({
   placeholder,
   name,
   selectOptions,
+  defaultValue,
 }: InputProps) => {
+  console.log('Register function:', register);
 
   return (
     <div className={`input-wrapper ${error ? 'input-invalid' : ''}`}>
@@ -39,7 +42,9 @@ export const Input = ({
         <select
           id={id}
           className="p-[8px] text-black rounded-6 bg-[#ebebeb]"
+          defaultValue={defaultValue}
           {...register?.(name)}
+          
         >
           {selectOptions.map((option) => (
             <option key={String(option.value)} value={String(option.value)}>
@@ -53,6 +58,7 @@ export const Input = ({
           placeholder={placeholder}
           type={type}
           className="p-10 w-full text-black rounded-6 bg-white"
+          defaultValue={defaultValue}
           {...register?.(name)}
         />
       )}

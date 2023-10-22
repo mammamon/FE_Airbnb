@@ -30,4 +30,3 @@
 21. google-map-react
 
 ## Known Bugs
-- Token bị lỗi undefined!
