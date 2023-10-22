@@ -20,7 +20,7 @@ type InputProps = {
   value?: string;
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void; // Add this line
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void; 
   selectOptions?: SelectOption[];
 };
 
