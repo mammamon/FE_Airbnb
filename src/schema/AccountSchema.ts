@@ -24,6 +24,10 @@ export const AccountSchema = z.object({
     message: "Vui lòng chọn giới tính",
     path: ["gender"],
   }),
+  role: z.string().refine(val => val === 'ADMIN' || val === 'USER', {
+    message: "Vui lòng chọn loại tài khoản",
+    path: ["role"],
+  }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Mật khẩu không khớp",
   path: ["confirmPassword"],

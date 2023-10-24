@@ -5,11 +5,10 @@ import { PATH, apiInstance } from "constant";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { RegisterSchema, RegisterSchemaType } from "schema";
+import { RegisterSchema, RegisterSchemaType, AccountSchema, AccountSchemaType } from "schema";
 import { userServices } from "services";
 import { useState, useEffect } from "react";
-import { handleError, pagination, useSearch, sortFilterTable } from "utils";
-
+import { handleError, pagination, useSearch, sortFilterTable, editItem, deleteItem } from "utils";
 
 export const AdminUserManage = () => {
     const {
@@ -29,6 +28,7 @@ export const AdminUserManage = () => {
         setIsModalVisible(true);
     };
 
+
     const handleCancel = () => {
         setIsModalVisible(false);
         reset();
@@ -37,63 +37,80 @@ export const AdminUserManage = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const { keyword, handleSearchChange } = useSearch();
+    const { keyword, handleSearchChange } = useSearch('users/search');
+    const [editingUser, setEditingUser] = useState(null);
+
+    const handleEdit = async (item) => {
+        try {
+            const newItemData = { ...item, ...newData };
+            await editItem('users', item.id, newItemData);
+        } catch (error) {
+            handleError(error);
+        }
+    };
+
+    const handleDelete = async (item) => {
+        if (window.confirm('Bạn muốn xóa người dùng này?')) {
+            try {
+                await deleteItem('users', item.id);
+                fetchUserPagination();
+            } catch (error) {
+                handleError(error);
+            }
+        }
+    };
 
 
-    const fetchUserPagination = async (pageIndex = 1, pageSize = 50, keyword = '') => {
+    const fetchUserPagination = async (pageIndex = 1, pageSize = 50) => {
         setLoading(true);
         try {
-            const response = await pagination('users/phan-trang-tim-kiem', pageIndex, pageSize, '');
-            let filteredData = response.data.content.data;
-            if (keyword) {
-                filteredData = filteredData.filter(user => 
-                    user.id.toString().includes(keyword) || 
-                    user.email.toLowerCase().includes(keyword.toLowerCase()) || 
-                    user.name.toLowerCase().includes(keyword.toLowerCase())
-                );
-            }
-            setData(filteredData);
+            const response = await pagination('users/phan-trang-tim-kiem', pageIndex, pageSize, keyword);
+            setData(response.data.content.data);
         } catch (error) {
             handleError(error);
         } finally {
             setLoading(false);
         }
     };
-    
-    
-    
+
 
     const columns = sortFilterTable([
         {
-            title: 'ID',
-            dataIndex: 'id',
-            width: 100,
+            title: 'ID', dataIndex: 'id', width: 100,
         },
         {
-            title: 'Name',
-            dataIndex: 'name',
+            title: 'Name', dataIndex: 'name',
         },
         {
-            title: 'Avatar',
-            dataIndex: 'avatar',
+            title: 'Avatar', dataIndex: 'avatar',
         },
         {
-            title: 'Email',
-            dataIndex: 'email',
+            title: 'Email', dataIndex: 'email',
         },
         {
-            title: 'Role',
-            dataIndex: 'role',
+            title: 'Role', dataIndex: 'role',
         },
         {
-            title: 'Quản lý',
-            dataIndex: 'role',
+            title: 'Quản lý', dataIndex: 'role',
+            render: (_, record) => (
+                <>
+                    <Button onClick={() => handleEdit(record)}>Edit</Button>
+                    <Button onClick={() => handleDelete(record)}>Delete</Button>
+                </>
+            ),
         },
     ], data);
 
     useEffect(() => {
         fetchUserPagination();
-    }, []);
+    }, [keyword]);
+
+    useEffect(() => {
+        if (editingUser) {
+            reset(editingUser);
+        }
+    }, [editingUser]);
+
 
     const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
         const api = apiInstance({
@@ -230,7 +247,8 @@ export const AdminUserManage = () => {
                             name="role"
                             error={errors?.role?.message}
                             selectOptions={[
-                                { label: 'Quản trị viên', value: 'ADMIN' }
+                                { label: 'Quản trị viên', value: 'ADMIN' },
+                                { label: 'Người dùng', value: 'USER' }
                             ]}
                             register={register}
                         />
@@ -238,14 +256,14 @@ export const AdminUserManage = () => {
                     <div className="flex justify-center items-center">
                         <button
                             type="submit"
-                            className="w-2/3 p-10 text-[20px] mt-2">
-                            Đăng Ký
+                            className="w-2/3 p-10 text-[20px] mt-2"
+                        >
+                            {editingUser ? 'Cập nhật' : 'Đăng Ký'}
                         </button>
                     </div>
                 </form>
             </Modal>
             <Input placeholder="Search" value={keyword} onChange={handleSearchChange} />
-            <Button onClick={() => fetchUserPagination(1, 50, keyword)}>Tìm</Button>
             <Table columns={columns} dataSource={data} loading={loading} pagination={{ pageSize: 20 }} scroll={{ y: 240 }} />
         </div>
     );

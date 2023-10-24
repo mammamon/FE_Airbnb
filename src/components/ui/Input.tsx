@@ -32,6 +32,7 @@ export const Input = ({
   placeholder,
   name,
   selectOptions,
+  onChange,
 }: InputProps) => {
   console.log('Register function:', register);
 
@@ -42,7 +43,6 @@ export const Input = ({
           id={id}
           className="p-[8px] text-black rounded-6 bg-[#ebebeb]"
           {...register?.(name)}
-          
         >
           {selectOptions.map((option) => (
             <option key={String(option.value)} value={String(option.value)}>
@@ -57,6 +57,7 @@ export const Input = ({
           type={type}
           className="p-10 w-full text-black rounded-6 bg-white"
           {...register?.(name)}
+          onChange={onChange}
         />
       )}
       {!!error && (

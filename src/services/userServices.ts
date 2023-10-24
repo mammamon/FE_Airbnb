@@ -9,14 +9,20 @@ const api = apiInstance({
 export const userServices = {
     register: (data: RegisterSchemaType) => api.post('auth/signup', data),
     login: (data: LoginSchemaType) => api.post<ApiResponse<UserLogin>>('auth/signin', data),
-    update: async (id: number, data: AccountSchemaType) => {
+    edit: async (id: number, data: AccountSchemaType) => {
         const updatedData = {
             ...data,
             gender: data.gender === 'true',
         };
-        const response = await api.put(`/users/${id}`, updatedData);
+        const response = await api.put(`/users?id=${id}`, updatedData);
         return response;
     },
-    userPagination: (pageIndex: number, pageSize: number, keyword: string) =>
+    
+    delete: async (id: number) => {
+        const response = await api.delete(`/users?id=${id}`);
+        return response.data;
+    },
+    pagination: (pageIndex: number, pageSize: number, keyword: string) =>
         api.get(`users/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`),
+    search: (keyword: string) => api.get(`users/search/${keyword}`),
 };

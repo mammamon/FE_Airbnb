@@ -5,7 +5,5 @@ export * from './getLocalStorage'
 export * from './setLocalStorage'
 export * from './removeLocalStorage'
 export * from './ageValid'
-export * from './pagination'
-export * from './searchTable'
-export * from './sortFilterTable'
+export * from './adminUtils'
 
