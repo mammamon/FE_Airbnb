@@ -178,6 +178,10 @@ ul li p .svg-inline--fa {
   inset: 70px 0px auto 510px !important;
 }
 
+.disabled-input {
+  opacity: 0.5;
+}
+
 .btn-love {
   font-size: 24px;
   margin-left: 5px;
@@ -497,4 +501,12 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   transition: all 0.2s;
   box-shadow: -4px 4px 24px -10px #ff385c;
   display: none;
+}
+
+.ant-pagination {
+  justify-content: center !important;
+}
+
+.ant-pagination-options {
+  display: none !important;
 }/*# sourceMappingURL=style.css.map */

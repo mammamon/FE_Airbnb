@@ -26,29 +26,38 @@ export const useSearch = <T>(endpoint: string) => {
 
     const handleSearchChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const newKeyword = e.target.value;
-        console.log('New keyword:', newKeyword);
-
         setKeyword(newKeyword);
-
-        console.log('Keyword state after setKeyword:', keyword);
-
         const response = await apiInstance().get<ApiResponse<T[]>>(`${endpoint}?keyword=${newKeyword}`);
         setResults(response.data.content);
     };
     return { keyword, results, handleSearchChange };
 };
 
-//sửa
+// sửa
 export const editItem = async (endpoint, itemId, itemData) => {
-    const formData = Object.fromEntries(
-        Object.entries(itemData).map(([key, value]) => [key, typeof value === 'boolean' ? String(value) : value])
-    );
-    const response = await apiInstance().put(`/${endpoint}?id=${itemId}`, formData);
-    const serverData = Object.fromEntries(
-        Object.entries(response.data).map(([key, value]) => [key, value === 'true' ? true : value === 'false' ? false : value])
-    );
+    const formData = {};
+    for (const [key, value] of Object.entries(itemData)) {
+        if (typeof value === 'boolean') {
+            formData[key] = String(value);
+        } else {
+            formData[key] = value;
+        }
+    }
 
-    return serverData;
+    const response = await apiInstance({
+        baseURL: import.meta.env.VITE_API,
+    }).put(`/${endpoint}/${itemId}`, formData);
+    const updatedData = {};
+    for (const [key, value] of Object.entries(response.data)) {
+        if (value === 'true') {
+            updatedData[key] = true;
+        } else if (value === 'false') {
+            updatedData[key] = false;
+        } else {
+            updatedData[key] = value;
+        }
+    }
+    return updatedData;
 };
 
 //xóa

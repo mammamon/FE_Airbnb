@@ -21,7 +21,7 @@ export const AccountSchema = z.object({
       message: `Bạn chưa đủ 16 tuổi hoặc năm sinh không hợp lệ`,
     }),
   gender: z.string().refine(val => val === 'true' || val === 'false', {
-    message: "Vui lòng chọn giới tính",
+    message: "Vui lòng chọn giới tính", 
     path: ["gender"],
   }),
   role: z.string().refine(val => val === 'ADMIN' || val === 'USER', {

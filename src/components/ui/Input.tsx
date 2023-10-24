@@ -20,8 +20,9 @@ type InputProps = {
   value?: string;
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void; 
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
   selectOptions?: SelectOption[];
+  disabled?: boolean;
 };
 
 export const Input = ({
@@ -33,16 +34,18 @@ export const Input = ({
   name,
   selectOptions,
   onChange,
+  disabled, 
 }: InputProps) => {
-  console.log('Register function:', register);
+  const disabledClass = disabled ? 'disabled-input' : '';
 
   return (
     <div className={`input-wrapper ${error ? 'input-invalid' : ''}`}>
       {selectOptions ? (
         <select
           id={id}
-          className="p-[8px] text-black rounded-6 bg-[#ebebeb]"
+          className={`p-[8px] text-black rounded-6 bg-[#ebebeb] ${disabledClass}`}
           {...register?.(name)}
+          disabled={disabled} 
         >
           {selectOptions.map((option) => (
             <option key={String(option.value)} value={String(option.value)}>
@@ -55,9 +58,10 @@ export const Input = ({
           id={id}
           placeholder={placeholder}
           type={type}
-          className="p-10 w-full text-black rounded-6 bg-white"
+          className={`p-10 w-full text-black rounded-6 bg-white ${disabledClass}`}
           {...register?.(name)}
           onChange={onChange}
+          disabled={disabled} 
         />
       )}
       {!!error && (
