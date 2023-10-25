@@ -24,7 +24,9 @@ const userSlice = createSlice({
       state.userLogin = undefined;
     },
     setUserFromLocalStorage: (state, action: PayloadAction<UserLogin>) => {
+      console.log('Action payload:', action.payload);
       state.userLogin = action.payload;
+      console.log('New state:', state);
     },
   }, // xử lý action đồng bộ
   extraReducers(builder) {

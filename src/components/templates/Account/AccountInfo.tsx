@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input, Avatar } from 'components/ui'
-// import { useAuth } from 'hooks'
 import { useEffect, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,11 +9,10 @@ import { updateThunk } from 'store/UserStore'
 
 export const AccountInfo = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // const { user } = useAuth()
   const userLogin = useSelector((state: RootState) => state.userManage.userLogin)
   console.log("userLogin: ", userLogin);
   const {
-    setValue,
+    reset,
     register,
     formState: { errors },
     handleSubmit,
@@ -27,25 +25,30 @@ export const AccountInfo = () => {
   const { watch } = useForm();
   console.log('Form state:', watch());
   const onSubmit: SubmitHandler<AccountSchemaType> = (value) => {
-    if (userLogin) {
-      console.log('UserLogin:', userLogin);
-      dispatch(updateThunk({ id: userLogin.id, data: value }));
+    if (userLogin?.user) {
+      console.log('User:', userLogin.user);
+      dispatch(updateThunk({ id: userLogin.user.id, data: value }));
     }
   }
-
-  useEffect(() => {
-    if (userLogin) { 
-      setValue('name', userLogin.name); 
-      setValue('email', userLogin.email); 
-      setValue('password', '');
-      setValue('confirmPassword', '');
-      setValue('phone', userLogin.phone); 
-      setValue('birthday', userLogin.birthday); 
-      setValue('gender', userLogin.gender ? 'true' : 'false'); 
-    }
-  }, [setValue, userLogin]);
   
 
+  useEffect(() => {
+    if (userLogin?.user) { 
+      reset({
+        name: userLogin.user.name,
+        email: userLogin.user.email,
+        password: '',
+        confirmPassword: '',
+        phone: userLogin.user.phone,
+        birthday: userLogin.user.birthday,
+        gender: userLogin.user.gender === undefined ? undefined : userLogin.user.gender.toString(),
+        role: userLogin.user.role,
+      });
+    }
+  }, [reset, userLogin]);
+  
+  
+  
 
   return (
     <div className="acountInfoWrapper flex ">

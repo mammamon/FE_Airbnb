@@ -149,3 +149,12 @@ $admin-sidebar-width: 50px;
     box-shadow: -4px 4px 24px -10px $primaryColor;
     display: none;
 }
+
+.searchInputAdmin {
+    outline: 2px solid $primaryColor;
+    border: none;
+    &::placeholder {
+        font-family: sans-serif;
+        color: #777;
+    }
+}

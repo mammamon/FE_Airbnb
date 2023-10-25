@@ -5,6 +5,7 @@ export * from './getLocalStorage'
 export * from './setLocalStorage'
 export * from './removeLocalStorage'
 export * from './ageValid'
+export * from './UrlValid'
 export * from './adminUtils'
-export * from './adminFormat'
+export * from './adminFormats'
 

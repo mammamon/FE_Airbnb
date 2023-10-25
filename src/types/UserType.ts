@@ -1,4 +1,4 @@
-export type UserLogin = {
+export type User = {
   id: number;
   name: string;
   email: string;
@@ -8,4 +8,9 @@ export type UserLogin = {
   avatar: string;
   gender: boolean;
   role: string;
+}
+
+export type UserLogin = {
+  token: string;
+  user: User;
 }

@@ -12,7 +12,6 @@ export const formatBirthday = (birthday) => {
             return `${year}-${month}-${day}`;
         }
     }
-
     return birthday;
 };
 

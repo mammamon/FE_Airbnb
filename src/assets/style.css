@@ -503,10 +503,23 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   display: none;
 }
 
+.searchInputAdmin {
+  outline: 2px solid #ff385c;
+  border: none;
+}
+.searchInputAdmin::placeholder {
+  font-family: sans-serif;
+  color: #777;
+}
+
 .ant-pagination {
   justify-content: center !important;
 }
 
 .ant-pagination-options {
   display: none !important;
+}
+
+.ant-table-column-title {
+  font-family: sans-serif;
 }/*# sourceMappingURL=style.css.map */

@@ -30,6 +30,5 @@
 21. google-map-react
 
 ## Known Bugs
-- Form AccountInfo không thể lấy lại dữ liệu người dùng
 - Error messages chỉ xuất hiện khi submit button (Edit & Register Form trang admin)
-- PUT API cập nhật người dùng bị lỗi 403
+- Avatar không thể đưa lên được server

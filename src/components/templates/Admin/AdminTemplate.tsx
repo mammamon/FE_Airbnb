@@ -1,10 +1,23 @@
 import { BookedManageTemplate, Tabs, AdminUserManage } from 'components'
 import { useEffect } from 'react'
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 export const AdminTemplate = () => {
     useEffect(() => {
         document.title = 'Admin';
     }, []);
+
+    const userLogin = useSelector((state: RootState) => state.userManage.userLogin);
+    console.log('userLogin:', userLogin);
+    const isAdmin = userLogin?.user?.role === 'ADMIN';
+    console.log("isAdmin: ", isAdmin);
+    if (!isAdmin) {
+        return <Navigate to="/accessdenied" />;
+    }
+
+
     return (
         <div className='admin'>
             <Tabs

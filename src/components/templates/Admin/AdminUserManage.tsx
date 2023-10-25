@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { RegisterSchema, RegisterSchemaType, AccountSchema, AccountSchemaType } from "schema";
 import { userServices } from "services";
 import { useState, useEffect } from "react";
-import { handleError, pagination, useSearch, sortFilterTable, editItem, deleteItem, formatBirthday, formatRole } from "utils";
+import { handleError, pagination, useSearch, sortFilterTable, editItem, deleteItem, formatBirthday, formatRole, isValidUrl } from "utils";
 
 export const AdminUserManage = () => {
     const [data, setData] = useState([]);
@@ -17,37 +17,26 @@ export const AdminUserManage = () => {
     const [editingUser, setEditingUser] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const navigate = useNavigate();
-    const isValidUrl = (str) => {
-        try {
-            new URL(str);
-            return true;
-        } catch (e) {
-            return false;
-        }
-    };
-
     const renderAvatar = (user) => {
         const avatarUrl = user.avatar;
         if (isValidUrl(avatarUrl)) {
             return (
                 <Avatar
                     src={avatarUrl}
-                    alt="Avatar"
                     style={{ width: 60, height: 60 }}
                 />
             );
         } else {
-            const defaultAvatarUrl = '../../../../images/no-avatar.png'; 
+            const defaultAvatarUrl = '../../../../images/no-avatar.png';
             return (
                 <Avatar
                     src={defaultAvatarUrl}
-                    alt="chưa có ảnh đại diện"
                     style={{ width: 60, height: 60 }}
                 />
             );
         }
     };
-    
+
 
     //register Form
     const {
@@ -92,7 +81,7 @@ export const AdminUserManage = () => {
 
             await userServices.register(newUser);
             toast.success('Đăng ký thành công!', {
-                position: 'top-right',
+                position: 'top-center',
                 autoClose: 1000,
             });
 
@@ -117,12 +106,12 @@ export const AdminUserManage = () => {
 
     //edit form
     const handleEdit: SubmitHandler<AccountSchemaType> = async (values) => {
-        console.log("Form values on edit submit:", values);
+        console.log("Form values:", values);
         try {
             const updatedUser = await editItem('users', editingUser.id, values);
             console.log("Updated user:", updatedUser);
             toast.success('Cập nhật thành công!', {
-                position: 'top-right',
+                position: 'top-center',
                 autoClose: 1000,
             });
             setIsModalVisible(false);
@@ -170,6 +159,7 @@ export const AdminUserManage = () => {
         resetEdit({
             name: '',
             email: '',
+            avatar: '',
             password: '',
             phone: '',
             birthday: '',
@@ -193,20 +183,20 @@ export const AdminUserManage = () => {
             title: 'ID', dataIndex: 'id', width: 100,
         },
         {
-            title: 'Name', dataIndex: 'name',
+            title: 'Tên', dataIndex: 'name',
         },
         {
             title: 'Email', dataIndex: 'email',
         },
         {
-            title: 'Ảnh đại diện', dataIndex: 'avatar',
+            title: 'Ảnh đại diện', dataIndex: 'avatar', width: 180,
             render: (avatar, record) => renderAvatar(record),
         },
         {
             title: 'Loại tài khoản', dataIndex: 'role', width: 180,
         },
         {
-            title: 'Quản lý', width: 150,
+            title: 'Quản lý', width: 180,
             render: (_, record) => (
                 <>
                     <Button className="me-4" onClick={() => handleEditUser(record)}>Sửa</Button>
@@ -235,7 +225,7 @@ export const AdminUserManage = () => {
 
     return (
         <div>
-            <Button type="primary" onClick={showModal}>
+            <Button className="mb-3 !p-10 !h-[48px]" type="primary" onClick={showModal}>
                 Thêm quản trị viên
             </Button>
             <Modal
@@ -255,6 +245,14 @@ export const AdminUserManage = () => {
                             id="name"
                             name="name"
                             error={errorsEdit?.name?.message}
+                            register={registerEdit}
+                        />
+                        <Input
+                            className="mt-16"
+                            placeholder="Link avatar"
+                            id="avatar"
+                            name="avatar"
+                            error={errorsEdit?.avatar?.message}
                             register={registerEdit}
                         />
                         <Input
@@ -438,14 +436,15 @@ export const AdminUserManage = () => {
                     </form>
                 )}
             </Modal>
-
-            <Input placeholder="Nhập họ tên" value={keyword} onChange={handleSearchChange} />
+            <div className="searchTableWrapper flex pb-3 w-full justify-center">
+                <input className="p-2 rounded-10 w-2/3 searchInputAdmin" placeholder="Nhập họ tên" value={keyword} onChange={handleSearchChange} />
+            </div>
             <Table
                 columns={columns}
                 dataSource={data}
                 loading={loading}
                 pagination={{ pageSize: 20 }}
-                scroll={{ y: 500 }}
+                scroll={{ y: 460 }}
             />
         </div>
     );
