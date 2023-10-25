@@ -9,7 +9,13 @@ export const apiInstance = (config?: CreateAxiosDefaults) => {
         const headers = {
             TokenCybersoft,
         } as unknown as AxiosRequestHeaders;
-
+        //thêm xác thực token khi upload ảnh
+        if (config.url?.endsWith('users/upload-avatar')) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                headers.Authorization = token;
+            }
+        }
         console.log('Request Headers:', headers);
 
         return {

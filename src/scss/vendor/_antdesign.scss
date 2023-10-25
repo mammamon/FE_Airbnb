@@ -7,3 +7,13 @@
 .ant-table-column-title {
     font-family: sans-serif;
 }
+.ant-modal-content .ant-modal-close {
+    display: none !important;
+}
+.ant-modal .ant-modal-title {
+    color: $primaryColor !important;
+    text-transform: uppercase;
+    font-size: 1.5rem !important;
+    font-family: sans-serif;
+
+}

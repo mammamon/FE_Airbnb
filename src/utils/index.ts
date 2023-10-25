@@ -8,4 +8,5 @@ export * from './ageValid'
 export * from './UrlValid'
 export * from './adminUtils'
 export * from './adminFormats'
+export * from './adminDisplay'
 

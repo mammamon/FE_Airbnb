@@ -1,4 +1,4 @@
-import { BookedManageTemplate, Tabs, AdminUserManage } from 'components'
+import { BookedManageTemplate, Tabs, AdminUserManage, AdminLocationManage } from 'components'
 import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -9,8 +9,8 @@ export const AdminTemplate = () => {
         document.title = 'Admin';
     }, []);
 
+    // chỉ cho phép tài khoản quản trị viên vào trang này
     const userLogin = useSelector((state: RootState) => state.userManage.userLogin);
-    console.log('userLogin:', userLogin);
     const isAdmin = userLogin?.user?.role === 'ADMIN';
     console.log("isAdmin: ", isAdmin);
     if (!isAdmin) {
@@ -32,15 +32,15 @@ export const AdminTemplate = () => {
                     {
                         key: 'locateManage',
                         label: 'Quản lý thông tin vị trí',
-                        // children: <BookedManageTemplate />,
+                        children: <AdminLocationManage />,
                     },
                     {
-                        key: 'locateManage',
+                        key: 'RoomManage',
                         label: 'Quản lý thông tin phòng',
                         // children: <BookedManageTemplate />,
                     },
                     {
-                        key: 'locateManage',
+                        key: 'BookedManage',
                         label: 'Quản lý đặt phòng',
                         children: <BookedManageTemplate />,
                     },

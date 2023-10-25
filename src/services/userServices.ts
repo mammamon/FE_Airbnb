@@ -25,4 +25,5 @@ export const userServices = {
     pagination: (pageIndex: number, pageSize: number, keyword: string) =>
         api.get(`users/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`),
     search: (keyword: string) => api.get(`users/search/${keyword}`),
+    uploadAvatar: (data: FormData) => api.post('users/upload-avatar', data), 
 };

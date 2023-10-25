@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AccountSchema, AccountSchemaType } from 'schema/AccountSchema'
 import { AppDispatch, RootState } from 'store'
 import { updateThunk } from 'store/UserStore'
+import { userServices } from 'services/userServices'
 
 export const AccountInfo = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -22,15 +23,32 @@ export const AccountInfo = () => {
   })  
   const dispatch = useDispatch<AppDispatch>();
   
-  const { watch } = useForm();
-  console.log('Form state:', watch());
-  const onSubmit: SubmitHandler<AccountSchemaType> = (value) => {
+  const onSubmit: SubmitHandler<AccountSchemaType> = async (value) => {
     if (userLogin?.user) {
       console.log('User:', userLogin.user);
+  
+      // Handle avatar upload
+      const fileInput = fileInputRef.current;
+      if (fileInput?.files && fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('avatar', file);
+        await userServices.uploadAvatar(formData);
+      }
+  
+      // Handle the rest of the form
       dispatch(updateThunk({ id: userLogin.user.id, data: value }));
     }
   }
   
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('avatar', file);
+      await userServices.uploadAvatar(formData);
+    }
+  }
 
   useEffect(() => {
     if (userLogin?.user) { 
@@ -47,15 +65,12 @@ export const AccountInfo = () => {
     }
   }, [reset, userLogin]);
   
-  
-  
-
   return (
     <div className="acountInfoWrapper flex ">
       <div className="w-1/2 flex flex-column items-center">
         <div className="bg-gray-300 rounded-full flex items-center mb-3">
           <Avatar className="cursor-pointer" size={120} icon={<i className="fas fa-user"></i>} onClick={() => fileInputRef.current?.click()} />
-          <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" />
+          <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={handleFileChange} />
         </div>
         <h3>cập nhật hình ảnh</h3>
       </div>

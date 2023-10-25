@@ -1,22 +1,40 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, Button } from "components";
-import { Modal, Table, Avatar, Descriptions } from "antd";
+import { Modal, Table, Avatar } from "antd";
 import { apiInstance } from "constant";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { RegisterSchema, RegisterSchemaType, AccountSchema, AccountSchemaType } from "schema";
 import { userServices } from "services";
 import { useState, useEffect } from "react";
-import { handleError, pagination, useSearch, sortFilterTable, editItem, deleteItem, formatBirthday, formatRole, genderDisplay, roleDisplay } from "utils";
+import { handleError, pagination, useSearch, sortFilterTable, editItem, deleteItem, formatBirthday, formatRole, isValidUrl } from "utils";
 
-export const AdminUserManage = () => {
+export const AdminLocationManage = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const { keyword, handleSearchChange } = useSearch('users/search');
     const [editingUser, setEditingUser] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
-    const [selectedUserDetails, setSelectedUserDetails] = useState(null);
+    const renderAvatar = (user) => {
+        const avatarUrl = user.avatar;
+        if (isValidUrl(avatarUrl)) {
+            return (
+                <Avatar
+                    src={avatarUrl}
+                    style={{ width: 60, height: 60 }}
+                />
+            );
+        } else {
+            const defaultAvatarUrl = '../../../../images/no-avatar.png';
+            return (
+                <Avatar
+                    src={defaultAvatarUrl}
+                    style={{ width: 60, height: 60 }}
+                />
+            );
+        }
+    };
+
 
     //register Form
     const {
@@ -102,6 +120,9 @@ export const AdminUserManage = () => {
         }
     };
 
+
+
+
     const handleEditUser = (record) => {
         console.log("Editing record:", record);
         showModal();
@@ -119,6 +140,9 @@ export const AdminUserManage = () => {
         }
     };
 
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
     const handleCancel = () => {
         setIsModalVisible(false);
         setEditingUser(null);
@@ -138,22 +162,6 @@ export const AdminUserManage = () => {
             gender: '',
         });
     };
-
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
-    const showDetailsModal = (user) => {
-        setSelectedUserDetails(user);
-        setIsDetailsModalVisible(true);
-    };
-
-    const handleDetailsModalCancel = () => {
-        setIsDetailsModalVisible(false);
-        setSelectedUserDetails(null);
-    };
-
-
     const fetchUserPagination = async (pageIndex = 1, pageSize = 140) => {
         setLoading(true);
         try {
@@ -174,29 +182,19 @@ export const AdminUserManage = () => {
             title: 'Tên', dataIndex: 'name',
         },
         {
-            title: 'Ảnh đại diện', dataIndex: 'avatar', width: 180,
-            className: 'text-center',
-            render: (avatar) => (
-                <Avatar
-                    src={avatar || '../../../../images/no-avatar.png'} 
-                    size={60}
-                />
-            ),
-        },
-        {
             title: 'Email', dataIndex: 'email',
         },
         {
-            title: 'Loại tài khoản', dataIndex: 'role', width: 180,
-            className: 'text-center',
-            render: (role) => roleDisplay[role],
+            title: 'Ảnh đại diện', dataIndex: 'avatar', width: 180,
+            render: (avatar, record) => renderAvatar(record),
         },
         {
-            title: 'Quản lý', width: 300,
-            className: 'text-center',
+            title: 'Loại tài khoản', dataIndex: 'role', width: 180,
+        },
+        {
+            title: 'Quản lý', width: 180,
             render: (_, record) => (
                 <>
-                    <Button className="me-4" onClick={() => showDetailsModal(record)}>Thông tin chi tiết</Button>
                     <Button className="me-4" onClick={() => handleEditUser(record)}>Sửa</Button>
                     <Button onClick={() => handleDelete(record)}>Xóa</Button>
                 </>
@@ -234,7 +232,7 @@ export const AdminUserManage = () => {
                 {editingUser ? (
                     <form onSubmit={handleEditSubmit(handleEdit)}>
                         <div className="flex items-center justify-between">
-                            <h2>Cập nhật</h2>
+                            <h2>Đăng ký</h2>
                             <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
                         </div>
                         <Input
@@ -426,29 +424,6 @@ export const AdminUserManage = () => {
                     </form>
                 )}
             </Modal>
-            <Modal
-                title="Thông tin chi tiết"
-                visible={isDetailsModalVisible}
-                onCancel={handleDetailsModalCancel}
-                footer={null}
-                className="text-center"
-            >
-                {selectedUserDetails && (
-                    <div className="detailsModal">
-                        <Avatar className="mb-3 mt-2 " src={selectedUserDetails.avatar || '../../../../images/no-avatar.png'} size={80} />
-                        <Descriptions column={2}>
-                            <Descriptions.Item label="Tên">{selectedUserDetails.name}</Descriptions.Item>
-                            <Descriptions.Item label="ID">{selectedUserDetails.id}</Descriptions.Item>
-                            <Descriptions.Item label="Email">{selectedUserDetails.email}</Descriptions.Item>
-                            <Descriptions.Item label="Giới tính">{genderDisplay[selectedUserDetails.gender]}</Descriptions.Item>
-                            <Descriptions.Item label="Số điện thoại">{selectedUserDetails.phone}</Descriptions.Item>
-                            <Descriptions.Item label="Sinh nhật">{selectedUserDetails.birthday}</Descriptions.Item>
-                            <Descriptions.Item label="Loại tài khoản">{roleDisplay[selectedUserDetails.role]}</Descriptions.Item>
-                        </Descriptions>
-                    </div>
-                )}
-            </Modal>
-
             <div className="searchTableWrapper flex pb-3 w-full justify-center">
                 <input className="p-2 rounded-10 w-2/3 searchInputAdmin" placeholder="Nhập họ tên" value={keyword} onChange={handleSearchChange} />
             </div>

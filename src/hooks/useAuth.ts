@@ -21,10 +21,10 @@ export const useAuth = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         dispatch(userManageActions.logOut());
     };
 
-    console.log('User data:', userLogin);
 
     return {
         user: userLogin,

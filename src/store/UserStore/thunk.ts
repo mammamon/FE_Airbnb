@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { userServices } from 'services'
 import { LoginSchemaType, AccountSchemaType } from 'schema'
 import { sleep } from 'utils'
-import { userManageActions } from './slice'; 
+import { userManageActions } from './slice';
 
 export const loginThunk = createAsyncThunk(
   'user/login',
@@ -16,12 +16,16 @@ export const loginThunk = createAsyncThunk(
       if (data) {
         await sleep(800);
         localStorage.setItem('user', JSON.stringify(data.data.content));
-        dispatch(userManageActions.login(data.data.content));
+        localStorage.setItem('token', data.data.content.token);
+        dispatch(userManageActions.login(data.data.content.user));
       }
     }
     return data.data.content;
   }
 );
+
+
+
 
 
 export const updateThunk = createAsyncThunk(
