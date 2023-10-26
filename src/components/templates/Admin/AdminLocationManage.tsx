@@ -321,7 +321,7 @@ export const AdminLocationManage = () => {
                         <div className="flex justify-center items-center">
                             <button
                                 type="submit"
-                                className="w-2/3 p-10 text-[20px] mt-2">
+                                className="w-1/3 p-10 text-[20px] mt-2">
                                 Cập nhật
                             </button>
                         </div>
@@ -401,23 +401,10 @@ export const AdminLocationManage = () => {
                                 ]}
                             />
                         </div>
-                        <div className="flex">
-                            <label className="p-10 w-1/2 text-black">Loại tài khoản:</label>
-                            <Input
-                                className="mt-16"
-                                id="role"
-                                name="role"
-                                error={errors?.role?.message}
-                                register={register}
-                                selectOptions={[
-                                    { label: 'Quản trị viên', value: 'ADMIN' },
-                                ]}
-                            />
-                        </div>
                         <div className="flex justify-center items-center">
                             <button
                                 type="submit"
-                                className="w-2/3 p-10 text-[20px] mt-2">
+                                className="w-1/3 p-10 text-[20px] mt-2">
                                 Thêm Admin
                             </button>
                         </div>

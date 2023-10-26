@@ -18,7 +18,7 @@ export const AdminUserManage = () => {
     const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
     const [selectedUserDetails, setSelectedUserDetails] = useState(null);
 
-    //register Form
+    //register Admin Form
     const {
         handleSubmit: handleRegisterSubmit,
         register,
@@ -56,8 +56,8 @@ export const AdminUserManage = () => {
             const newUser = {
                 ...values,
                 gender: values.gender === 'true' ? 'true' : 'false',
-                role: 'ADMIN',
             };
+            console.log("newUser: ", newUser);
 
             await userServices.register(newUser);
             toast.success('Đăng ký thành công!', {
@@ -178,7 +178,7 @@ export const AdminUserManage = () => {
             className: 'text-center',
             render: (avatar) => (
                 <Avatar
-                    src={avatar || '../../../../images/no-avatar.png'} 
+                    src={avatar || '../../../../images/no-avatar.png'}
                     size={60}
                 />
             ),
@@ -323,7 +323,7 @@ export const AdminUserManage = () => {
                         <div className="flex justify-center items-center">
                             <button
                                 type="submit"
-                                className="w-2/3 p-10 text-[20px] mt-2">
+                                className="w-1/3 p-10 text-[20px] mt-2">
                                 Cập nhật
                             </button>
                         </div>
@@ -409,7 +409,6 @@ export const AdminUserManage = () => {
                                 className="mt-16"
                                 id="role"
                                 name="role"
-                                error={errors?.role?.message}
                                 register={register}
                                 selectOptions={[
                                     { label: 'Quản trị viên', value: 'ADMIN' },
@@ -419,7 +418,7 @@ export const AdminUserManage = () => {
                         <div className="flex justify-center items-center">
                             <button
                                 type="submit"
-                                className="w-2/3 p-10 text-[20px] mt-2">
+                                className="w-1/3 p-10 text-[20px] mt-2">
                                 Thêm Admin
                             </button>
                         </div>

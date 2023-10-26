@@ -16,7 +16,7 @@ export const formatBirthday = (birthday) => {
 };
 
 export const formatRole = (role) => {
-    const lowercaseRoles = ['user', 'admin']; 
+    const lowercaseRoles = ['user', 'admin','User','Admin']; 
     if (lowercaseRoles.includes(role.toLowerCase())) {
         return role.toUpperCase();
     }

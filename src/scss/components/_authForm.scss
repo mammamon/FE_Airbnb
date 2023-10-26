@@ -4,7 +4,11 @@ form,
     .ant-modal-footer {
         display: none;
     }
-
+    h2 {
+        font-size: 30px;
+        text-transform: capitalize;
+        margin-bottom: 4px;
+    }
     button {
         background-color: $primaryColor !important;
         color: #fff !important;

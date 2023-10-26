@@ -29,6 +29,10 @@
 20. moment
 21. google-map-react
 
-## Known Bugs
-- Error messages chỉ xuất hiện khi submit button (Edit & Register Form trang admin)
-- Avatar không thể đưa lên được server
+## Known Bugs & Cons
+# Admin Side (Quang)
+- Check login và logout dựa vào userData lưu ở local (không an toàn), do ban đầu code không lấy được token, sau này lấy được token rồi thì không đủ thời gian để sửa, và sợ sửa sẽ gây xung đột code trước đó, nên chỉ sử dụng token vào các api upload hình ảnh (@@)
+- Error messages chỉ xuất hiện khi submit form, không thể check real-time
+- Upload hình ảnh bị lỗi 403 
+- Register admin khi đưa vào server tự chuyển role thành USER, chỉ edit user mới lên admin được (xem log trả về xác nhận đã gán role:"ADMIN" gửi lên server nhưng vào server bị lưu thành USER)
+# User Side (Tùng)

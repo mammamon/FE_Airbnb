@@ -151,6 +151,7 @@ export const AccountInfo = () => {
             id="role"
             name="role"
             register={register}
+            disabled={true}
             selectOptions={[
               { label: 'Người dùng', value: 'USER' },
               { label: 'Quản trị viên', value: 'ADMIN' }
@@ -160,7 +161,7 @@ export const AccountInfo = () => {
         <div className="flex justify-center items-center">
           <button
             type="submit"
-            className="w-2/3 p-10 text-[20px] mt-2">
+            className="w-1/3 p-10 text-[20px] mt-2">
             Cập nhật thông tin
           </button>
         </div>
