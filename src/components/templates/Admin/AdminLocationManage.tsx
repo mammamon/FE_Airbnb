@@ -30,62 +30,62 @@ export const AdminLocationManage = () => {
 
     const onSubmit = async (values) => {
         try {
-          if (editingLocation) {
-            // handle edit
-            const updatedLocation = await editItem('vi-tri', editingLocation.id, values);
-            console.log("Updated Location:", updatedLocation);
-            toast.success('Cập nhật vị trí thành công!', {
-              position: 'top-center',
-              autoClose: 800,
-            });
-      
-            setIsModalVisible(false);
-            reset();
-            fetchLocationPagination();
-      
-            // Upload file
-            const fileInput = document.querySelector('#hinhAnh') as HTMLInputElement;
-            if (fileInput.files && fileInput.files.length > 0) {
-              const imageUrl = await uploadFile('/vi-tri/upload-hinh-vitri', editingLocation.id, fileInput.files[0]);
-              setValue('hinhAnh', imageUrl);
-            }
-          } else {
-            // handle add
-            const api = apiInstance({
-              baseURL: import.meta.env.VITE_API,
-            });
-            const response = await api.get('/vi-tri');
-            let locations = [];
-            if (response.data && typeof response.data === 'object') {
-              if (Array.isArray(response.data)) {
-                locations = response.data;
-              } else {
-                locations.push(response.data);
-              }
+            if (editingLocation) {
+                // handle edit
+                const updatedLocation = await editItem('vi-tri', editingLocation.id, values);
+                console.log("Updated Location:", updatedLocation);
+                toast.success('Cập nhật vị trí thành công!', {
+                    position: 'top-center',
+                    autoClose: 800,
+                });
+
+                setIsModalVisible(false);
+                reset();
+                fetchLocationPagination();
+
+                // Upload file
+                const fileInput = document.querySelector('#hinhAnh') as HTMLInputElement;
+                if (fileInput.files && fileInput.files.length > 0) {
+                    const imageUrl = await uploadFile('/vi-tri/upload-hinh-vitri', editingLocation.id, fileInput.files[0]);
+                    setValue('hinhAnh', imageUrl);
+                }
             } else {
-              throw new Error('Data không hợp lệ');
+                // handle add
+                const api = apiInstance({
+                    baseURL: import.meta.env.VITE_API,
+                });
+                const response = await api.get('/vi-tri');
+                let locations = [];
+                if (response.data && typeof response.data === 'object') {
+                    if (Array.isArray(response.data)) {
+                        locations = response.data;
+                    } else {
+                        locations.push(response.data);
+                    }
+                } else {
+                    throw new Error('Data không hợp lệ');
+                }
+
+                const locationDitto = locations.some((location) => location.tenViTri === values.tenViTri);
+                if (locationDitto) {
+                    throw new Error('Vị trí đã tồn tại');
+                }
+
+                const addedLocation = await api.get('vi-tri', { params: values });
+                toast.success('Thêm vị trí thành công!', {
+                    position: 'top-center',
+                    autoClose: 800,
+                });
+
+                setIsModalVisible(false);
+                reset();
+                console.log("Added Location ID:", addedLocation.data.id);
             }
-      
-            const locationDitto = locations.some((location) => location.tenViTri === values.tenViTri);
-            if (locationDitto) {
-              throw new Error('Vị trí đã tồn tại');
-            }
-      
-            const addedLocation = await api.get('vi-tri', { params: values });
-            toast.success('Thêm vị trí thành công!', {
-              position: 'top-center',
-              autoClose: 800,
-            });
-      
-            setIsModalVisible(false);
-            reset();
-            console.log("Added Location ID:", addedLocation.data.id);
-          }
         } catch (err) {
-          handleError(err);
+            handleError(err);
         }
-      };
-      
+    };
+
 
 
     const handleEditLocation = (record) => {
@@ -130,19 +130,19 @@ export const AdminLocationManage = () => {
         });
 
         try {
-          const response = await api.post(`/vi-tri/upload-hinh-vitri?maViTri=${maViTri}`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-      
-          const imageUrl = response.data.content.hinhAnh;
-          setValue('hinhAnh', imageUrl);
+            const response = await api.post(`/vi-tri/upload-hinh-vitri?maViTri=${maViTri}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            const imageUrl = response.data.content.hinhAnh;
+            setValue('hinhAnh', imageUrl);
         } catch (err) {
-          handleError(err);
+            handleError(err);
         }
-      };
-      
+    };
+
 
 
 
@@ -282,7 +282,21 @@ export const AdminLocationManage = () => {
                         register={register}
                     />
                     {/* input upload hình */}
-                    {editingLocation && (<Input type="file" onChange={(event) => onFileChange(event, editingLocation.id)} />)}
+                    {editingLocation && (
+                        <div>
+                            <Input
+                                className="mt-16"
+                                placeholder="Hình ảnh"
+                                disabled={true}
+                                id="hinhAnh"
+                                name="hinhAnh"
+                                register={register}
+                            />
+                            <h3 className="mb-3">Tải ảnh lên (tự chọn)</h3>
+                            <Input type="file" onChange={(event) => onFileChange(event, editingLocation.id)} />
+                        </div>
+
+                    )}
                     <div className="flex justify-center items-center">
                         <button
                             type="submit"

@@ -11,11 +11,21 @@ const api = apiInstance({
 export const sortFilterTable = (definitions, data) => {
     return definitions.map((definition) => ({
         ...definition,
-        sorter: definition.sorter || ((a, b) => String(a[definition.dataIndex]).localeCompare(String(b[definition.dataIndex]))),
+        sorter: definition.sorter || ((a, b) => {
+            const numA = parseFloat(a[definition.dataIndex]);
+            const numB = parseFloat(b[definition.dataIndex]);
+
+            if (!isNaN(numA) && !isNaN(numB)) {
+                return numA - numB;
+            } else {
+                return String(a[definition.dataIndex]).localeCompare(String(b[definition.dataIndex]));
+            }
+        }),
         filters: definition.filters || [...new Set(data.map(item => item[definition.dataIndex]))].map(value => ({ text: String(value), value: String(value) })),
         onFilter: definition.onFilter || ((value, record) => String(record[definition.dataIndex]).includes(value)),
     }));
 };
+
 
 
 // phân trang
@@ -77,22 +87,21 @@ export const deleteItem = async (endpoint, itemId, useQueryString = false) => {
 export const uploadFile = async (endpoint, maViTri, file) => {
     const formData = new FormData();
     formData.append('file', file);
-    
+
     try {
-      const response = await api.post(`${endpoint}?maViTri=${maViTri}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-    
-      const imageUrl = response.data.content.hinhAnh;
-      return imageUrl;
+        const response = await api.post(`${endpoint}?maViTri=${maViTri}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        const imageUrl = response.data.content.hinhAnh;
+        return imageUrl;
     } catch (err) {
-      handleError(err);
-      return null;
+        handleError(err);
+        return null;
     }
-  };
-  
-  
-  
-  
+};
+
+
+

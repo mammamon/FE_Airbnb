@@ -11,7 +11,7 @@ export const apiInstance = (config?: CreateAxiosDefaults) => {
         } as unknown as AxiosRequestHeaders;
         const token = localStorage.getItem('token');
         if (token) {
-            headers.Authorization = token;
+            headers.Authorization = token || '';
         }
 
         return {

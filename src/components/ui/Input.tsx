@@ -34,7 +34,7 @@ export const Input = ({
   name,
   selectOptions,
   onChange,
-  disabled, 
+  disabled,
 }: InputProps) => {
   const disabledClass = disabled ? 'disabled-input' : '';
 
@@ -45,7 +45,7 @@ export const Input = ({
           id={id}
           className={`p-[8px] text-black rounded-6 bg-[#ebebeb] ${disabledClass}`}
           {...register?.(name)}
-          disabled={disabled} 
+          disabled={disabled}
         >
           {selectOptions.map((option) => (
             <option key={String(option.value)} value={String(option.value)}>
@@ -61,13 +61,13 @@ export const Input = ({
           className={`p-10 w-full text-black rounded-6 bg-white ${disabledClass}`}
           {...register?.(name)}
           onChange={onChange}
-          disabled={disabled} 
+          disabled={disabled}
         />
       )}
       {!!error && (
         <div className="tooltipError">
           <span className="tooltipErrorText">{error}</span>
-          {type !== 'date' && <FontAwesomeIcon icon={faExclamationCircle} className="input-error-icon" />}
+          {type !== 'date' && type !== 'number' && <FontAwesomeIcon icon={faExclamationCircle} className="input-error-icon" />}
         </div>
       )}
     </div>

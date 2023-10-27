@@ -1,26 +1,33 @@
-import { BookedManageTemplate, Tabs, AdminUserManage, AdminLocationManage } from 'components'
-import { useEffect } from 'react'
-import { Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { RootState } from 'store';
+import { BookedManageTemplate, AdminUserManage, AdminLocationManage, AdminRoomManage } from 'components';
+import { Tabs } from 'components';
 
 export const AdminTemplate = () => {
+    const [activeKey, setActiveKey] = useState(localStorage.getItem('activeTabKey') || 'accountInfo');
+
     useEffect(() => {
         document.title = 'Admin';
     }, []);
 
-    // chỉ cho phép tài khoản quản trị viên vào trang này
+    useEffect(() => {
+        localStorage.setItem('activeTabKey', activeKey);
+    }, [activeKey]);
+    
+    //check admin role
     const userLogin = useSelector((state: RootState) => state.userManage.userLogin);
     const isAdmin = userLogin?.user?.role === 'ADMIN';
-    console.log("isAdmin: ", isAdmin);
     if (!isAdmin) {
         return <Navigate to="/accessdenied" />;
     }
 
-
     return (
         <div className='admin'>
             <Tabs
+                activeKey={activeKey}
+                onChange={setActiveKey}
                 tabPosition="left"
                 items={[
                     {
@@ -28,7 +35,6 @@ export const AdminTemplate = () => {
                         label: 'Quản lý người dùng',
                         children: <AdminUserManage />,
                     },
-
                     {
                         key: 'locateManage',
                         label: 'Quản lý thông tin vị trí',
@@ -37,7 +43,7 @@ export const AdminTemplate = () => {
                     {
                         key: 'RoomManage',
                         label: 'Quản lý thông tin phòng',
-                        // children: <BookedManageTemplate />,
+                        children: <AdminRoomManage />,
                     },
                     {
                         key: 'BookedManage',

@@ -36,5 +36,5 @@
 - Click vào các nút thông tin chi tiết hoặc sửa, đôi lúc modal bị nhấp nháy 2 lần
 - Bị lỗi 403 ngăn không cho xóa một số người dùng, vị trí hoặc phòng (thường có ID nhỏ). Chắc do config bên server. Mình cho disable nút sửa / xóa khi ID <= 10
 - Register admin khi đưa vào server tự chuyển role thành USER, chỉ khi edit user (PUT request) mới lên admin được
-- Server không gán ID cho vị trí mới vừa được tạo (ID= undefined) => Không thêm vị trí mới được
+- Server không gán ID cho vị trí mới vừa được tạo => ID = undefined => Không thêm vị trí mới được
 - Các api upload ảnh đều bị dính lỗi 403 mặc dù mình thêm 2 token rồi 
