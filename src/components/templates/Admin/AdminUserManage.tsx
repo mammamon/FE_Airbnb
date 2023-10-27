@@ -62,7 +62,7 @@ export const AdminUserManage = () => {
             await userServices.register(newUser);
             toast.success('Đăng ký thành công!', {
                 position: 'top-center',
-                autoClose: 1000,
+                autoClose: 800,
             });
 
             setIsModalVisible(false);
@@ -91,7 +91,7 @@ export const AdminUserManage = () => {
             console.log("Updated user:", updatedUser);
             toast.success('Cập nhật thành công!', {
                 position: 'top-center',
-                autoClose: 1000,
+                autoClose: 800,
             });
             setIsModalVisible(false);
             reset();
@@ -104,15 +104,19 @@ export const AdminUserManage = () => {
 
     const handleEditUser = (record) => {
         console.log("Editing record:", record);
-        showModal();
         setEditingUser(record);
+        showModal();
     };
 
     const handleDelete = async (item) => {
         if (window.confirm('Bạn muốn xóa người dùng này?')) {
             try {
-                await deleteItem('users', item.id);
+                await deleteItem('users', item.id, true);
                 fetchUserPagination();
+                toast.success('Xóa người dùng thành công!', {
+                    position: 'top-center',
+                    autoClose: 800,
+                });
             } catch (error) {
                 handleError(error);
             }
@@ -192,16 +196,33 @@ export const AdminUserManage = () => {
             render: (role) => roleDisplay[role],
         },
         {
-            title: 'Quản lý', width: 300,
+            title: 'Quản Lý', width: 300,
             className: 'text-center',
             render: (_, record) => (
                 <>
-                    <Button className="me-4" onClick={() => showDetailsModal(record)}>Thông tin chi tiết</Button>
-                    <Button className="me-4" onClick={() => handleEditUser(record)}>Sửa</Button>
-                    <Button onClick={() => handleDelete(record)}>Xóa</Button>
+                    <Button
+                        className="me-4"
+                        onClick={() => showDetailsModal(record)}
+                    >
+                        Thông tin chi tiết
+                    </Button>
+                    <Button
+                        className="me-4"
+                        onClick={() => handleEditUser(record)}
+                        disabled={record.id <= 10}
+                    >
+                        Sửa
+                    </Button>
+                    <Button 
+                        onClick={() => handleDelete(record)} 
+                        disabled={record.id <= 10}
+                    >
+                        Xóa
+                    </Button>
                 </>
             ),
-        },
+        }
+        
     ], data);
 
     useEffect(() => {
@@ -224,7 +245,7 @@ export const AdminUserManage = () => {
     return (
         <div>
             <Button className="mb-3 !p-10 !h-[48px]" type="primary" onClick={showModal}>
-                Thêm quản trị viên
+                Thêm admin
             </Button>
             <Modal
                 visible={isModalVisible}

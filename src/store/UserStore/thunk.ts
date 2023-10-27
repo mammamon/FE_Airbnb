@@ -24,10 +24,6 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
-
-
-
-
 export const updateThunk = createAsyncThunk(
   'user/update',
   async (payload: { id: number; data: AccountSchemaType }, { rejectWithValue }) => {

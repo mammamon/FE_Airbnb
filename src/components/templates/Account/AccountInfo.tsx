@@ -27,7 +27,6 @@ export const AccountInfo = () => {
     if (userLogin?.user) {
       console.log('User:', userLogin.user);
   
-      // Handle avatar upload
       const fileInput = fileInputRef.current;
       if (fileInput?.files && fileInput.files.length > 0) {
         const file = fileInput.files[0];
@@ -36,7 +35,6 @@ export const AccountInfo = () => {
         await userServices.uploadAvatar(formData);
       }
   
-      // Handle the rest of the form
       dispatch(updateThunk({ id: userLogin.user.id, data: value }));
     }
   }

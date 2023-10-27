@@ -29,10 +29,12 @@
 20. moment
 21. google-map-react
 
-## Known Bugs & Cons
-# Admin Side (Quang)
-- Check login và logout dựa vào userData lưu ở local (không an toàn), do ban đầu code không lấy được token, sau này lấy được token rồi thì không đủ thời gian để sửa, và sợ sửa sẽ gây xung đột code trước đó, nên chỉ sử dụng token vào các api upload hình ảnh (@@)
-- Error messages chỉ xuất hiện khi submit form, không thể check real-time
-- Upload hình ảnh bị lỗi 403 
-- Register admin khi đưa vào server tự chuyển role thành USER, chỉ edit user mới lên admin được (xem log trả về xác nhận đã gán role:"ADMIN" gửi lên server nhưng vào server bị lưu thành USER)
-# User Side (Tùng)
+# Known Bugs & Cons
+## Admin Side (Quang)
+- Check login và logout dựa vào user data lưu ở local (không an toàn), do ban đầu mình code không lấy được token, sau này lấy được token thì sợ sửa sẽ gây xung đột các code trước đó nên thôi lỡ rồi @@
+- Error messages chỉ xuất hiện khi submit form, không thể check ngay tại thời điểm nhập
+- Click vào các nút thông tin chi tiết hoặc sửa, đôi lúc modal bị nhấp nháy 2 lần
+- Bị lỗi 403 ngăn không cho xóa một số người dùng, vị trí hoặc phòng (thường có ID nhỏ). Chắc do config bên server. Mình cho disable nút sửa / xóa khi ID <= 10
+- Register admin khi đưa vào server tự chuyển role thành USER, chỉ khi edit user (PUT request) mới lên admin được
+- Server không gán ID cho vị trí mới vừa được tạo (ID= undefined) => Không thêm vị trí mới được
+- Các api upload ảnh đều bị dính lỗi 403 mặc dù mình thêm 2 token rồi 

@@ -1,5 +1,11 @@
 import { useState, ChangeEvent } from "react";
 import { apiInstance } from "constant";
+import { handleError } from "./handleError";
+
+
+const api = apiInstance({
+    baseURL: import.meta.env.VITE_API,
+});
 
 //sort / filter bảng
 export const sortFilterTable = (definitions, data) => {
@@ -14,9 +20,7 @@ export const sortFilterTable = (definitions, data) => {
 
 // phân trang
 export const pagination = (endpoint: string, pageIndex: number, pageSize: number, keyword: string) =>
-    apiInstance({
-        baseURL: import.meta.env.VITE_API,
-    }).get(`${endpoint}?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`);
+    api.get(`${endpoint}?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`);
 
 
 // tìm kiếm
@@ -48,6 +52,7 @@ export const editItem = async (endpoint, itemId, itemData) => {
         baseURL: import.meta.env.VITE_API,
     }).put(`/${endpoint}/${itemId}`, formData);
     const updatedData = {};
+    //chuyển "true" "false" ra boolean gửi tới server
     for (const [key, value] of Object.entries(response.data)) {
         if (value === 'true') {
             updatedData[key] = true;
@@ -61,10 +66,33 @@ export const editItem = async (endpoint, itemId, itemData) => {
 };
 
 //xóa
-export const deleteItem = async (endpoint, itemId) => {
-    const api = apiInstance({
-        baseURL: import.meta.env.VITE_API,
-    });
-    const response = await api.delete(`/${endpoint}?id=${itemId}`);
+export const deleteItem = async (endpoint, itemId, useQueryString = false) => {
+    const url = useQueryString ? `/${endpoint}?id=${itemId}` : `/${endpoint}/${itemId}`;
+    const response = await api.delete(url);
     return response.data;
 };
+
+
+// Update 
+export const uploadFile = async (endpoint, maViTri, file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+      const response = await api.post(`${endpoint}?maViTri=${maViTri}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    
+      const imageUrl = response.data.content.hinhAnh;
+      return imageUrl;
+    } catch (err) {
+      handleError(err);
+      return null;
+    }
+  };
+  
+  
+  
+  
