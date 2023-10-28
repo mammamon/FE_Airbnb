@@ -13,7 +13,7 @@ export const apiInstance = (config?: CreateAxiosDefaults) => {
         if (token) {
             headers.Authorization = token || '';
         }
-
+        // console.log('Request Headers:', headers);
         return {
             ...config,
             headers: headers,

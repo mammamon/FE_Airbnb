@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { handleError, pagination, useSearch, sortFilterTable, deleteItem, editItem, uploadFile } from "utils";
 
 export const AdminLocationManage = () => {
+    const api = apiInstance({ baseURL: import.meta.env.VITE_API });
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const { keyword, handleSearchChange } = useSearch('vi-tri/search');
@@ -51,9 +52,6 @@ export const AdminLocationManage = () => {
                 }
             } else {
                 // handle add
-                const api = apiInstance({
-                    baseURL: import.meta.env.VITE_API,
-                });
                 const response = await api.get('/vi-tri');
                 let locations = [];
                 if (response.data && typeof response.data === 'object') {
@@ -125,10 +123,6 @@ export const AdminLocationManage = () => {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
-        const api = apiInstance({
-            baseURL: import.meta.env.VITE_API,
-        });
-
         try {
             const response = await api.post(`/vi-tri/upload-hinh-vitri?maViTri=${maViTri}`, formData, {
                 headers: {
@@ -317,7 +311,7 @@ export const AdminLocationManage = () => {
                     <div className="detailsModal flex flex-column justify-center items-center">
                         <img
                             src={selectedLocationDetails.hinhAnh || '../../../../images/no-image.jpg'}
-                            width={240} height={240}
+                            style={{ width: '90%', height: '240px' }}
                             alt="vị trí"
                             className="mb-3"
                         />

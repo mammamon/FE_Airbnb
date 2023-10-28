@@ -4,6 +4,7 @@ import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
+
 type SelectOption = {
   label: string;
   value: string | boolean;

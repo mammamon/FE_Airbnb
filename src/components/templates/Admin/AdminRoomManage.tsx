@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { handleError, pagination, useSearch, sortFilterTable, deleteItem, editItem, uploadFile } from "utils";
 
 export const AdminRoomManage = () => {
+    const api = apiInstance({ baseURL: import.meta.env.VITE_API });
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const { keyword, handleSearchChange } = useSearch('vi-tri/search');
@@ -17,17 +18,19 @@ export const AdminRoomManage = () => {
     const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
     const [selectedRoomDetails, setSelectedRoomDetails] = useState(null);
     const [locations, setLocations] = useState([]);
+    const [selectedLocation, setSelectedLocation] = useState(null);
+    const findLocationByMaViTri = (maViTri) => {
+        return locations.find(location => location.id === maViTri);
+    };
 
     useEffect(() => {
         const fetchLocations = async () => {
-            const api = apiInstance({
-                baseURL: import.meta.env.VITE_API,
-            });
             const response = await api.get('/vi-tri');
             setLocations(response.data.content);
         };
 
         fetchLocations();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const locationDisplay = (maViTri) => {
@@ -47,11 +50,21 @@ export const AdminRoomManage = () => {
         resolver: zodResolver(RoomSchema),
     });
 
+    const registerNumber = (name) => {
+        return {
+            ...register(name, {
+                setValueAs: value => parseFloat(value)
+            })
+        };
+    };
+
     const onSubmit = async (values) => {
+        //đổi mã vị trí qua số
+        values.maViTri = parseInt(values.maViTri);
         try {
             if (editingRoom) {
                 // handle edit
-                const updatedRoom = await editItem('vi-tri', editingRoom.id, values);
+                const updatedRoom = await editItem('phong-thue', editingRoom.id, values);
                 console.log("Updated Room:", updatedRoom);
                 toast.success('Cập nhật vị trí thành công!', {
                     position: 'top-center',
@@ -70,10 +83,7 @@ export const AdminRoomManage = () => {
                 }
             } else {
                 // handle add
-                const api = apiInstance({
-                    baseURL: import.meta.env.VITE_API,
-                });
-                const response = await api.get('/vi-tri');
+                const response = await api.get('/phong-thue');
                 let Rooms = [];
                 if (response.data && typeof response.data === 'object') {
                     if (Array.isArray(response.data)) {
@@ -85,12 +95,7 @@ export const AdminRoomManage = () => {
                     throw new Error('Data không hợp lệ');
                 }
 
-                const RoomDitto = Rooms.some((Room) => Room.tenViTri === values.tenViTri);
-                if (RoomDitto) {
-                    throw new Error('Vị trí đã tồn tại');
-                }
-
-                const addedRoom = await api.get('vi-tri', { params: values });
+                const addedRoom = await api.get('phong-thue', { params: values });
                 toast.success('thêm phòng thành công!', {
                     position: 'top-center',
                     autoClose: 800,
@@ -104,6 +109,7 @@ export const AdminRoomManage = () => {
             handleError(err);
         }
     };
+
 
 
 
@@ -149,7 +155,6 @@ export const AdminRoomManage = () => {
             doXe: 'false',
             hoBoi: 'false',
             banUi: 'false',
-            maViTri: 0,
             hinhAnh: '',
         });
     };
@@ -160,12 +165,8 @@ export const AdminRoomManage = () => {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
-        const api = apiInstance({
-            baseURL: import.meta.env.VITE_API,
-        });
-
         try {
-            const response = await api.post(`/vi-tri/upload-hinh-vitri?maViTri=${maViTri}`, formData, {
+            const response = await api.post(`/phong-thue/upload-hinh-phong?maPhong=${maViTri}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -178,18 +179,16 @@ export const AdminRoomManage = () => {
         }
     };
 
-
-
-
-
-
-
     const showModal = () => {
         setIsModalVisible(true);
     };
 
     const showDetailsModal = (Room) => {
         setSelectedRoomDetails(Room);
+        if (Room && Room.maViTri) {
+            const location = findLocationByMaViTri(Room.maViTri);
+            setSelectedLocation(location);
+        }
         setIsDetailsModalVisible(true);
     };
 
@@ -310,6 +309,17 @@ export const AdminRoomManage = () => {
 
 
                     <div className="w-full px-4 mt-4 flex items-center">
+                        <Input
+                            id="maViTri"
+                            name="maViTri"
+                            error={errors?.maViTri?.message}
+                            register={register}
+                            selectOptions={locations.map(location => ({
+                                label: location.tenViTri,
+                                value: location.id,
+                            }))}
+                        />
+
                         <label htmlFor="tenPhong" className="w-1/3 pb-[14px]">Tên Phòng:</label>
                         <Input
                             id="tenPhong"
@@ -326,7 +336,7 @@ export const AdminRoomManage = () => {
                             name="khach"
                             type='number'
                             error={errors?.khach?.message}
-                            register={register}
+                            register={registerNumber}
                         />
                     </div>
 
@@ -337,7 +347,8 @@ export const AdminRoomManage = () => {
                             name="phongNgu"
                             type='number'
                             error={errors?.phongNgu?.message}
-                            register={register}
+                            register={registerNumber}
+
                         />
                     </div>
 
@@ -348,7 +359,7 @@ export const AdminRoomManage = () => {
                             name="giuong"
                             type='number'
                             error={errors?.giuong?.message}
-                            register={register}
+                            register={registerNumber}
                         />
                     </div>
 
@@ -359,7 +370,7 @@ export const AdminRoomManage = () => {
                             name="phongTam"
                             type='number'
                             error={errors?.phongTam?.message}
-                            register={register}
+                            register={registerNumber}
                         />
                     </div>
                     <div className="w-1/3 px-4 ">
@@ -369,7 +380,7 @@ export const AdminRoomManage = () => {
                             name="giaTien"
                             type='number'
                             error={errors?.giaTien?.message}
-                            register={register}
+                            register={registerNumber}
                         />
                     </div>
                     <div className="flex flex-wrap">
@@ -535,24 +546,62 @@ export const AdminRoomManage = () => {
 
             </Modal>
             <Modal
-                title="Thông tin chi tiết"
                 visible={isDetailsModalVisible}
                 onCancel={handleDetailsModalCancel}
                 footer={null}
                 className="text-center"
             >
-                {selectedRoomDetails && (
+                {selectedRoomDetails && selectedLocation && (
                     <div className="detailsModal flex flex-column justify-center items-center">
+                        <h2>{selectedRoomDetails.tenPhong}</h2>
                         <img
                             src={selectedRoomDetails.hinhAnh || '../../../../images/no-image.jpg'}
-                            width={400} height={400}
+                            style={{ width: '90%', height: '240px' }}
                             alt="phòng"
                             className="mb-3"
                         />
-                        <Descriptions column={2}>
-                            <Descriptions.Item label="Tên Phòng">{selectedRoomDetails.tenPhong}</Descriptions.Item>
+                        <h3 className="mb-1">Vị trí: {selectedLocation ? `${selectedLocation.tenViTri}, ${selectedLocation.tinhThanh}, ${selectedLocation.quocGia}` : 'N/A'}</h3>
+                        <h2 className="text-[#333]">${selectedRoomDetails.giaTien}</h2>
+                        <Descriptions column={3}>
                             <Descriptions.Item label="ID - Mã phòng">{selectedRoomDetails.id}</Descriptions.Item>
+                            <Descriptions.Item label="Số Khách">{selectedRoomDetails.khach}</Descriptions.Item>
+                            <Descriptions.Item label="Số Phòng Ngủ">{selectedRoomDetails.phongNgu}</Descriptions.Item>
+                            <Descriptions.Item label="Số Giường">{selectedRoomDetails.giuong}</Descriptions.Item>
+                            <Descriptions.Item label="Số Phòng Tắm">{selectedRoomDetails.phongTam}</Descriptions.Item>
                         </Descriptions>
+                        <Descriptions>
+                            <Descriptions.Item label="Máy Giặt">
+                                {selectedRoomDetails.mayGiat ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Bàn Là">
+                                {selectedRoomDetails.banLa ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="TiVi">
+                                {selectedRoomDetails.tivi ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Điều Hòa">
+                                {selectedRoomDetails.dieuHoa ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Wifi">
+                                {selectedRoomDetails.wifi ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Bếp">
+                                {selectedRoomDetails.bep ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Đỗ Xe">
+                                {selectedRoomDetails.doXe ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Hồ Bơi">
+                                {selectedRoomDetails.hoBoi ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Bàn Ủi">
+                                {selectedRoomDetails.banUi ? '✔️' : '❌'}
+                            </Descriptions.Item>
+                        </Descriptions>
+
+                        <Descriptions className="text-start">
+                        </Descriptions>
+
                     </div>
                 )}
             </Modal>

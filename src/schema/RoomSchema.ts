@@ -1,14 +1,13 @@
 import { z } from "zod";
 
 export const RoomSchema = z.object({
-    id: z.number().min(1, "Vui lòng nhập id"),
     tenPhong: z.string().nonempty("Vui lòng nhập tên phòng"),
     khach: z.number().min(1, "Vui lòng nhập số khách"),
     phongNgu: z.number().min(1, "Vui lòng nhập số phòng ngủ"),
     giuong: z.number().min(1, "Vui lòng nhập số giường"),
     phongTam: z.number().min(1, "Vui lòng nhập số phòng tắm"),
-    moTa: z.string().nonempty("Vui lòng nhập mô tả"),
     giaTien: z.number().min(1, "Vui lòng nhập giá tiền"),
+    moTa: z.string().nonempty("Vui lòng nhập mô tả"),
     mayGiat: z.string().refine(val => val === 'true' || val === 'false', {
         message: "Vui lòng chọn giá trị 'true' hoặc 'false' cho máy giặt",
         path: ["mayGiat"],
@@ -45,7 +44,8 @@ export const RoomSchema = z.object({
         message: "Vui lòng chọn giá trị 'true' hoặc 'false' cho bàn ủi",
         path: ["banUi"],
     }),
-    maViTri: z.number().min(1, "Vui lòng nhập mã vị trí"),
+    maViTri:z.string().nonempty("Vui lòng nhập tên phòng"),
+    hinhAnh: z.string().optional(),
 });
 
 export type RoomSchemaType = z.infer<typeof RoomSchema>;

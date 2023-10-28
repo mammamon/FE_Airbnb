@@ -83,7 +83,7 @@ export const deleteItem = async (endpoint, itemId, useQueryString = false) => {
 };
 
 
-// Update 
+// Upload File
 export const uploadFile = async (endpoint, maViTri, file) => {
     const formData = new FormData();
     formData.append('file', file);
