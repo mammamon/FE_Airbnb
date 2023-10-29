@@ -1,11 +1,9 @@
 import { useState, ChangeEvent } from "react";
-
 import { handleError } from "./handleError";
 import { apiInstance } from "constant";
 
-
 const api = apiInstance({
-    baseURL: import.meta.env.VITE_API,
+    baseURL: import.meta.env.VITE_API
 });
 
 //sort / filter bảng

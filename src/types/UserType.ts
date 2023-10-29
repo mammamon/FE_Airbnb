@@ -10,7 +10,7 @@ export type User = {
   role: string;
 }
 
-export type UserLogin = {
+export type UserLogin = {a
   token: string;
   user: User;
 }

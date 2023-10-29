@@ -3,6 +3,7 @@ import { Input, Avatar } from 'components/ui'
 import { useEffect, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from "react-toastify";
 import { AccountSchema, AccountSchemaType } from 'schema/AccountSchema'
 import { AppDispatch, RootState } from 'store'
 import { updateThunk } from 'store/UserStore'
@@ -20,36 +21,60 @@ export const AccountInfo = () => {
   } = useForm<AccountSchemaType>({
     resolver: zodResolver(AccountSchema),
     mode: 'onChange',
-  })  
+  })
   const dispatch = useDispatch<AppDispatch>();
-  
+
   const onSubmit: SubmitHandler<AccountSchemaType> = async (value) => {
-    if (userLogin?.user) {
-      console.log('User:', userLogin.user);
-  
-      const fileInput = fileInputRef.current;
-      if (fileInput?.files && fileInput.files.length > 0) {
-        const file = fileInput.files[0];
+    try {
+      if (userLogin?.user) {
+        console.log('User:', userLogin.user);
+        const fileInput = fileInputRef.current;
+        if (fileInput?.files && fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const formData = new FormData();
+          formData.append('avatar', file);
+          await userServices.uploadAvatar(formData);
+        }
+        await dispatch(updateThunk({ id: userLogin.user.id, data: value }));
+        toast.success('cập nhật thành công', {
+          position: 'top-center',
+          autoClose: 800,
+        });
+      }
+    } catch (err) {
+      toast.error('cập nhật thât bại  ', {
+        position: 'top-center',
+        autoClose: 800,
+      });
+      console.error(err);
+    }
+  };
+
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (event.target.files && event.target.files.length > 0) {
+        const file = event.target.files[0];
         const formData = new FormData();
         formData.append('avatar', file);
         await userServices.uploadAvatar(formData);
+        toast.success('Avatar upload thành công!', {
+          position: 'top-center',
+          autoClose: 800,
+        });
       }
-  
-      dispatch(updateThunk({ id: userLogin.user.id, data: value }));
+    } catch (err) {
+      toast.error('Avatar Upload thất bại', {
+        position: 'top-center',
+        autoClose: 800,
+      });
+      console.error(err);
     }
-  }
-  
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append('avatar', file);
-      await userServices.uploadAvatar(formData);
-    }
-  }
+  };
+
 
   useEffect(() => {
-    if (userLogin?.user) { 
+    if (userLogin?.user) {
       reset({
         name: userLogin.user.name,
         email: userLogin.user.email,
@@ -62,12 +87,23 @@ export const AccountInfo = () => {
       });
     }
   }, [reset, userLogin]);
-  
+
   return (
     <div className="acountInfoWrapper flex ">
       <div className="w-1/2 flex flex-column items-center">
         <div className="bg-gray-300 rounded-full flex items-center mb-3">
-          <Avatar className="cursor-pointer" size={120} icon={<i className="fas fa-user"></i>} onClick={() => fileInputRef.current?.click()} />
+          <Avatar
+            className="cursor-pointer"
+            size={120}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            {userLogin?.user.avatar ? (
+              <img src={userLogin?.user.avatar} alt="User Avatar" />
+            ) : (
+              <i className="fas fa-x"></i>
+            )}
+          </Avatar>
+
           <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={handleFileChange} />
         </div>
         <h3>cập nhật hình ảnh</h3>

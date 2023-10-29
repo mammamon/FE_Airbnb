@@ -16,7 +16,7 @@ export const loginThunk = createAsyncThunk(
       if (data) {
         await sleep(800);
         localStorage.setItem('user', JSON.stringify(data.data.content));
-        localStorage.setItem('token', data.data.content.token);
+        localStorage.setItem('token', JSON.stringify(data.data.content.token));
         dispatch(userManageActions.login(data.data.content.user));
       }
     }

@@ -13,20 +13,20 @@ import { GlobalOutlined } from '@ant-design/icons';
 export const Header = () => {
   const param = useParams();
   const navigate = useNavigate();
-  const { user} = useAuth();
+  const { user } = useAuth();
   const dispatch = useAppDispatch();
   const [scroll, setScroll] = useState<boolean>(false);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
   // const [localChoose,setLocalChoose] = useState( {...getLocalStorage("local")})
-  const isChooseLocal= Object.keys(param).length?true:false
+  const isChooseLocal = Object.keys(param).length ? true : false
   const handleScroll = () => {
     if (window.pageYOffset > 50) {
       setScroll(true);
     } else {
       setScroll(false);
     }
-  }; 
+  };
   const handleResize = () => {
     if (window.innerWidth <= 768) {
       setIsSmallScreen(true);
@@ -38,7 +38,7 @@ export const Header = () => {
   };
 
   const toggleHeader = () => {
-    setIsHeaderVisible(!isHeaderVisible); 
+    setIsHeaderVisible(!isHeaderVisible);
   };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -61,7 +61,7 @@ export const Header = () => {
         className={cn({
           "header-fixed": scroll,
           "header-hidden": !isHeaderVisible && isSmallScreen,
-          "header-local":isChooseLocal,
+          "header-local": isChooseLocal,
         })}
       >
         <div className="header-content">
@@ -70,8 +70,8 @@ export const Header = () => {
             onClick={() => navigate("/")}
             src="/images/airbnb.svg"
             alt="logo"
-          />  
-          {!isChooseLocal&&<nav>
+          />
+          {!isChooseLocal && <nav>
             <NavLink to="">Nơi ở</NavLink>
             <NavLink to="">Trải nghiệm</NavLink>
             <NavLink to="">Trải nghiệm thực tế</NavLink>
@@ -86,9 +86,9 @@ export const Header = () => {
               </NavLink>
             </nav>
             <GlobalOutlined type={"button"} />
-            
+
             {!user && (
-              <Badge count={0} showZero offset={[-10,3]} size="small">
+              <Badge count={0} showZero offset={[-10, 3]} size="small">
                 <div className="dropdown">
                   <button
                     className="btn dropdown-toggle"
@@ -101,7 +101,7 @@ export const Header = () => {
                     <i className="fa-solid fa-bars"></i>
                   </button>
                   <NavLink to="">
-                  <i className="fa-solid fa-bag-shopping"></i>
+                    <i className="fa-solid fa-bag-shopping"></i>
                   </NavLink>
                   <div
                     className="dropdown-menu"
@@ -121,7 +121,7 @@ export const Header = () => {
                     </a>
                   </div>
                 </div>
-            </Badge>
+              </Badge>
             )}
             {!!user && (
               <Popover
@@ -129,6 +129,8 @@ export const Header = () => {
                   <div className="p-10 w-auto !inset-[ 50px 0px 0px 0px]">
                     <p className="font-600 text-16">{user?.user.name}</p>
                     <hr className="my-16" />
+                    <p className="text-16">Xin chào</p>
+                    <p className="font-600 text-16 mb-4 text=[#ff385c]">{user?.user.name}</p>
                     <p
                       className="text-16 cursor-pointer"
                       onClick={() => navigate(PATH.account)}
@@ -157,12 +159,20 @@ export const Header = () => {
                 ) : (
                   <Avatar
                     size="large"
-                    className="!bg-[var(--primary-color)] cursor-pointer"
+                    className="!bg-[var(--primary-color)] cursor-pointer !containeritems-center"
                   >
-                    <i className="fa-regular fa-user text-20"></i>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <img
+                        src={user?.user.avatar}
+                        alt="User Avatar"
+                        style={{ borderRadius: '50%', objectFit: 'cover', width:'40px', height:'40px'}}
+                      />
+                    </div>
                   </Avatar>
                 )}
               </Popover>
+
+
             )}
           </div>
         </div>

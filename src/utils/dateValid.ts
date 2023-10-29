@@ -11,11 +11,14 @@ export const isAgeValid = (birthday) => {
   return year >= minYear && year <= maxYear;
 };
 
-export const isBookingDateValid = (ngayDen, ngayDi) => {
+export const isBookingDateValid = (ngayDen, ngayDi, isEditingBooked) => {
   const format = 'YYYY.MM.DD';
   const startDate = moment(ngayDen, format);
   const endDate = moment(ngayDi, format);
   const today = moment().startOf('day');
-  
-  return startDate.isSameOrBefore(endDate) && startDate.isSameOrAfter(today) && endDate.isSameOrAfter(today);
+  if (isEditingBooked) {
+    return startDate.isSameOrBefore(endDate);
+  } else {
+    return startDate.isSameOrBefore(endDate) && startDate.isSameOrAfter(today) && endDate.isSameOrAfter(today);
+  }
 };

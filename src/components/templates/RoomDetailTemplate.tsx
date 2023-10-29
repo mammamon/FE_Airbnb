@@ -82,13 +82,15 @@ export const RoomDetailTemplate = () => {
   const bookedList: BookedRoom[] = bookedRoomList?.filter(
     (x) => x.maPhong === Number(param.roomId)
   );
+  useEffect(()=>{
+    setFeedbackRoomList(feedbackList?.filter((x) => x.maPhong === Number(param.roomId)))
+  },[feedbackList])
 
   useEffect(() => {
     dispatch(getRoomRentByIdThunk(Number(param.roomId)));
     dispatch(getFeedbackListThunk());
     dispatch(getBookedRoomListThunk());
-    setFeedbackRoomList(feedbackList?.filter((x) => x.maPhong === Number(param.roomId)))
-  }, [dispatch]);
+  },[dispatch]);
   return (
     roomRentById && (
       <div className="room-detail-template">
