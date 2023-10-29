@@ -106,7 +106,7 @@ export const AdminBookedManage = () => {
 
             } else {
                 // handle add
-                const response = await api.get('/dat-phong');
+                const response = await api.post('/dat-phong');
                 let locations = [];
                 if (response.data && typeof response.data === 'object') {
                     if (Array.isArray(response.data)) {
@@ -116,11 +116,6 @@ export const AdminBookedManage = () => {
                     }
                 } else {
                     throw new Error('Data không hợp lệ');
-                }
-
-                const locationDitto = locations.some((location) => location.tenViTri === values.tenViTri);
-                if (locationDitto) {
-                    throw new Error('phòng đặt đã tồn tại');
                 }
 
                 const addedLocation = await api.get('dat-phong', { params: values });

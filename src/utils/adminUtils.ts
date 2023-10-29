@@ -48,31 +48,21 @@ export const useSearch = <T>(endpoint: string) => {
 
 // sửa
 export const editItem = async (endpoint, itemId, itemData) => {
-    const formData = {};
-    for (const [key, value] of Object.entries(itemData)) {
-        if (typeof value === 'boolean') {
-            formData[key] = String(value);
-        } else {
-            formData[key] = value;
+    // chuyển 'true' 'false' ra boolean gửi tới server
+    for (const key in itemData) {
+        if (itemData[key] === "true") {
+            itemData[key] = true;
+        } else if (itemData[key] === "false") {
+            itemData[key] = false;
         }
     }
-
     const response = await apiInstance({
         baseURL: import.meta.env.VITE_API,
-    }).put(`/${endpoint}/${itemId}`, formData);
-    const updatedData = {};
-    //chuyển "true" "false" ra boolean gửi tới server
-    for (const [key, value] of Object.entries(response.data)) {
-        if (value === 'true') {
-            updatedData[key] = true;
-        } else if (value === 'false') {
-            updatedData[key] = false;
-        } else {
-            updatedData[key] = value;
-        }
-    }
-    return updatedData;
+    }).put(`/${endpoint}/${itemId}`, itemData);
+
+    return response.data;
 };
+
 
 //xóa
 export const deleteItem = async (endpoint, itemId, useQueryString = false) => {
@@ -83,12 +73,12 @@ export const deleteItem = async (endpoint, itemId, useQueryString = false) => {
 
 
 // Upload File
-export const uploadFile = async (endpoint, maViTri, file) => {
+export const uploadFile = async (endpoint, itemID, file) => {
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-        const response = await api.post(`${endpoint}?maViTri=${maViTri}`, formData, {
+        const response = await api.post(`${endpoint}?maViTri=${itemID}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
