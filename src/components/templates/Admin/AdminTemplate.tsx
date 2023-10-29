@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { RootState } from 'store';
-import { BookedManageTemplate, AdminUserManage, AdminLocationManage, AdminRoomManage } from 'components';
+import { AdminUserManage, AdminLocationManage, AdminRoomManage, AdminBookedManage } from 'components';
 import { Tabs } from 'components';
 
 export const AdminTemplate = () => {
@@ -48,7 +48,7 @@ export const AdminTemplate = () => {
                     {
                         key: 'BookedManage',
                         label: 'Quản lý đặt phòng',
-                        children: <BookedManageTemplate />,
+                        children: <AdminBookedManage />,
                     },
                 ]}
             />

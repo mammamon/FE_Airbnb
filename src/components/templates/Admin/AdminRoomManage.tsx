@@ -66,7 +66,7 @@ export const AdminRoomManage = () => {
                 // handle edit
                 const updatedRoom = await editItem('phong-thue', editingRoom.id, values);
                 console.log("Updated Room:", updatedRoom);
-                toast.success('Cập nhật vị trí thành công!', {
+                toast.success('Cập nhật thông tin phòng thành công!', {
                     position: 'top-center',
                     autoClose: 800,
                 });
@@ -114,17 +114,23 @@ export const AdminRoomManage = () => {
 
 
     const handleEditRoom = (record) => {
-        console.log("Editing record:", record);
-        setEditingRoom(record);
+        const convertedData = {};
+        for (const key in record) {
+            convertedData[key] = (typeof record[key] === 'boolean' || typeof record[key] === 'number') ? record[key].toString() : record[key];
+        }
+
+        console.log("Editing record:", convertedData);
+        setEditingRoom(convertedData);
         showModal();
     };
 
+
     const handleDeleteRoom = async (item) => {
-        if (window.confirm('Bạn muốn xóa vị trí này?')) {
+        if (window.confirm('Bạn muốn xóa phòng này này?')) {
             try {
                 await deleteItem('vi-tri', item.id);
                 fetchRoomPagination();
-                toast.success('Xóa vị trí thành công!', {
+                toast.success('Xóa phòng thành công!', {
                     position: 'top-center',
                     autoClose: 800,
                 });
