@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import moment from "moment";
 import { Input, Button } from "components";
 import { Modal, Table, Descriptions } from "antd";
 import { apiInstance } from "constant";
@@ -6,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BookedAddSchema, BookedEditSchema, BookedSchemaType } from "schema";
 import { useState, useEffect } from "react";
-import { handleError, useSearch, sortFilterTable, deleteItem, editItem } from "utils";
+import { handleError, useSearch, sortFilterTable, deleteItem, editItem, formatDate } from "utils";
 
 export const AdminBookedManage = () => {
     const api = apiInstance({ baseURL: import.meta.env.VITE_API });
@@ -43,6 +44,7 @@ export const AdminBookedManage = () => {
         }
     };
 
+
     const fetchUsers = async () => {
         try {
             const response = await api.get('/users');
@@ -77,6 +79,15 @@ export const AdminBookedManage = () => {
         mode: "onChange",
         resolver: zodResolver(editingBooked ? BookedEditSchema : BookedAddSchema),
     });
+
+    const registerNumber = (name) => {
+        return {
+            ...register(name, {
+                setValueAs: value => parseFloat(value)
+            })
+        };
+    };
+
     const onSubmit = async (values) => {
         values.maNguoiDung = parseInt(selectedMaNguoiDung);
         values.maPhong = parseInt(selectedMaPhong);
@@ -113,7 +124,7 @@ export const AdminBookedManage = () => {
                 }
 
                 const addedLocation = await api.get('dat-phong', { params: values });
-                toast.success('thêm đơn đặt phòng thành công!', {
+                toast.success('thêm lịch đặt phòng thành công!', {
                     position: 'top-center',
                     autoClose: 800,
                 });
@@ -158,9 +169,11 @@ export const AdminBookedManage = () => {
         reset({
             maNguoiDung: "1",
             maPhong: "1",
+            soLuongKhach: 1,
+            ngayDen: moment().format('YYYY-MM-DD'),
+            ngayDi: moment().format('YYYY-MM-DD'),
         });
-    };
-
+    }
     const showModal = () => {
         setIsModalVisible(true);
     };
@@ -227,14 +240,17 @@ export const AdminBookedManage = () => {
         if (editingBooked) {
             reset({
                 ...editingBooked,
+                ngayDen: formatDate(editingBooked.ngayDen),
+                ngayDi: formatDate(editingBooked.ngayDi),
             });
         }
     }, [editingBooked, reset]);
 
+
     return (
         <div>
             <Button className="mb-3 !p-10 !h-[48px]" type="primary" onClick={showModal}>
-                thêm đơn đặt phòng
+                thêm lịch đặt phòng
             </Button>
             <Modal
                 visible={isModalVisible}
@@ -242,7 +258,7 @@ export const AdminBookedManage = () => {
                 footer={null}
             >
                 <div className="flex items-center justify-between">
-                    <h2>{editingBooked ? "Cập nhật đặt phòng" : "Thêm đơn đặt phòng"}</h2>
+                    <h2>{editingBooked ? "Cập nhật đặt phòng" : "Thêm lịch đặt phòng"}</h2>
                     <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -296,15 +312,17 @@ export const AdminBookedManage = () => {
                             name="ngayDi"
                             error={errors?.ngayDi?.message}
                             register={register}
+
                         />
                     </div>
-                    <div className="w-full px-4  items-center">
-                        <label htmlFor="soLuongKhach" className="w-1/3 pb-[14px]">Mô Tả:</label>
+                    <div className="w-1/3 px-4 ">
+                        <label htmlFor="soLuongKhach">Số lượng khách:</label>
                         <Input
                             id="soLuongKhach"
                             name="soLuongKhach"
+                            type='number'
                             error={errors?.soLuongKhach?.message}
-                            register={register}
+                            register={registerNumber}
                         />
                     </div>
                     <div className="flex justify-center w-full">
@@ -333,7 +351,7 @@ export const AdminBookedManage = () => {
                         />
                         <Descriptions column={2}>
                             <Descriptions.Item label="Tên phòng đặt">{selectedBookedDetails.tenViTri}</Descriptions.Item>
-                            <Descriptions.Item label="ID - Đơn đặt phòng số">{selectedBookedDetails.id}</Descriptions.Item>
+                            <Descriptions.Item label="ID - lịch đặt phòng số">{selectedBookedDetails.id}</Descriptions.Item>
                             <Descriptions.Item label="Tỉnh Thành">{selectedBookedDetails.tinhThanh}</Descriptions.Item>
                             <Descriptions.Item label="Quốc Gia">{selectedBookedDetails.quocGia}</Descriptions.Item>
                         </Descriptions>

@@ -1,3 +1,10 @@
+import moment from "moment";
+
+export const formatDate = (date) => {
+    return moment(date).format('YYYY-MM-DD');
+};
+
+
 export const formatBirthday = (birthday) => {
     const dateFormats = [
         /(\d{1,2})\/(\d{1,2})\/(\d{4})/,
@@ -16,7 +23,7 @@ export const formatBirthday = (birthday) => {
 };
 
 export const formatRole = (role) => {
-    const lowercaseRoles = ['user', 'admin','User','Admin']; 
+    const lowercaseRoles = ['user', 'admin', 'User', 'Admin'];
     if (lowercaseRoles.includes(role.toLowerCase())) {
         return role.toUpperCase();
     }
