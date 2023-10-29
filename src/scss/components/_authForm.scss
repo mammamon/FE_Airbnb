@@ -1,12 +1,22 @@
 //authForm
-form {
+form,
+.ant-modal-content {
+    .ant-modal-footer {
+        display: none;
+    }
+    h2 {
+        font-size: 28px;
+        font-weight: 500;
+        text-transform: capitalize;
+        margin-bottom: 4px;
+    }
     button {
         background-color: $primaryColor !important;
         color: #fff !important;
         border-radius: 10px !important;
 
         &:hover {
-            background-color: #ff5a5f !important;
+            filter: brightness(1.3) !important;
         }
     }
 

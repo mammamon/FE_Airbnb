@@ -67,7 +67,7 @@ h2 {
 
 h3 {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   margin: 0;
   line-height: inherit !important;
 }
@@ -187,6 +187,10 @@ ul li p .svg-inline--fa {
   inset: 70px 0px auto 510px !important;
 }
 
+.disabled-input {
+  opacity: 0.5;
+}
+
 .btn-love {
   font-size: 24px;
   margin-left: 5px;
@@ -277,47 +281,69 @@ ul li p .svg-inline--fa {
   background-color: var(--primary-color);
 }
 
-form button {
+form .ant-modal-footer,
+.ant-modal-content .ant-modal-footer {
+  display: none;
+}
+form h2,
+.ant-modal-content h2 {
+  font-size: 28px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-bottom: 4px;
+}
+form button,
+.ant-modal-content button {
   background-color: #ff385c !important;
   color: #fff !important;
   border-radius: 10px !important;
 }
-form button:hover {
-  background-color: #ff5a5f !important;
+form button:hover,
+.ant-modal-content button:hover {
+  filter: brightness(1.3) !important;
 }
-form input {
+form input,
+.ant-modal-content input {
   border: 1px solid #222;
 }
-form input::placeholder {
+form input::placeholder,
+.ant-modal-content input::placeholder {
   color: #717171;
 }
-form input:-ms-input-placeholder {
+form input:-ms-input-placeholder,
+.ant-modal-content input:-ms-input-placeholder {
   color: #717171;
 }
-form input::-webkit-input-placeholder {
+form input::-webkit-input-placeholder,
+.ant-modal-content input::-webkit-input-placeholder {
   color: #717171;
 }
-form input:focus {
+form input:focus,
+.ant-modal-content input:focus {
   outline: 1px solid #ff385c;
   border: 1px solid transparent;
 }
-form .input-wrapper {
+form .input-wrapper,
+.ant-modal-content .input-wrapper {
   position: relative;
   display: inline-block;
   width: 100%;
   margin-bottom: 1.8rem;
 }
-form .input-wrapper .input-error-icon {
+form .input-wrapper .input-error-icon,
+.ant-modal-content .input-wrapper .input-error-icon {
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
   color: #ff385c;
 }
-form .input-wrapper.input-invalid .input-error-icon {
+form .input-wrapper.input-invalid .input-error-icon,
+.ant-modal-content .input-wrapper.input-invalid .input-error-icon {
   display: block;
 }
-form .input-wrapper.input-invalid .tooltipError .tooltipErrorText {
+form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
+.ant-modal-content .input-wrapper.input-invalid .tooltipError .tooltipErrorText {
   margin: 4px 0;
   padding-left: 4px;
   width: 100%;
@@ -394,3 +420,162 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText {
   display: inline-block;
   width: 100%;
 }
+/*ADMIN PAGE*/
+.admin__header__wrapper {
+  background-color: #717171;
+}
+
+.admin__header {
+  height: 60px;
+  background-color: inherit;
+  justify-content: space-between;
+}
+.admin__header .logo {
+  width: 200px;
+  background-color: #717171;
+}
+.admin__header .logo > * {
+  color: #fff;
+}
+.admin__header .searchbox {
+  padding: 6px;
+  width: 60vw;
+}
+.admin__header .searchbox input::placeholder {
+  opacity: 1;
+}
+
+.admin__sidebar {
+  background-color: #eee;
+  width: 50px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+}
+.admin__sidebar a {
+  width: 40px;
+  background-color: #ff385c;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0 10px 0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.admin__sidebar i {
+  font-size: 1.5rem;
+}
+
+.admin__main #product-table-admin tr,
+.admin__main #product-table-admin td {
+  height: 140px;
+}
+.admin__main .table-responsive {
+  max-height: 84vh;
+  overflow: auto;
+  background-color: #fff;
+  width: 100%;
+}
+.admin__main .table-responsive h4, .admin__main .table-responsive p {
+  font-weight: 600;
+}
+.admin__main .table-responsive h4 span, .admin__main .table-responsive p span {
+  font-weight: 500;
+  color: red;
+}
+.admin__main .table-responsive .table-title {
+  background-color: #fff;
+  justify-content: space-between;
+}
+.admin__main .table-responsive .table-title h3 {
+  font-family: "Circular", sans-serif;
+  color: #717171;
+  font-weight: 700;
+}
+.admin__main .table-responsive img {
+  width: 80px;
+  height: 60px;
+}
+.admin__main .product-row {
+  height: 190.4px;
+}
+.admin__main #product-form {
+  background-color: grey;
+}
+.admin__main #product-delete-form {
+  background-color: grey;
+}
+.admin__main .product-group-manage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.admin__main .product-group-manage #btn-modal-edit {
+  color: #ff385c;
+}
+.admin__main .product-group-manage #btnDelete {
+  color: red;
+}
+.admin__main .product-group-manage i {
+  font-size: 1.25rem;
+}
+.admin__main .product-group-manage #btnUrl {
+  color: blue;
+}
+.admin__main .product-img-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#backToTop {
+  font-size: 20px;
+  position: fixed;
+  right: 1.8rem;
+  bottom: 1rem;
+  width: 3rem;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  color: #fff;
+  background: #ff385c;
+  border-radius: 50%;
+  transition: all 0.2s;
+  box-shadow: -4px 4px 24px -10px #ff385c;
+  display: none;
+}
+
+.searchInputAdmin {
+  outline: 2px solid #ff385c;
+  border: none;
+}
+.searchInputAdmin::placeholder {
+  font-family: sans-serif;
+  color: #777;
+}
+
+.ant-pagination {
+  justify-content: center !important;
+}
+
+.ant-pagination-options {
+  display: none !important;
+}
+
+.ant-table-column-title {
+  font-family: sans-serif;
+}
+
+.ant-modal-content .ant-modal-close {
+  display: none !important;
+}
+
+.ant-modal .ant-modal-title {
+  font-family: "Roboto" !important;
+  font-size: 24px !important;
+  color: #ff385c !important;
+  font-weight: 400 !important;
+  text-transform: capitalize;
+}/*# sourceMappingURL=style.css.map */

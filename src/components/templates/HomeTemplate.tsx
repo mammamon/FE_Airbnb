@@ -1,5 +1,5 @@
 import "animate.css"
-import SwiperCarousel from '../../components/ui/SwiperCarousel';
+import SwiperCarousel from "components/ui/SwiperCarousel";
 import { useEffect, useState } from 'react';
 import {  RootState, useAppDispatch } from 'store';
 import { getLocalRoomListThunk, getSearchPageThunk } from 'store/LocalRoomStore';

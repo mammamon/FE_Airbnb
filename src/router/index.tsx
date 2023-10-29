@@ -1,7 +1,7 @@
 import { RouteObject } from 'react-router-dom'
 import { PATH } from 'constant'
-import { AuthLayout, MainLayout } from 'components'
-import { Login, Register, Home, Account, RoomList, RoomDetail, UserInfo } from 'pages'
+import { AuthLayout, MainLayout, AdminLayout } from 'components'
+import { Login, Register, Home, Account, RoomList, RoomDetail, Admin, AccessDenied } from 'pages'
 
 export const router: RouteObject[] = [
     {
@@ -13,7 +13,7 @@ export const router: RouteObject[] = [
                 element: <Home />,
             },
             {
-                path: PATH.roomList,
+                path: PATH.roomlList,
                 element: <RoomList />
             }
             ,
@@ -21,11 +21,8 @@ export const router: RouteObject[] = [
                 path: PATH.roomDetail,
                 element: <RoomDetail />
             }
-            ,
-            {
-                path: PATH.userInfo,
-                element: <UserInfo/>
-            }
+            
+            
             ,
             {
                 path: PATH.account,
@@ -46,5 +43,19 @@ export const router: RouteObject[] = [
                 element: <Register />,
             },
         ],
+    },
+    {
+        element: <AdminLayout />,
+        children: [
+            {   
+                path: PATH.admin,
+                element: <Admin />,
+            },
+        ],
+    },
+    
+    {
+        path: PATH.accessdenied,
+        element: <AccessDenied />,
     },
 ]

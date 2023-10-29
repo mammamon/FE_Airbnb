@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { RegisterSchema, RegisterSchemaType } from "schema";
 import { userServices } from "services";
-import { handleError} from "utils";
-import { apiInstance } from "constant";``
+import { handleError } from "utils";
+import { apiInstance } from "constant"; ``
 
 export const RegisterTemplate = () => {
   const {
@@ -22,8 +22,6 @@ export const RegisterTemplate = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (values) => {
-    console.log('onsubmit start');
-    console.log('Input Values:', values);
     const api = apiInstance({
       baseURL: import.meta.env.VITE_API,
     });
@@ -45,13 +43,14 @@ export const RegisterTemplate = () => {
       const emailDitto = users.some((user) => user.email === values.email);
       // console.log('Email check:', emailDitto);
       if (emailDitto) {
-        throw new Error('Email already exists');
+        throw new Error('Email đã tồn tại');
       }
 
-      // tạo object mới với gender chuyển sang boolean
+      // tạo object mới với gender chuyển sang boolean, gán role = USER
       const newUser = {
         ...values,
         gender: values.gender === 'true' ? 'true' : 'false',
+        role: "USER"
       };
       // console.log('newUser:', newUser);
       await userServices.register(newUser);
@@ -148,18 +147,16 @@ export const RegisterTemplate = () => {
           className="mt-16"
           id="role"
           name="role"
-          error={errors?.role?.message}
           register={register}
           selectOptions={[
             { label: 'Người dùng', value: 'USER' },
-            { label: 'Quản trị viên', value: 'ADMIN' }
           ]}
         />
       </div>
       <div className="flex justify-center items-center">
         <button
           type="submit"
-          className="w-2/3 p-10 text-[20px] mt-2">
+          className="w-1/3 p-10 text-[20px] mt-2">
           Đăng Ký
         </button>
       </div>

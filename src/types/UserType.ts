@@ -1,4 +1,4 @@
-export type UserLogin = {
+export type User = {
   id: number;
   name: string;
   email: string;
@@ -7,17 +7,10 @@ export type UserLogin = {
   birthday: string;
   avatar: string;
   gender: boolean;
-  role: 'USER' | 'ADMIN';
-  accessToken: string
+  role: string;
 }
 
-export type User= {
-  user:UserLogin,
-  token:string,
-}
-
-export type UserByAccessToken = Omit<UserLogin, 'accessToken'> & {
-  account: {
-    role: 'USER' | 'ADMIN'
-  }
+export type UserLogin = {
+  token: string;
+  user: User;
 }

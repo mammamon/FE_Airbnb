@@ -1,66 +1,38 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { userServices } from 'services'
-import { getAccessToken } from 'utils'
 import { LoginSchemaType, AccountSchemaType } from 'schema'
 import { sleep } from 'utils'
+import { userManageActions } from './slice';
 
 export const loginThunk = createAsyncThunk(
-  'userManage/login',
-  async (payload: LoginSchemaType, { rejectWithValue }) => {
+  'user/login',
+  async (payload: LoginSchemaType, { dispatch, rejectWithValue }) => {
+    let data;
     try {
-      const data = await userServices.login(payload)
-      await sleep(800)
-      return data.data.content
+      data = await userServices.login(payload);
     } catch (err) {
-      return rejectWithValue(err)
+      return rejectWithValue(err);
+    } finally {
+      if (data) {
+        await sleep(800);
+        localStorage.setItem('user', JSON.stringify(data.data.content));
+        localStorage.setItem('token', data.data.content.token);
+        dispatch(userManageActions.login(data.data.content.user));
+      }
     }
+    return data.data.content;
   }
-)
-
-// export const getUserByAccessTokenThunk = createAsyncThunk(
-//   'userManage/getUserByAccesToken',
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const token = getAccessToken()
-//       if (token) {
-//         const data = await userServices.getUserByAccessToken()
-//         return data.data.content
-//       }
-//     } catch (err) {
-//       console.error('Error:', err);
-//       return rejectWithValue(err.response.data.message);
-//     }
-//   }
-// );
+);
 
 export const updateThunk = createAsyncThunk(
   'userManage/update',
   async (payload: { id: number; data: AccountSchemaType }, { rejectWithValue }) => {
     try {
-      const token = getAccessToken();
-      if (token) {
-        const response = await userServices.update(payload.id, payload.data);
-        return response.data.content;
-      }
+      const response = await userServices.edit(payload.id, payload.data);
+      return response.data.content;
     } catch (err) {
       console.error('Error:', err);
       return rejectWithValue(err.response.data.message);
     }
   }
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

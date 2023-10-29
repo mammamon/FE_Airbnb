@@ -20,4 +20,3 @@ export const apiInstance = (config?: CreateAxiosDefaults) => {
 
     return api
 }
-

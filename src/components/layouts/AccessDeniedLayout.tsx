@@ -1,7 +1,7 @@
 import { useAuth } from 'hooks'
 import { Navigate, Outlet } from 'react-router-dom'
 
-export const AuthLayout = () => {
+export const AccessDeniedLayout = () => {
     const { user } = useAuth()
 
     if (user) {

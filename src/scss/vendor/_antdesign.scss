@@ -1,0 +1,16 @@
+.ant-pagination {
+    justify-content: center !important;
+}
+.ant-pagination-options {
+    display: none !important;
+}
+.ant-table-column-title {
+    font-family: sans-serif;
+}
+.ant-modal-content .ant-modal-close {
+    display: none !important;
+}
+.ant-modal .ant-modal-title {
+    @include font-style ('Roboto'!important,24px!important, $primaryColor!important, 400!important);
+    text-transform: capitalize;
+}
