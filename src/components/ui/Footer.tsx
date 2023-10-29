@@ -66,7 +66,7 @@ export const Footer = () => {
                   </p>
                 </li>
                 <li>
-                  <p><i className="fa-solid fa-spray-can"></i>Không có máy báo khỏi</p>
+                  <p><i className="fa-solid fa-circle-exclamation"></i>Không có máy báo khỏi</p>
                 </li>
               </ul>
             </div>
@@ -152,9 +152,9 @@ export const Footer = () => {
         </div>
         <div className="flex justify-between mt-24 border-t pt-18">
           <div>
-            <p>
+            <p className="inline-block">
               &#169; 2021 Airbnb, Inc. All rights reserved
-              <span>
+            </p>
                 <ul
                   style={{
                     listStyleType: "disc",
@@ -162,12 +162,11 @@ export const Footer = () => {
                     width: "fit-content",
                   }}
                 >
-                  <li className="ml-4">Quyền riêng tư</li>
-                  <li className="ml-4">Điều khoản</li>
-                  <li className="ml-4">Sơ đồ trang web</li>
+                  <li className="ml-4"><p>Quyền riêng tư</p></li>
+                  <li className="ml-4"><p>Điều khoản</p></li>
+                  <li className="ml-4"><p>Sơ đồ trang web</p></li>
                 </ul>
-              </span>
-            </p>
+              
           </div>
           <div className="flex justify-between  w-3/12">
             <div className="flex justify-between w-8/12">

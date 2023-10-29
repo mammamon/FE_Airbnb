@@ -2,10 +2,21 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { roomRentServices } from 'services';
 
 export const getRoomRentThunk = createAsyncThunk(
-  'api/phong-thue/getRoomDetailThunk',
+  'roomRent/getRoomDetail',
   async (maViTri:number, { rejectWithValue }) => {
     try {
       const data = await roomRentServices.getRoomRentListDetail(maViTri);
+      return data.data.content;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+export const getRoomRentByIdThunk = createAsyncThunk(
+  'roomRent/getRoomRentById',
+  async (id:number, { rejectWithValue }) => {
+    try {
+      const data = await roomRentServices.getRoomRentById(id);
       return data.data.content;
     } catch (err) {
       return rejectWithValue(err);

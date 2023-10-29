@@ -76,7 +76,9 @@ export const Header = () => {
             <NavLink to="">Trải nghiệm</NavLink>
             <NavLink to="">Trải nghiệm thực tế</NavLink>
           </nav>}
-          <Search/>
+          <div className={cn({"form-home":!isChooseLocal,"form-not-home":isChooseLocal})}>
+          <Search name="search-form" />
+          </div>
           <div className="header-user">
             <nav>
               <NavLink to="">
@@ -125,7 +127,7 @@ export const Header = () => {
               <Popover
                 content={
                   <div className="p-10 w-auto !inset-[ 50px 0px 0px 0px]">
-                    <p className="font-600 text-16">{user?.name}</p>
+                    <p className="font-600 text-16">{user?.user.name}</p>
                     <hr className="my-16" />
                     <p
                       className="text-16 cursor-pointer"
@@ -212,7 +214,7 @@ const Container = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    position:relative;
     @media (max-width: 768px) {
       padding: 0 20px;
       flex-direction: column;
@@ -221,7 +223,15 @@ const Container = styled.header`
       margin: 0;
       background-color: #efefef;
     }
+    .form-home{
+      position:absolute;
+      top:110px;
+      left:300px;
+    }
 
+    .form-not-home{
+      width:60%;
+        }
     .brand {
       width: 150px;
       &:hover {

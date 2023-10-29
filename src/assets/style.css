@@ -110,8 +110,13 @@ ul li p .svg-inline--fa {
   margin-right: 10px !important;
 }
 
-.ant-form {
-  width: 60% !important;
+.map.container {
+  width: 100%;
+  height: 100%;
+}
+
+#search-form {
+  width: 100% !important;
   align-items: center;
   outline: 2px solid #ff385c;
   padding: 15px 30px !important;
@@ -119,46 +124,50 @@ ul li p .svg-inline--fa {
   flex-wrap: nowrap;
   justify-content: space-between;
   background-color: white;
+  z-index: 100;
   z-index: 999;
 }
-.ant-form.form-home {
+#search-form.form-home {
   position: fixed;
   top: 100px;
   left: 20%;
 }
-.ant-form .ant-form-item {
+#search-form .ant-form-item {
   width: 35%;
   border-right: 2px solid #717171;
   padding-right: 10px;
   margin-right: 0;
 }
-.ant-form .ant-form-item:nth-child(2) {
+#search-form .ant-form-item:nth-child(2) {
   width: 40%;
 }
-.ant-form .ant-form-item:nth-child(3) {
+#search-form .ant-form-item:nth-child(3) {
   width: 10%;
 }
-.ant-form .ant-form-item:nth-child(4) {
+#search-form .ant-form-item:nth-child(4) {
   width: 5%;
   margin: 0;
   padding: 0;
   border-right: none;
 }
-.ant-form .ant-form-item:nth-child(4) button {
+#search-form .ant-form-item:nth-child(4) button {
   color: red;
   border-radius: 50% !important;
 }
-.ant-form .ant-form-item .ant-row {
+#search-form .ant-form-item .ant-row {
   flex-direction: column;
 }
-.ant-form .ant-form-item .ant-row .ant-col label {
+#search-form .ant-form-item .ant-row .ant-col .ant-picker {
+  width: 100%;
+}
+#search-form .ant-form-item .ant-row .ant-col label {
   margin-bottom: 0px !important;
   height: 25px;
 }
-.ant-form .ant-form-item .ant-row .ant-col .ant-input-number {
+#search-form .ant-form-item .ant-row .ant-col .ant-input-number {
   width: 100%;
 }
-.ant-form .ant-form-item .ant-row .ant-form-item-required {
+#search-form .ant-form-item .ant-row .ant-form-item-required {
   width: 100%;
 }
 
@@ -341,18 +350,47 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText {
   }
 }
 
-.room-list-template .ant-list-item-meta-avatar {
+.room-list-template .ant-list-item:hover {
+  transform: scale(1.01);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+}
+.room-list-template .ant-list-item .ant-list-item-meta {
+  padding: 10px 10px;
+}
+.room-list-template .ant-list-item .ant-list-item-meta:hover .ant-list-item-meta-content .ant-list-item-meta-title a {
+  color: #ff385c;
+}
+.room-list-template .ant-list-item .ant-list-item-meta .ant-list-item-meta-avatar {
   flex: none;
 }
-.room-list-template .ant-list-item-meta-content {
+.room-list-template .ant-list-item .ant-list-item-meta .ant-list-item-meta-content {
   flex-grow: 1;
   height: 200px;
   display: flex;
   flex-direction: column;
 }
-.room-list-template .ant-list-item-meta-content .ant-list-item-meta-title {
+.room-list-template .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title {
   flex: none;
 }
-.room-list-template .ant-list-item-meta-content .ant-list-item-meta-description {
+.room-list-template .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-title a {
+  font-size: 20px;
+}
+.room-list-template .ant-list-item .ant-list-item-meta .ant-list-item-meta-content .ant-list-item-meta-description {
   flex-grow: 1;
+}
+
+.form-booking .ant-form {
+  border-top: solid 1px #717171;
+  border-radius: 0;
+  outline: none;
+  padding: 10px 0 !important;
+}
+.form-booking .ant-form .ant-form-item {
+  padding: 0;
+  width: 100%;
+  border-right: none;
+}
+.form-booking .ant-form .ant-form-item .ant-btn {
+  display: inline-block;
+  width: 100%;
 }

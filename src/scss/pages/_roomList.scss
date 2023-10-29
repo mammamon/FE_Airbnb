@@ -1,17 +1,42 @@
 .room-list-template{
-	.ant-list-item-meta-avatar {
-		flex: none;
-	}	
-	.ant-list-item-meta-content{
-		flex-grow: 1;
-		height: 200px;
-		display: flex;
-		flex-direction: column;
-		.ant-list-item-meta-title{
-			flex: none;
+	.ant-list-item{
+		&:hover{
+			transform: scale(1.01);
+			box-shadow:  0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 		}
-		.ant-list-item-meta-description{
-			flex-grow: 1;
+		.ant-list-item-meta{
+			padding: 10px 10px;
+			&:hover{
+				.ant-list-item-meta-content{
+					.ant-list-item-meta-title{
+						a{
+	
+							color: $primaryColor;
+						}
+					}
+				}
+			}
+			.ant-list-item-meta-avatar {
+				flex: none;
+			}	
+			.ant-list-item-meta-content{
+				flex-grow: 1;
+				height: 200px;
+				display: flex;
+				flex-direction: column;
+				.ant-list-item-meta-title{
+					flex: none;
+					a{
+						font-size:20px;
+		
+					}
+		;			
+				}
+				.ant-list-item-meta-description{
+					flex-grow: 1;
+				}
+			}
+	
 		}
 	}
 }

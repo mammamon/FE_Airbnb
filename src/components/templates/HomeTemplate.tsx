@@ -10,7 +10,6 @@ import { Avatar, List } from "antd";
 
 export const HomeTemplate = () => {
     const {pageLocalRoomList}= useSelector((state: RootState)=>state.localRoom)
-    console.log(pageLocalRoomList)
     const dispatch = useAppDispatch();
     const [banners, setBanners] = useState([]);
    useEffect(()=>{
@@ -31,7 +30,7 @@ export const HomeTemplate = () => {
             <List
             className="mt-5"
             itemLayout="horizontal"
-            dataSource={pageLocalRoomList.data}
+            dataSource={pageLocalRoomList?.data}
             pagination={{
                 pageSize: 3,align:"start"
               }}

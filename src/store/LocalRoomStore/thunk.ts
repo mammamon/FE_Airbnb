@@ -3,7 +3,7 @@ import { localRoomServices } from "services";
 import { PageType } from "types";
 
 export const getLocalRoomListThunk = createAsyncThunk(
-  "api/getLocalRoomList",
+  "localRoom/getLocalRoomList",
   async (_, { rejectWithValue }) => {
     try {
       const data = await localRoomServices.getLocalRoomList();
@@ -15,7 +15,7 @@ export const getLocalRoomListThunk = createAsyncThunk(
 );
 
 export const getSearchPageThunk = createAsyncThunk(
-  'api/vi-tri/getSearchPageThunk',
+  'localRoom/getSearchPage',
   async (pageSetup:PageType, { rejectWithValue }) => {
     try {
       const data = await localRoomServices.getSearchPage(pageSetup);

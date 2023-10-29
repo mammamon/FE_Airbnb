@@ -7,8 +7,13 @@ export type UserLogin = {
   birthday: string;
   avatar: string;
   gender: boolean;
-  role: string;
+  role: 'USER' | 'ADMIN';
   accessToken: string
+}
+
+export type User= {
+  user:UserLogin,
+  token:string,
 }
 
 export type UserByAccessToken = Omit<UserLogin, 'accessToken'> & {

@@ -5,7 +5,7 @@ import { LoginSchemaType, AccountSchemaType } from 'schema'
 import { sleep } from 'utils'
 
 export const loginThunk = createAsyncThunk(
-  'user/login',
+  'userManage/login',
   async (payload: LoginSchemaType, { rejectWithValue }) => {
     try {
       const data = await userServices.login(payload)
@@ -17,24 +17,24 @@ export const loginThunk = createAsyncThunk(
   }
 )
 
-export const getUserByAccessTokenThunk = createAsyncThunk(
-  'user/getUserByAccesToken',
-  async (_, { rejectWithValue }) => {
-    try {
-      const token = getAccessToken()
-      if (token) {
-        const data = await userServices.getUserByAccessToken()
-        return data.data.content
-      }
-    } catch (err) {
-      console.error('Error:', err);
-      return rejectWithValue(err.response.data.message);
-    }
-  }
-);
+// export const getUserByAccessTokenThunk = createAsyncThunk(
+//   'userManage/getUserByAccesToken',
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const token = getAccessToken()
+//       if (token) {
+//         const data = await userServices.getUserByAccessToken()
+//         return data.data.content
+//       }
+//     } catch (err) {
+//       console.error('Error:', err);
+//       return rejectWithValue(err.response.data.message);
+//     }
+//   }
+// );
 
 export const updateThunk = createAsyncThunk(
-  'user/update',
+  'userManage/update',
   async (payload: { id: number; data: AccountSchemaType }, { rejectWithValue }) => {
     try {
       const token = getAccessToken();

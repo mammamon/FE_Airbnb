@@ -1,0 +1,17 @@
+.form-booking{
+	.ant-form{
+		border-top: solid 1px $secondaryColor;
+		border-radius: 0;
+		outline: none;
+		padding: 10px 0!important;
+		.ant-form-item{
+			padding: 0;
+			width: 100%;
+			border-right: none;
+			.ant-btn{
+				display: inline-block;
+				width: 100%;
+			}
+		}
+	}
+}

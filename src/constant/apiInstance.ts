@@ -12,8 +12,6 @@ export const apiInstance = (config?: CreateAxiosDefaults) => {
             Authorization: 'Bearer ' + getAccessToken() || '',
         } as unknown as AxiosRequestHeaders;
 
-        console.log('Request Headers:', headers);
-
         return {
             ...config,
             headers: headers,
