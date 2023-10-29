@@ -328,7 +328,7 @@ form .input-wrapper,
   position: relative;
   display: inline-block;
   width: 100%;
-  margin-bottom: 1.8rem;
+  margin-bottom: 20px;
 }
 form .input-wrapper .input-error-icon,
 .ant-modal-content .input-wrapper .input-error-icon {
@@ -420,6 +420,7 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   display: inline-block;
   width: 100%;
 }
+
 /*ADMIN PAGE*/
 .admin__header__wrapper {
   background-color: #717171;
@@ -578,4 +579,4 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   color: #ff385c !important;
   font-weight: 400 !important;
   text-transform: capitalize;
-}/*# sourceMappingURL=style.css.map */
+}

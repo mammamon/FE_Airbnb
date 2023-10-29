@@ -44,7 +44,7 @@ export const LoginTemplate = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center justify-between">
         <h2>Đăng nhập</h2>
-        <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
+        <img src="/images/airbnb.svg" className="w-[130px] h-[32px]" />
       </div>
       <Input
         className="mt-16"

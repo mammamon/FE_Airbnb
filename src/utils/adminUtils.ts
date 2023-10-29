@@ -1,6 +1,7 @@
 import { useState, ChangeEvent } from "react";
-import { apiInstance } from "constant";
+
 import { handleError } from "./handleError";
+import { apiInstance } from "constant";
 
 
 const api = apiInstance({
