@@ -10,5 +10,3 @@ export type FeedbackType ={
 	noiDung: string,
 	saoBinhLuan: number,
   }
-
-  

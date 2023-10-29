@@ -1,3 +1,3 @@
 export const getAccessToken = () => {
-    return localStorage.getItem('ACCESSTOKEN')
+    return JSON.parse(localStorage.getItem('ACCESSTOKEN'))
 }

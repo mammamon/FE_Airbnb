@@ -12,29 +12,29 @@ import {
   Space,
   message,
 } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { RootState, useAppDispatch } from "store";
 import { getBookedRoomListThunk } from "store/BookingRoomStore";
 import { getRoomRentByIdThunk } from "store/RoomDetailStore";
 import { Search } from "components";
 import { BookedRoom, FeedbackType } from "types";
 import { dayFormat, getLocalStorage } from "utils";
-import { getFeedbackListThunk } from "store/FeedbackStore/thunk";
+import { getFeedbackListThunk, postFeedbackThunk } from "store/FeedbackStore/thunk";
 import TextArea from "antd/es/input/TextArea";
 import FormItem from "antd/es/form/FormItem";
-// import dayjs from "dayjs"
+import dayjs from "dayjs"
 
 export const RoomDetailTemplate = () => {
   const param = useParams();
   const dispatch = useAppDispatch();
   const { roomRentById } = useSelector((state: RootState) => state.roomRent);
   const { feedbackList } = useSelector((state: RootState) => state.feedback);
+  const [feedbackRoomList,setFeedbackRoomList] = useState<FeedbackType[]>()
   const { bookedRoomList } = useSelector(
     (state: RootState) => state.bookingRoom
   );
-  // const {isFetchingBookingRoom}=useSelector((state:RootState)=>state.bookingRoom)
   const [messageApi, contextHolder] = message.useMessage();
   const success = () => {
     messageApi.open({
@@ -45,13 +45,22 @@ export const RoomDetailTemplate = () => {
   if (getLocalStorage("userBookedRoom")) {
     success();
   }
-
   const onFinish = (fieldsValue: object) => {
-    const feedback=fieldsValue["feedbackInput"]
-    console.log(feedback)
-    const starRate=fieldsValue["starRate"]
-    console.log(starRate)
-  }
+    const feedback = fieldsValue["feedbackInput"];
+    const starRate = fieldsValue["starRate"];
+    const data:FeedbackType={
+      id:0,
+      maNguoiBinhLuan:4210,
+      maPhong:Number(param.roomId),
+      ngayBinhLuan:dayjs().toDate().toISOString(),
+      noiDung:feedback,
+      saoBinhLuan:starRate
+    }
+    dispatch(postFeedbackThunk(data))
+    const feedbackCurrent=[...feedbackRoomList]
+    feedbackCurrent.push(data)
+    setFeedbackRoomList(feedbackCurrent)
+  };
   const furniture = {
     banLa: ["Bàn là", "https://img.icons8.com/material-outlined/24/iron.png"],
     banUi: ["Bàn ủi", "https://img.icons8.com/material-outlined/24/iron.png"],
@@ -73,18 +82,13 @@ export const RoomDetailTemplate = () => {
   const bookedList: BookedRoom[] = bookedRoomList?.filter(
     (x) => x.maPhong === Number(param.roomId)
   );
-  const feedbackRoomList: FeedbackType[] = feedbackList?.filter(
-    (x) => x.maPhong === Number(param.roomId)
-  );
+
   useEffect(() => {
     dispatch(getRoomRentByIdThunk(Number(param.roomId)));
     dispatch(getFeedbackListThunk());
     dispatch(getBookedRoomListThunk());
-    console.log("Thông tin phòng đã được đặt", bookedRoomList);
-    console.log("Thông tin phòng đã chọn", roomRentById);
-    console.log("Thông tin bình luận của khách đã thuê", feedbackList);
+    setFeedbackRoomList(feedbackList?.filter((x) => x.maPhong === Number(param.roomId)))
   }, [dispatch]);
-  // console.log(dayFormat.printDate(feedbackList[0]?.ngayBinhLuan));
   return (
     roomRentById && (
       <div className="room-detail-template">
@@ -225,32 +229,46 @@ export const RoomDetailTemplate = () => {
             )}
           />
         </Space>
-        <Space direction="vertical" size="small" style={{
+        <Space
+          direction="vertical"
+          size="small"
+          style={{
             display: "flex",
             padding: "15px 0",
-          }}>
-            <Form onFinish={onFinish} rootClassName="feedback-input" initialValues={{starRate:1}}>
-             
-              <FormItem
-              rules={[{required:true,message:"Hãy nhập bình luận"}]}
-              name="feedbackInput">
-            <TextArea
-              showCount
-              maxLength={100}
-              style={{ height: 120}}
-              // onChange={onChange}
-              placeholder="Nhập bình luận của bạn"
-            />
-              </FormItem>
-              <FormItem rules={[{type: "number" as const,min:1,message:"Hãy chọn sao"}]}  name="starRate"  style={{marginBottom:0}}> 
-                <Rate />
-              </FormItem>
-              <FormItem>
+          }}
+        >
+          <Form
+            onFinish={onFinish}
+            rootClassName="feedback-input"
+            initialValues={{ starRate: 1 }}
+          >
+            <FormItem
+              rules={[{ required: true, message: "Hãy nhập bình luận" }]}
+              name="feedbackInput"
+            >
+              <TextArea
+                showCount
+                maxLength={100}
+                style={{ height: 120 }}
+                // onChange={onChange}
+                placeholder="Nhập bình luận của bạn"
+              />
+            </FormItem>
+            <FormItem
+              rules={[
+                { type: "number" as const, min: 1, message: "Hãy chọn sao" },
+              ]}
+              name="starRate"
+              style={{ marginBottom: 0 }}
+            >
+              <Rate />
+            </FormItem>
+            <FormItem>
               <Button type="primary" htmlType="submit" size="large">
-            Submit
-          </Button>
-              </FormItem>
-            </Form>
+                Submit
+              </Button>
+            </FormItem>
+          </Form>
         </Space>
       </div>
     )

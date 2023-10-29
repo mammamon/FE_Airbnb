@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { feedbackServices } from "services";
-import { FeedbackType } from "types";
+import {  FeedbackType } from "types";
+import { sleep } from "utils";
 
 
 export const getFeedbackListThunk = createAsyncThunk(
@@ -17,9 +18,10 @@ export const getFeedbackListThunk = createAsyncThunk(
 
 export const postFeedbackThunk = createAsyncThunk(
   "feedback/postFeedback",
-  async (feedback:FeedbackType, { rejectWithValue }) => {
+  async (payload:FeedbackType, { rejectWithValue }) => {
     try {
-      const data = await feedbackServices.postFeedback(feedback);
+      const data = await feedbackServices.postFeedback(payload);
+      await sleep(500)
       return data.data.content;
     } catch (err) {
       return rejectWithValue(err.message);
