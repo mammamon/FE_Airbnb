@@ -4,7 +4,7 @@ import { Modal, Table, Descriptions } from "antd";
 import { apiInstance } from "constant";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { BookedSchema, BookedSchemaType } from "schema";
+import { BookedAddSchema, BookedEditSchema, BookedSchemaType } from "schema";
 import { useState, useEffect } from "react";
 import { handleError, useSearch, sortFilterTable, deleteItem, editItem } from "utils";
 
@@ -15,10 +15,20 @@ export const AdminBookedManage = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const { keyword, handleSearchChange } = useSearch('dat-phong/search');
-    const [editingBooked, seteditingBooked] = useState(null);
+    const [editingBooked, setEditingBooked] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
     const [selectedBookedDetails, setselectedBookedDetails] = useState(null);
+    const [selectedMaNguoiDung, setSelectedMaNguoiDung] = useState(null);
+    const [selectedMaPhong, setSelectedMaPhong] = useState(null);
+
+    const handleSelectedMaNguoiDungChange = (value) => {
+        setSelectedMaNguoiDung(value);
+    };
+
+    const handleSelectedMaPhongChange = (value) => {
+        setSelectedMaPhong(value);
+    };
 
     const fetchData = async () => {
         setLoading(true);
@@ -65,10 +75,11 @@ export const AdminBookedManage = () => {
         reset,
     } = useForm<BookedSchemaType>({
         mode: "onChange",
-        resolver: zodResolver(BookedSchema),
+        resolver: zodResolver(editingBooked ? BookedEditSchema : BookedAddSchema),
     });
-
     const onSubmit = async (values) => {
+        values.maNguoiDung = parseInt(selectedMaNguoiDung);
+        values.maPhong = parseInt(selectedMaPhong);
         try {
             if (editingBooked) {
                 // handle edit
@@ -116,11 +127,14 @@ export const AdminBookedManage = () => {
         }
     };
 
-
-
     const handleEditBooked = (record) => {
-        console.log("Editing record:", record);
-        seteditingBooked(record);
+        const convertedData = {};
+        for (const key in record) {
+            convertedData[key] = (typeof record[key] === 'boolean' || typeof record[key] === 'number') ? record[key].toString() : record[key];
+        }
+
+        console.log("Editing record:", convertedData);
+        setEditingBooked(convertedData);
         showModal();
     };
 
@@ -138,13 +152,12 @@ export const AdminBookedManage = () => {
         }
     };
 
-
     const handleCancel = () => {
         setIsModalVisible(false);
-        seteditingBooked(null);
+        setEditingBooked(null);
         reset({
-        maNguoiDung: 1,
-        maPhong: 1,
+            maNguoiDung: "1",
+            maPhong: "1",
         });
     };
 
@@ -161,8 +174,6 @@ export const AdminBookedManage = () => {
         setIsDetailsModalVisible(false);
         setselectedBookedDetails(null);
     };
-
-
 
     const columns = data ? sortFilterTable([
         {
@@ -182,15 +193,6 @@ export const AdminBookedManage = () => {
         },
         {
             title: 'Số Lượng Khách', dataIndex: 'soLuongKhach',
-        },
-        {
-            title: 'Hình Ảnh', dataIndex: 'hinhAnh', width: 180,
-            className: 'text-center',
-            render: (hinhAnh) => (
-                <div className="flex justify-center">
-                    <img src={hinhAnh || '../../images/no-image.png'} alt="Location" width={80} height={80} />
-                </div>
-            ),
         },
         {
             title: 'Quản Lý', width: 300,
@@ -219,8 +221,6 @@ export const AdminBookedManage = () => {
                 </>
             ),
         }
-
-
     ], data) : [];
 
     useEffect(() => {
@@ -230,7 +230,6 @@ export const AdminBookedManage = () => {
             });
         }
     }, [editingBooked, reset]);
-
 
     return (
         <div>
@@ -256,8 +255,10 @@ export const AdminBookedManage = () => {
                         register={register}
                         selectOptions={users.map(user => ({
                             label: `${user.id}: ${user.name}`,
-                            value: user.id,
+                            value: user.id.toString(),
                         }))}
+                        value={selectedMaNguoiDung}
+                        onChange={(e) => handleSelectedMaNguoiDungChange(e.target.value)}
                     />
                     <Input
                         className="mt-16"
@@ -267,11 +268,52 @@ export const AdminBookedManage = () => {
                         error={errors?.maPhong?.message}
                         register={register}
                         selectOptions={rooms.map(room => ({
-                            label: `ID ${room.id}: ${room.tenPhong}`,
-                            value: room.id,
+                            label: `${room.id}: ${room.tenPhong}`,
+                            value: room.id.toString(),
                         }))}
+                        value={selectedMaPhong}
+                        onChange={(e) => handleSelectedMaPhongChange(e.target.value)}
                     />
-                    {/* ... rest of your form fields */}
+                    <div className="flex">
+                        <label className="p-10 w-1/2 text-black">Ngày đến:</label>
+                        <Input
+                            type="date"
+                            className="mt-16"
+                            placeholder="Ngày sinh"
+                            id="ngayDen"
+                            name="ngayDen"
+                            error={errors?.ngayDen?.message}
+                            register={register}
+                        />
+                    </div>
+                    <div className="flex">
+                        <label className="p-10 w-1/2 text-black">Ngày đi:</label>
+                        <Input
+                            type="date"
+                            className="mt-16"
+                            placeholder="Ngày đi"
+                            id="ngayDi"
+                            name="ngayDi"
+                            error={errors?.ngayDi?.message}
+                            register={register}
+                        />
+                    </div>
+                    <div className="w-full px-4  items-center">
+                        <label htmlFor="soLuongKhach" className="w-1/3 pb-[14px]">Mô Tả:</label>
+                        <Input
+                            id="soLuongKhach"
+                            name="soLuongKhach"
+                            error={errors?.soLuongKhach?.message}
+                            register={register}
+                        />
+                    </div>
+                    <div className="flex justify-center w-full">
+                        <button
+                            type="submit"
+                            className="w-2/5 p-10 text-[20px] mt-2">
+                            {editingBooked ? "Cập nhật" : "Thêm"}
+                        </button>
+                    </div>
                 </form>
             </Modal>
             <Modal
@@ -291,7 +333,7 @@ export const AdminBookedManage = () => {
                         />
                         <Descriptions column={2}>
                             <Descriptions.Item label="Tên phòng đặt">{selectedBookedDetails.tenViTri}</Descriptions.Item>
-                            <Descriptions.Item label="ID - Mã phòng đặt">{selectedBookedDetails.id}</Descriptions.Item>
+                            <Descriptions.Item label="ID - Đơn đặt phòng số">{selectedBookedDetails.id}</Descriptions.Item>
                             <Descriptions.Item label="Tỉnh Thành">{selectedBookedDetails.tinhThanh}</Descriptions.Item>
                             <Descriptions.Item label="Quốc Gia">{selectedBookedDetails.quocGia}</Descriptions.Item>
                         </Descriptions>
