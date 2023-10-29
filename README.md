@@ -1,7 +1,7 @@
 ## How to run
 #Step 1:
+- Sử dụng npm (khuyến khích): xóa yarn.lock ---> npm install ---> npm start
 - Sử dụng yarn: xóa package-lock.json ---> yarn install --> yarn start
-- Sử dụng npm: xóa yarn.lock ---> npm install ---> npm start
 
 #Step 2:
 - Chạy live scss compiler để cập nhật style.css
@@ -31,5 +31,7 @@
 
 # Known Bugs & Cons
 ## Admin Side (Quang)
+- Server tự đổi role admin sang user khi tạo acc mới. chỉ có edit mới lên admin được
+- Tạo phòng và vị trí mới, server nhận nhưng không cho ID => tạo thất bại
 
 ## User Side (Tùng)

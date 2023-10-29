@@ -89,13 +89,11 @@ export const AdminBookedManage = () => {
     };
 
     const onSubmit = async (values) => {
-        values.maNguoiDung = parseInt(selectedMaNguoiDung);
-        values.maPhong = parseInt(selectedMaPhong);
         try {
             if (editingBooked) {
                 // handle edit
-                const updatedLocation = await editItem('dat-phong', editingBooked.id, values);
-                console.log("Updated Location:", updatedLocation);
+                const updatedBooked = await editItem('dat-phong', editingBooked.id, values);
+                console.log("Updated Location:", updatedBooked);
                 toast.success('Cập nhật phòng đặt thành công!', {
                     position: 'top-center',
                     autoClose: 800,
@@ -106,19 +104,19 @@ export const AdminBookedManage = () => {
 
             } else {
                 // handle add
-                const response = await api.post('/dat-phong');
-                let locations = [];
+                const response = await api.get('/dat-phong');
+                let Booked = [];
                 if (response.data && typeof response.data === 'object') {
                     if (Array.isArray(response.data)) {
-                        locations = response.data;
+                        Booked = response.data;
                     } else {
-                        locations.push(response.data);
-                    }
+                        Booked.push(response.data);
+                 }
                 } else {
                     throw new Error('Data không hợp lệ');
                 }
 
-                const addedLocation = await api.get('dat-phong', { params: values });
+                const addedBooked = await api.get('dat-phong', { params: values });
                 toast.success('thêm lịch đặt phòng thành công!', {
                     position: 'top-center',
                     autoClose: 800,
@@ -126,7 +124,7 @@ export const AdminBookedManage = () => {
 
                 setIsModalVisible(false);
                 reset();
-                console.log("Added Location ID:", addedLocation.data.id);
+                console.log("Added ID:", addedBooked.data.id);
             }
         } catch (err) {
             handleError(err);
