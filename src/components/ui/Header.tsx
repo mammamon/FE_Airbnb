@@ -76,8 +76,8 @@ export const Header = () => {
             <NavLink to="">Trải nghiệm</NavLink>
             <NavLink to="">Trải nghiệm thực tế</NavLink>
           </nav>}
-          <div className={cn({"form-home":!isChooseLocal,"form-not-home":isChooseLocal})}>
-          <Search name="search-form" />
+          <div className={cn({ "form-home": !isChooseLocal, "form-not-home": isChooseLocal })}>
+            <Search name="search-form" />
           </div>
           <div className="header-user">
             <nav>
@@ -127,15 +127,20 @@ export const Header = () => {
               <Popover
                 content={
                   <div className="p-10 w-auto !inset-[ 50px 0px 0px 0px]">
-                    <p className="font-600 text-16">{user?.user.name}</p>
-                    <hr className="my-16" />
                     <p className="text-16">Xin chào</p>
                     <p className="font-600 text-16 mb-4 text=[#ff385c]">{user?.user.name}</p>
+                    <hr className="my-16" />
                     <p
-                      className="text-16 cursor-pointer"
+                      className="text-16 mb-3 cursor-pointer"
                       onClick={() => navigate(PATH.account)}
                     >
                       Thông tin tài khoản
+                    </p>
+                    <p
+                      className="text-16 cursor-pointer"
+                      onClick={() => navigate(PATH.admin)}
+                    >
+                      Đến trang Admin
                     </p>
                     <hr className="my-16" />
                     <Button
@@ -165,7 +170,7 @@ export const Header = () => {
                       <img
                         src={user?.user.avatar}
                         alt="User Avatar"
-                        style={{ borderRadius: '50%', objectFit: 'cover', width:'40px', height:'40px'}}
+                        style={{ borderRadius: '50%', objectFit: 'cover', width: '40px', height: '40px' }}
                       />
                     </div>
                   </Avatar>
