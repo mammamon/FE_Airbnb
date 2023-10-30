@@ -51,7 +51,7 @@ export const RoomListTemplate = () => {
   };
   // get room list by id-----------------------------------------------------------------------
   useEffect(() => {
-    dispatch(getRoomRentThunk(getLocalStorage("local")?.localId));
+    dispatch(getRoomRentThunk(getLocalStorage("localId")));
     console.log("danh sách phòng thuê",roomRentList)
   }, [dispatch,param]);
   return (
@@ -70,21 +70,21 @@ export const RoomListTemplate = () => {
                   <div>
                     <HeartOutlined
                       onClick={() => {
-                        handleChecked(room.id);
+                        handleChecked(room?.id);
                       }}
                       className={cn(
-                        { hidden: like?.find((x) => x === room.id) },
+                        { hidden: like?.find((x) => x === room?.id) },
                         "btn-love"
                       )}
                     />
                     <HeartFilled
                       onClick={() => {
-                        handleChecked(room.id);
+                        handleChecked(room?.id);
                       }}
                       className={cn(
                         {
-                          hidden: !like?.find((x) => x === room.id),
-                          checked: like?.find((x) => x === room.id),
+                          hidden: !like?.find((x) => x === room?.id),
+                          checked: like?.find((x) => x === room?.id),
                         },
                         "btn-love"
                       )}
@@ -96,21 +96,21 @@ export const RoomListTemplate = () => {
                 
                   avatar={
                     <Avatar onClick={()=>{
-                      const path = generatePath(PATH.roomDetail,{roomId:room.id})
-                      navigate(path)}}  shape="square" size={200} src={room.hinhAnh} />
+                      const path = generatePath(PATH.roomDetail,{roomId:room?.id})
+                      navigate(path)}}  shape="square" size={200} src={room?.hinhAnh} />
                   }
                   title={<a onClick={()=>{
                     const path = generatePath(PATH.roomDetail,{roomId:room.id})
-                    navigate(path)}}  >{room.tenPhong}</a>}
+                    navigate(path)}}  >{room?.tenPhong}</a>}
                   description={
                     <div onClick={()=>{
-                      const path = generatePath(PATH.roomDetail,{roomId:room.id})
+                      const path = generatePath(PATH.roomDetail,{roomId:room?.id})
                       navigate(path)}} className="flex flex-col !justify-between flex-wrap grow h-full">
                       <div>
-                        <p>{room.moTa}</p>
+                        <p>{room?.moTa}</p>
                         <p>
-                          {room.giuong} giường, {room.phongNgu} phòng ngủ,{" "}
-                          {room.phongTam} phòng tắm, {room.khach} khách{" "}
+                          {room?.giuong} giường, {room?.phongNgu} phòng ngủ,{" "}
+                          {room?.phongTam} phòng tắm, {room?.khach} khách{" "}
                         </p>
                       </div>
                       <div className="room-furniture flex !justify-between items-start">

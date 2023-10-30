@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, InputNumber, Select, Space } from "antd";
+import { Button, DatePicker, Form, InputNumber, Select, Space, message } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,12 +8,14 @@ import { getLocalRoomListThunk } from "store/LocalRoomStore";
 import { RangePickerProps } from "antd/es/date-picker";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { PATH } from "constant";
-// import cn from "classnames";
-import { getLocalStorage, removeLocalStorage, setLocalStorage } from "utils";
+import cn from "classnames";
+import {  removeLocalStorage, setLocalStorage} from "utils";
 import isBetween from "dayjs/plugin/isBetween";
 import { BookedRoom, BookingRoom } from "types";
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import { postBookingRoomThunk } from "store/BookingRoomStore";
+import { useAuth } from "hooks";
+
 
 type FormProps = {
   isSearchHeader?: boolean;
@@ -23,6 +25,7 @@ type FormProps = {
   costRent?:number;
   onClickEvent?:boolean,
   idRoom?:number,
+  scroll?:boolean,
 };
 
 export const Search = ({
@@ -33,6 +36,7 @@ export const Search = ({
   costRent=0,
   onClickEvent=true,
   idRoom,
+  scroll=false,
 }: FormProps) => {
   const param = useParams();
   const isRoomDetail = Object.keys(param).length ? true : false;
@@ -41,8 +45,10 @@ export const Search = ({
   const { Option } = Select;
   const { RangePicker } = DatePicker;
   const navigate = useNavigate();
-  const [dataLocal, setDatalocal] = useState(getLocalStorage("local") || {});
+  // const [dataLocal, setDatalocal] = useState(getLocalStorage("local")||{});
   const [form] = Form.useForm();
+  const {user}=useAuth()
+  console.log(user)
   removeLocalStorage("userBookedRoom")
  
   // ------------------------------------------------------------------------------------------------------
@@ -135,11 +141,17 @@ export const Search = ({
   const [cost,setCost]=useState(0)
   
   const onValuesChange=(_,allFields)=>{
-    console.log("kiem soat value",allFields)
     const numberRentDay = allFields.rangePicker?dayjs(allFields.rangePicker[1]).diff(allFields.rangePicker[0],"day"):0;
     const amountGuestValue = allFields.amountGuest?allFields.amountGuest:0;
     setCost(numberRentDay *amountGuestValue*costRent)
   }
+  const [messageApi, contextHolder] = message.useMessage();
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "Đặt phòng thành công",
+    });
+  };
 
   
   const onFinish = (fieldsValue: object) => { if(onClickEvent){
@@ -157,63 +169,64 @@ export const Search = ({
         localId: localId,
         amountGuest: amountGuest,
       };
-      setDatalocal({ ...values });
+      // setDatalocal({ ...values });
       setLocalStorage("local", values);
+      setLocalStorage("localId", localId);
       const path = generatePath(PATH.roomList, {
         cityName: local[1],
       });
       navigate(path);
   }
   else{
-    const rangeValue = fieldsValue["rangePicker"];
-    const amountGuest = fieldsValue["amountGuest"];
-    const data:BookingRoom={
-      id:0,
-      maPhong:idRoom,
-      ngayDen:rangeValue[0],
-      ngayDi:rangeValue[1],
-      soLuongKhach:amountGuest,
-      maNguoiDung:3829
+    if(user?.token){
+      const rangeValue = fieldsValue["rangePicker"];
+      const amountGuest = fieldsValue["amountGuest"];
+      const data:BookingRoom={
+        id:0,
+        maPhong:idRoom,
+        ngayDen:rangeValue[0],
+        ngayDi:rangeValue[1],
+        soLuongKhach:amountGuest,
+        maNguoiDung:user.user.id
+      }
+      dispatch(postBookingRoomThunk(data))
+      success()
     }
-    dispatch(postBookingRoomThunk(data))
-  }
-    
+    else{
+      navigate(PATH.login)
+    }
+  }   
   };
-  useEffect(() => {
-    if (!Object.keys(param).length) {
-      setDatalocal({});
-      form.resetFields();
-    } else if (param.cityName) {
-      setDatalocal(getLocalStorage("local"));
-    }
-  }, [Object.keys(param).length]);
-  //----------------------------------------------------------------------------------------------
+  // useEffect(() => {
+  //   if (!Object.keys(param).length || !param.cityName) {
+  //     setDatalocal({});
+  //     form.resetFields();
+  //   } else if (param.cityName) {
+  //     setDatalocal(getLocalStorage("local"));
+  //   }
+  // }, [Object.keys(param).length]);
+
+  
+ 
   useEffect(() => {
     dispatch(getLocalRoomListThunk());
   }, [dispatch]);
+
   return (
     <Form
       name={name}
       onFinish={onFinish}
       style={{ width: "fit-content" }}
       requiredMark={false}
-      layout="inline"
+      layout={isSearchHeader?"vertical":"horizontal"}
       form={form}
       colon={false}
       onValuesChange={onValuesChange}
       initialValues={
-        Object.keys(param).length
-          ? {
-              rangePicker: [
-                dayjs(dataLocal?.rangePicker[0], dateFormat),
-                dayjs(dataLocal?.rangePicker[1], dateFormat),
-              ],
-              localInput: dataLocal?.localInput?.join(", ").toString(),
-              amountGuest: getLocalStorage("local")?.amountGuest,
-            }
-          : { amountGuest: 1 }
+         { amountGuest: 1 }
       }
     >
+        {contextHolder}
       {isSearchHeader && (
         <Form.Item
           name="localInput"
@@ -224,8 +237,8 @@ export const Search = ({
             showSearch
             id="local"
             placeholder="Bạn muốn đi đâu?"
-            optionFilterProp="label"
-            popupClassName={isRoomDetail && "form-home"}
+            optionFilterProp="name"
+            popupClassName={cn({"form-home-page":!isRoomDetail,"scroll":scroll})}
           >
             {localRoomList?.map((local) => (
               <Option
@@ -250,7 +263,7 @@ export const Search = ({
       >
         <RangePicker
           placeholder={["Nhận phòng", "Trả phòng"]}
-          popupClassName={isRoomDetail && "form-home"}
+          popupClassName={cn({"form-home-page":!isRoomDetail,"scroll":scroll})}
           format={dateFormat}
           disabledDate={disabledDate}
           // onBlur={numberDayHandle()}
@@ -264,7 +277,7 @@ export const Search = ({
         label={isRoomDetail ? "" : "Khách"}
         {...amountConfig}
       >
-        <InputNumber min={0} max={100} {...amountConfig} />
+        <InputNumber min={1} max={100} {...amountConfig} />
       </Form.Item>
       <Form.Item>
         {isSearchHeader ? (

@@ -8,9 +8,10 @@ export const apiInstance = (config?: CreateAxiosDefaults) => {
     api.interceptors.request.use((config) => {
         const headers = {
             tokenCybersoft,
-            token:localStorage.getItem('token')||''
+            token:JSON.parse(localStorage.getItem('token'))||''
         } as unknown as AxiosRequestHeaders;
         // const token = localStorage.getItem('token');
+        // console.log(token)
         // if (token) {
         //     headers.Authorization = token || '';
         // }

@@ -14,52 +14,62 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { RootState, useAppDispatch } from "store";
 import { getBookedRoomListThunk } from "store/BookingRoomStore";
 import { getRoomRentByIdThunk } from "store/RoomDetailStore";
 import { Search } from "components";
 import { BookedRoom, FeedbackType } from "types";
-import { dayFormat, getLocalStorage } from "utils";
+import { dayFormat} from "utils";
 import { getFeedbackListThunk, postFeedbackThunk } from "store/FeedbackStore/thunk";
 import TextArea from "antd/es/input/TextArea";
 import FormItem from "antd/es/form/FormItem";
 import dayjs from "dayjs"
+import { useAuth } from "hooks";
+import { PATH } from "constant";
 
 export const RoomDetailTemplate = () => {
   const param = useParams();
+  const navigate=useNavigate()
   const dispatch = useAppDispatch();
   const { roomRentById } = useSelector((state: RootState) => state.roomRent);
   const { feedbackList } = useSelector((state: RootState) => state.feedback);
   const [feedbackRoomList,setFeedbackRoomList] = useState<FeedbackType[]>()
+  const {user} =useAuth()
   const { bookedRoomList } = useSelector(
     (state: RootState) => state.bookingRoom
   );
   const [messageApi, contextHolder] = message.useMessage();
+ 
+
   const success = () => {
     messageApi.open({
       type: "success",
-      content: "Đặt phòng thành công",
+      content: "Bình luận thành công",
     });
   };
-  if (getLocalStorage("userBookedRoom")) {
-    success();
-  }
+
   const onFinish = (fieldsValue: object) => {
     const feedback = fieldsValue["feedbackInput"];
     const starRate = fieldsValue["starRate"];
+    if(user.token){
     const data:FeedbackType={
       id:0,
-      maNguoiBinhLuan:4210,
+      maNguoiBinhLuan:user.user.id,
       maPhong:Number(param.roomId),
       ngayBinhLuan:dayjs().toDate().toISOString(),
       noiDung:feedback,
       saoBinhLuan:starRate
     }
     dispatch(postFeedbackThunk(data))
+    success()
     const feedbackCurrent=[...feedbackRoomList]
     feedbackCurrent.push(data)
     setFeedbackRoomList(feedbackCurrent)
+    }
+    else{
+    navigate(PATH.login)
+    }
   };
   const furniture = {
     banLa: ["Bàn là", "https://img.icons8.com/material-outlined/24/iron.png"],
@@ -104,6 +114,8 @@ export const RoomDetailTemplate = () => {
           }}
         >
           <Row gutter={16}>
+            <Col span={18}>
+              <Row gutter={16}>
             <Col className="col-image" span={6}>
               <Image
                 src={roomRentById?.hinhAnh}
@@ -123,21 +135,12 @@ export const RoomDetailTemplate = () => {
                 </p>
               </div>
             </Col>
-          </Row>
-        </Space>
-        <Space
-          direction="vertical"
-          size="middle"
-          style={{
-            display: "flex",
-            padding: "15px 0",
-            borderTop: "1px solid var(--secondary-color)",
-          }}
-        >
-          <h3>Tiện nghi hiện có</h3>
-          <Row gutter={16}>
-            <Col className="col-furniture" span={8}>
-              <Row gutter={24}>
+              </Row>
+            <Row>
+              <Col span={24}>
+            <h3> Tiện nghi hiện có</h3>
+              </Col>
+          <Row >
                 {Object.keys(roomRentById).map(
                   (x, i) =>
                     roomRentById[x] === true && (
@@ -157,10 +160,13 @@ export const RoomDetailTemplate = () => {
                       </Col>
                     )
                 )}
-              </Row>
+            
+  
+          </Row>
+            </Row>
             </Col>
-            <Col className="col-booked" span={16}>
-              <Space
+            <Col span={6}>
+            <Space
                 direction="vertical"
                 size="middle"
                 style={{
@@ -170,9 +176,10 @@ export const RoomDetailTemplate = () => {
               >
                 <Card style={{ width: 300 }}>
                   <h3 className="mb-2">{roomRentById?.giaTien}$/đêm</h3>
-                  <div className="form-booking">
+                  {/* <div className="form-booking"> */}
                     {contextHolder}
                     <Search
+                      name="form-booking"
                       isSearchHeader={false}
                       guestMax={roomRentById?.khach}
                       bookedList={bookedList}
@@ -180,11 +187,22 @@ export const RoomDetailTemplate = () => {
                       onClickEvent={false}
                       idRoom={Number(param.roomId)}
                     />
-                  </div>
+                  {/* </div> */}
                 </Card>
               </Space>
             </Col>
           </Row>
+        </Space>
+        <Space
+          direction="vertical"
+          size="middle"
+          style={{
+            display: "flex",
+            padding: "15px 0",
+            borderTop: "1px solid var(--secondary-color)",
+          }}
+        >
+         
         </Space>
         <Space
           direction="vertical"

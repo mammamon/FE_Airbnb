@@ -1,3 +1,263 @@
+.form-home{
+	position: absolute;
+	width: 60%;
+	top: 80px;
+	left: 20%;
+	&.form-scroll{
+		top:105px
+	}
+  }
+.form-not-home{
+	width: 60%;
+}
+#search-form{
+    display: flex;
+    width: 100%!important;
+    align-items: center;
+    outline: 2px solid $primaryColor;
+    padding: 15px 30px!important;
+    border-radius: 50px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: start;
+    background-color: white;
+    z-index: 999;
+    .ant-form-item{
+      width: 35%;
+      border-right: 2px solid $secondaryColor;
+      padding-right: 10px;
+      margin-right: 0;
+        &:nth-child(2){
+          width: 40%;
+        }
+        &:nth-child(3){
+          width: 10%;
+        }
+       &:nth-child(4){
+        width: 5%;
+        margin: 0;
+        padding: 0;
+        border-right: none;
+        
+        button{
+          color: red;
+          border-radius: 50%!important;
+        }
+      }
+      .ant-row{
+        flex-direction: column  ;
+        .ant-col{
+          .ant-picker{
+            width: 100%;
+          }
+          label{
+            margin-bottom: 0px!important;
+            height: 25px;
+          }
+          .ant-input-number{
+            width: 100%;
+          }
+        }
+        .ant-form-item-required{
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  #form-booking{
+    button{
+      width: 100%!important;
+    }
+  }
+
+
+.ant-select-dropdown{
+	inset: 75px 0px auto 21%!important;
+	position: fixed!important;
+	&.scroll{
+		inset: 95px 0px auto 21%!important;
+		transition: all .2s;
+	  }
+	&.form-home-page{
+  inset: 160px 0px auto 22%!important;
+  position: fixed!important;
+  &.scroll{
+    inset: 185px 0px auto 22%!important;
+	transition: all .2s;
+  }
+	}
+}
+
+.ant-picker-dropdown{
+	inset: 65px 0px auto 40%!important;
+	position: fixed!important;
+	&.scroll{
+		inset: 90px 0px auto 40%!important;
+		transition: all .2s;
+	  }
+	&.form-home-page{
+		inset: 150px 0px auto 40%!important;
+		position: fixed!important;
+		&.scroll{
+		  inset: 175px 0px auto 40%!important;
+		  transition: all .2s;
+		}
+	}
+
+}
+
+.disabled-input {
+  opacity: 0.5;
+}
+
+.room-detail-template{
+  .ant-card{
+    border: 2px solid $primaryColor;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .search-form {
+//   &.header-fixed {
+//     position: fixed;
+//     width: 80%;
+//     top: 110px;
+//     left: 150px;
+//     z-index: 999;
+//   }
+//   position: fixed;
+//   background-color: white;
+//   display: flex;
+//   justify-content: space-between;
+//   width: 80%;
+//   padding: 10px 15px;
+//   border-radius: 50px;
+//   align-items: center;
+//   border: 1px solid black;
+//   .search-input {
+//     display: flex;
+//     flex-direction: column;
+//     width: 33.33%;
+//     border-right: 2px solid $grayLighter;
+//     margin-left: 15px;
+//     padding: 0 5px;
+//     input {
+//       display: inline-block;
+//       width: 100%;
+//       &:focus {
+//         outline: none;
+//       }
+//     }
+//     &:nth-child(3) {
+//       border-right: none !important;
+//       margin-right: 0;
+//     }
+//   }
+//   .search-icon {
+//     width: 50px;
+//     height: 50px;
+//     border-radius: 50%;
+//     background-color: var(--primary-color);
+//     color: white;
+//     font-size: 25px;
+//     text-align: center;
+//     svg {
+//       width: 100%;
+//     }
+//   }
+// }
+
+// .ant-select-dropdown{
+//   position: fixed!important;
+//   inset: 190px 0px auto 185px!important;
+// }
+
+// .ant-picker-dropdown{
+//   position: fixed!important;
+//   inset: 190px auto auto 365px!important;
+//   width: fit-content;
+// }
+
+
+
 // //search form
 // .search-form {
 //     &.header-fixed {

@@ -1,0 +1,25 @@
+.ant-popover{
+
+    .ant-popover-inner{
+		.content-login{
+			background-color: white;
+			border: $primaryColor solid 1px;
+			border-radius: 10px;
+			position: fixed!important;
+			top: 75px!important;
+			right: 15px!important;
+			&.scroll{
+				top: 100px!important;
+			}
+			&.popover-home{
+			top: 60px!important;
+			right: 15px!important;
+				&.scroll{
+					top: 75px!important;
+				}
+			}
+
+		}
+		
+    }
+  }

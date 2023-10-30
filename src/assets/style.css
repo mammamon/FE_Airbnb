@@ -115,7 +115,41 @@ ul li p .svg-inline--fa {
   height: 100%;
 }
 
+.ant-popover .ant-popover-inner .content-login {
+  background-color: white;
+  border: #ff385c solid 1px;
+  border-radius: 10px;
+  position: fixed !important;
+  top: 75px !important;
+  right: 15px !important;
+}
+.ant-popover .ant-popover-inner .content-login.scroll {
+  top: 100px !important;
+}
+.ant-popover .ant-popover-inner .content-login.popover-home {
+  top: 60px !important;
+  right: 15px !important;
+}
+.ant-popover .ant-popover-inner .content-login.popover-home.scroll {
+  top: 75px !important;
+}
+
+.form-home {
+  position: absolute;
+  width: 60%;
+  top: 80px;
+  left: 20%;
+}
+.form-home.form-scroll {
+  top: 105px;
+}
+
+.form-not-home {
+  width: 60%;
+}
+
 #search-form {
+  display: flex;
   width: 100% !important;
   align-items: center;
   outline: 2px solid #ff385c;
@@ -123,14 +157,9 @@ ul li p .svg-inline--fa {
   border-radius: 50px;
   flex-wrap: nowrap;
   justify-content: space-between;
+  align-items: start;
   background-color: white;
-  z-index: 100;
   z-index: 999;
-}
-#search-form.form-home {
-  position: fixed;
-  top: 100px;
-  left: 20%;
 }
 #search-form .ant-form-item {
   width: 35%;
@@ -171,24 +200,50 @@ ul li p .svg-inline--fa {
   width: 100%;
 }
 
+#form-booking button {
+  width: 100% !important;
+}
+
 .ant-select-dropdown {
-  inset: 180px 0px auto 300px !important;
+  inset: 75px 0px auto 21% !important;
   position: fixed !important;
 }
-.ant-select-dropdown.form-home {
-  inset: 80px 0px auto 290px !important;
+.ant-select-dropdown.scroll {
+  inset: 95px 0px auto 21% !important;
+  transition: all 0.2s;
+}
+.ant-select-dropdown.form-home-page {
+  inset: 160px 0px auto 22% !important;
+  position: fixed !important;
+}
+.ant-select-dropdown.form-home-page.scroll {
+  inset: 185px 0px auto 22% !important;
+  transition: all 0.2s;
 }
 
 .ant-picker-dropdown {
-  inset: 170px 0px auto 520px !important;
+  inset: 65px 0px auto 40% !important;
   position: fixed !important;
 }
-.ant-picker-dropdown.form-home {
-  inset: 70px 0px auto 510px !important;
+.ant-picker-dropdown.scroll {
+  inset: 90px 0px auto 40% !important;
+  transition: all 0.2s;
+}
+.ant-picker-dropdown.form-home-page {
+  inset: 150px 0px auto 40% !important;
+  position: fixed !important;
+}
+.ant-picker-dropdown.form-home-page.scroll {
+  inset: 175px 0px auto 40% !important;
+  transition: all 0.2s;
 }
 
 .disabled-input {
   opacity: 0.5;
+}
+
+.room-detail-template .ant-card {
+  border: 2px solid #ff385c;
 }
 
 .btn-love {
