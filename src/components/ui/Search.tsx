@@ -48,7 +48,6 @@ export const Search = ({
   // const [dataLocal, setDatalocal] = useState(getLocalStorage("local")||{});
   const [form] = Form.useForm();
   const {user}=useAuth()
-  console.log(user)
   removeLocalStorage("userBookedRoom")
  
   // ------------------------------------------------------------------------------------------------------

@@ -52,7 +52,6 @@ export const RoomListTemplate = () => {
   // get room list by id-----------------------------------------------------------------------
   useEffect(() => {
     dispatch(getRoomRentThunk(getLocalStorage("localId")));
-    console.log("danh sách phòng thuê",roomRentList)
   }, [dispatch,param]);
   return (
     <div className="room-list-template py-10">
