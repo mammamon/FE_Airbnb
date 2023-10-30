@@ -2,6 +2,10 @@
 - Sử dụng npm (nên dùng): xóa yarn.lock ---> npm install -> npm run build ---> npm start
 - Sử dụng yarn (hên xui): xóa package-lock.json ---> yarn install --> yarn start
 
+# Test:
+- tài khoản người dùng thường: tung1@gmail.com - pass: tung
+- Tài khoản quản trị viên: flyingshiet@gmail.com - pass: 123456Q@ 
+
 # Phân chia công việc
 ## Tùng
 - Thiết kế giao diện và chức năng phía web người dùng: trang chủ, danh sách phòng, chi tiết phòng, thông tin cá nhân người dùng

@@ -559,15 +559,15 @@ export const AdminRoomManage = () => {
             >
                 {selectedRoomDetails && selectedLocation && (
                     <div className="detailsModal flex flex-column justify-center items-center">
-                        <h2>{selectedRoomDetails.tenPhong}</h2>
+                        <h2 className="!text-2xl">{selectedRoomDetails.tenPhong}</h2>
+                        <h3 className="mb-1">Vị trí: {selectedLocation ? `${selectedLocation.tenViTri}, ${selectedLocation.tinhThanh}, ${selectedLocation.quocGia}` : 'N/A'}</h3>
                         <img
                             src={selectedRoomDetails.hinhAnh || '../../../../images/no-image.jpg'}
                             style={{ width: '90%', height: '240px' }}
                             alt="phòng"
                             className="mb-3"
                         />
-                        <h3 className="mb-1">Vị trí: {selectedLocation ? `${selectedLocation.tenViTri}, ${selectedLocation.tinhThanh}, ${selectedLocation.quocGia}` : 'N/A'}</h3>
-                        <h2 className="text-[#333]">${selectedRoomDetails.giaTien}</h2>
+                        <p className="text-[#333] text-2xl mb-3">${selectedRoomDetails.giaTien}/ngày</p>
                         <Descriptions column={3}>
                             <Descriptions.Item label="ID - Mã phòng">{selectedRoomDetails.id}</Descriptions.Item>
                             <Descriptions.Item label="Số Khách">{selectedRoomDetails.khach}</Descriptions.Item>
