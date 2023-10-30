@@ -309,7 +309,7 @@ export const AdminRoomManage = () => {
             >
                 <div className="flex items-center justify-between px-4">
                     <h2>{editingRoom ? "Cập nhật phòng" : "thêm phòng mới"}</h2>
-                    <img src="../../../images/airbnb.svg" className="w-[100px] h-[2px]" />
+                    <img src="../../../images/airbnb.svg" className="w-[100px] h-[25px]" />
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap">
                     <div className="w-full px-4 mt-4 flex items-center">
@@ -323,7 +323,7 @@ export const AdminRoomManage = () => {
                         />
                     </div>
                     <div className="w-1/3 px-4 ">
-                    <label htmlFor="maViTri">Chọn địa điểm:</label>
+                        <label htmlFor="maViTri">Chọn địa điểm:</label>
                         <Input
                             id="maViTri"
                             name="maViTri"
@@ -519,14 +519,13 @@ export const AdminRoomManage = () => {
                     </div>
 
                     {editingRoom && (
-                        <div className="flex flex-column items-center w-full px-4">
-                            <label htmlFor="hinhAnh">Url ảnh hiện tại:</label>
-                            <h3 className="mb-3">Chọn ảnh khác (tải lên)</h3>
+                        <div className="flex items-center w-full px-4">
+                            <h3 className="mb-3 w-2/5">Chọn ảnh khác:</h3>
                             <Input type="file" onChange={(event) => onFileChange(event, editingRoom.id)} />
                         </div>
                     )}
                     <div className="w-full px-4  items-center">
-                        <label htmlFor="moTa" className="w-1/3`">Mô Tả:</label>
+                        <label htmlFor="moTa" className="w-1/3``">Mô Tả:</label>
                         <Input
                             id="moTa"
                             name="moTa"
@@ -560,44 +559,45 @@ export const AdminRoomManage = () => {
                             alt="phòng"
                             className="mb-3"
                         />
-                        <p className="text-[#333] text-2xl mb-3">${selectedRoomDetails.giaTien}/ngày</p>
-                        <Descriptions column={3}>
-                            <Descriptions.Item label="ID - Mã phòng">{selectedRoomDetails.id}</Descriptions.Item>
-                            <Descriptions.Item label="Số Khách">{selectedRoomDetails.khach}</Descriptions.Item>
-                            <Descriptions.Item label="Số Phòng Ngủ">{selectedRoomDetails.phongNgu}</Descriptions.Item>
-                            <Descriptions.Item label="Số Giường">{selectedRoomDetails.giuong}</Descriptions.Item>
-                            <Descriptions.Item label="Số Phòng Tắm">{selectedRoomDetails.phongTam}</Descriptions.Item>
-                        </Descriptions>
-                        <Descriptions>
-                            <Descriptions.Item label="Máy Giặt">
-                                {selectedRoomDetails.mayGiat ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Bàn Là">
-                                {selectedRoomDetails.banLa ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="TiVi">
-                                {selectedRoomDetails.tivi ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Điều Hòa">
-                                {selectedRoomDetails.dieuHoa ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Wifi">
-                                {selectedRoomDetails.wifi ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Bếp">
-                                {selectedRoomDetails.bep ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Đỗ Xe">
-                                {selectedRoomDetails.doXe ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Hồ Bơi">
-                                {selectedRoomDetails.hoBoi ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Bàn Ủi">
-                                {selectedRoomDetails.banUi ? '✔️' : '❌'}
-                            </Descriptions.Item>
-                        </Descriptions>
-
+                        <p className="text-[#333] text-2xl mb-3">${selectedRoomDetails.giaTien}/đêm</p>
+                        <div className="px-4">
+                            <Descriptions column={3}>
+                                <Descriptions.Item label="ID - Mã phòng">{selectedRoomDetails.id}</Descriptions.Item>
+                                <Descriptions.Item label="Số Khách">{selectedRoomDetails.khach}</Descriptions.Item>
+                                <Descriptions.Item label="Số Phòng Ngủ">{selectedRoomDetails.phongNgu}</Descriptions.Item>
+                                <Descriptions.Item label="Số Giường">{selectedRoomDetails.giuong}</Descriptions.Item>
+                                <Descriptions.Item label="Số Phòng Tắm">{selectedRoomDetails.phongTam}</Descriptions.Item>
+                            </Descriptions>
+                            <Descriptions>
+                                <Descriptions.Item label="Máy Giặt">
+                                    {selectedRoomDetails.mayGiat ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="Bàn Là">
+                                    {selectedRoomDetails.banLa ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="TiVi">
+                                    {selectedRoomDetails.tivi ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="Điều Hòa">
+                                    {selectedRoomDetails.dieuHoa ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="Wifi">
+                                    {selectedRoomDetails.wifi ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="Bếp">
+                                    {selectedRoomDetails.bep ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="Đỗ Xe">
+                                    {selectedRoomDetails.doXe ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="Hồ Bơi">
+                                    {selectedRoomDetails.hoBoi ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                                <Descriptions.Item label="Bàn Ủi">
+                                    {selectedRoomDetails.banUi ? '✔️' : '❌'}
+                                </Descriptions.Item>
+                            </Descriptions>
+                        </div>
                         <Descriptions className="text-start">
                         </Descriptions>
 

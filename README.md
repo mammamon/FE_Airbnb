@@ -13,14 +13,14 @@
 - Thiết kế giao diện và chức năng phía web quản trị: đăng nhập, đăng kí, quản lý người dùng, quản lý vị trí, quản lý phòng, quản lý đặt phòng, từ chối truy cập...
 
 
-# Các hạn chế và lỗi chưa sửa
+# Các lỗi chưa sửa
 ## User Side (Tùng)
 - Để report ở đây
 ## Admin Side (Quang)
-- Check login và logout bằng user data lưu ở local (không an toàn), do hồi đầu mình không lấy được token, sau này lấy được thì gần tới hạn nộp bài (@@)
+- Check login và logout bằng user data lưu ở local (không an toàn), do hồi đầu mình không lấy được token, sau này lấy được thì sợ xung đột code nên thôi @@.
 - Server tự đổi role admin sang user khi tạo acc mới. chỉ có edit mới lên admin được
 - Tạo phòng và vị trí mới, server nhận nhưng không tự động assign ID => không tạo mới được
-- Config API instance để pass authorization thất bại mặc dù đã gắn 2 token (thử nhiều kiểu, thêm, bỏ prefix đều ko thành công) => các api cần auth xác thực đều bị 403
+- Có một số phòng, vị trí không sửa xóa được, lỗi 403, chắc do config bên server
 
 # Install Package
 1. TailwindCSS

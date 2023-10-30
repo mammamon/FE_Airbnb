@@ -12,7 +12,7 @@ import { handleError, useSearch, sortFilterTable, deleteItem, editItem, formatDa
 export const AdminBookedManage = () => {
     const api = apiInstance({ baseURL: import.meta.env.VITE_API });
     const [data, setData] = useState([]);
-    const [users, setUsers] = useState<{ id: number, name: string}[]>([]);
+    const [users, setUsers] = useState<{ id: number, name: string }[]>([]);
     const [rooms, setRooms] = useState<{ id: number, tenPhong: string, giaTien: number }[]>([]);
     const [loading, setLoading] = useState(false);
     const { keyword, handleSearchChange } = useSearch('dat-phong/search');
@@ -269,7 +269,7 @@ export const AdminBookedManage = () => {
             >
                 <div className="flex items-center justify-between px-4">
                     <h2>{editingBooked ? "Sửa lịch đặt phòng" : "Thêm lịch đặt phòng"}</h2>
-                    <img src="../../../images/airbnb.svg" className="w-[100px] h-[20px]" />
+                    <img src="../../../images/airbnb.svg" className="w-[100px] h-[25px]" />
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
                     <div className="px-4">
@@ -361,16 +361,18 @@ export const AdminBookedManage = () => {
                         {(() => {
                             const { user, room } = findMatchingUserAndRoom(selectedBookedDetails);
                             return (
-                                <Descriptions column={1}>
-                                    <Descriptions.Item label="Đơn đặt phòng ID số">{selectedBookedDetails.id}</Descriptions.Item>
-                                    <Descriptions.Item label="Người đặt phòng">{user && user.name}</Descriptions.Item>
-                                    <Descriptions.Item label="Tên phòng">{room && room.tenPhong}</Descriptions.Item>
-                                    <Descriptions.Item label="Giá tiền">${room && room.giaTien}/ ngày</Descriptions.Item>
-                                    <Descriptions.Item label="Tổng tiền">${tongTienDisplay(room.giaTien, selectedBookedDetails.ngayDen, selectedBookedDetails.ngayDi)}</Descriptions.Item>
-                                    <Descriptions.Item label="Ngày đến">{moment(selectedBookedDetails.ngayDen).format('DD/MM/YYYY')}</Descriptions.Item>
-                                    <Descriptions.Item label="Ngày đi">{moment(selectedBookedDetails.ngayDi).format('DD/MM/YYYY')}</Descriptions.Item>
-                                    <Descriptions.Item label="Số lượng khách">{selectedBookedDetails.soLuongKhach}</Descriptions.Item>
-                                </Descriptions>
+                                <div>
+                                    <h2>Đơn đặt phòng số: {selectedBookedDetails.id}</h2>
+                                    <Descriptions column={1}>
+                                        <Descriptions.Item label="Tên phòng">{room && room.tenPhong}</Descriptions.Item>
+                                        <Descriptions.Item label="Người đặt phòng">{user && user.name}</Descriptions.Item>
+                                        <Descriptions.Item label="Số lượng khách">{selectedBookedDetails.soLuongKhach}</Descriptions.Item>
+                                        <Descriptions.Item label="Giá tiền">${room && room.giaTien}/ đêm</Descriptions.Item>
+                                        <Descriptions.Item label="Tổng tiền">${tongTienDisplay(room.giaTien, selectedBookedDetails.ngayDen, selectedBookedDetails.ngayDi)}</Descriptions.Item>
+                                        <Descriptions.Item label="Ngày đến">{moment(selectedBookedDetails.ngayDen).format('DD/MM/YYYY')}</Descriptions.Item>
+                                        <Descriptions.Item label="Ngày đi">{moment(selectedBookedDetails.ngayDi).format('DD/MM/YYYY')}</Descriptions.Item>
+                                    </Descriptions>
+                                </div>
 
                             );
                         })()}
