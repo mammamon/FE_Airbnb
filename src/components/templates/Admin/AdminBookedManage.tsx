@@ -12,8 +12,8 @@ import { handleError, useSearch, sortFilterTable, deleteItem, editItem, formatDa
 export const AdminBookedManage = () => {
     const api = apiInstance({ baseURL: import.meta.env.VITE_API });
     const [data, setData] = useState([]);
-    const [rooms, setRooms] = useState([]);
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<{ id: number, name: string }[]>([]);
+    const [rooms, setRooms] = useState<{ id: number, tenPhong: string }[]>([]);
     const [loading, setLoading] = useState(false);
     const { keyword, handleSearchChange } = useSearch('dat-phong/search');
     const [editingBooked, setEditingBooked] = useState(null);
@@ -22,6 +22,15 @@ export const AdminBookedManage = () => {
     const [selectedBookedDetails, setselectedBookedDetails] = useState(null);
     const [selectedMaNguoiDung, setSelectedMaNguoiDung] = useState(null);
     const [selectedMaPhong, setSelectedMaPhong] = useState(null);
+    const findMatchingUserAndRoom = (dataItem) => {
+        const user = users.find(user => user.id === dataItem.maNguoiDung);
+        const room = rooms.find(room => room.id === dataItem.maPhong);
+        return { user, room };
+    };
+
+
+
+
 
     const handleSelectedMaNguoiDungChange = (value) => {
         setSelectedMaNguoiDung(value);
@@ -93,7 +102,7 @@ export const AdminBookedManage = () => {
             if (editingBooked) {
                 // handle edit
                 const updatedBooked = await editItem('dat-phong', editingBooked.id, values);
-                console.log("Updated Location:", updatedBooked);
+                console.log("Updated :", updatedBooked);
                 toast.success('Cập nhật phòng đặt thành công!', {
                     position: 'top-center',
                     autoClose: 800,
@@ -171,8 +180,9 @@ export const AdminBookedManage = () => {
         setIsModalVisible(true);
     };
 
-    const showDetailsModal = (location) => {
-        setselectedBookedDetails(location);
+    const showDetailsModal = (record) => {
+        const { user, room } = findMatchingUserAndRoom(record);
+        setselectedBookedDetails({ ...record, user, room });
         setIsDetailsModalVisible(true);
     };
 
@@ -180,6 +190,8 @@ export const AdminBookedManage = () => {
         setIsDetailsModalVisible(false);
         setselectedBookedDetails(null);
     };
+
+
 
     const columns = data ? sortFilterTable([
         {
@@ -350,21 +362,24 @@ export const AdminBookedManage = () => {
             >
                 {selectedBookedDetails && (
                     <div className="detailsModal flex flex-column justify-center items-center">
-                        <img
-                            src={selectedBookedDetails.hinhAnh || '../../../../images/no-image.jpg'}
-                            style={{ width: '90%', height: '240px' }}
-                            alt="phòng đặt"
-                            className="mb-3"
-                        />
-                        <Descriptions column={2}>
-                            <Descriptions.Item label="Tên phòng đặt">{selectedBookedDetails.tenViTri}</Descriptions.Item>
-                            <Descriptions.Item label="ID - lịch đặt phòng số">{selectedBookedDetails.id}</Descriptions.Item>
-                            <Descriptions.Item label="Tỉnh Thành">{selectedBookedDetails.tinhThanh}</Descriptions.Item>
-                            <Descriptions.Item label="Quốc Gia">{selectedBookedDetails.quocGia}</Descriptions.Item>
-                        </Descriptions>
+                        {(() => {
+                            const { user, room } = findMatchingUserAndRoom(selectedBookedDetails);
+                            return (
+                                <Descriptions column={1}>
+                                    <Descriptions.Item label="ID">{selectedBookedDetails.id}</Descriptions.Item>
+                                    <Descriptions.Item label="Ngày đến">{selectedBookedDetails.ngayDen}</Descriptions.Item>
+                                    <Descriptions.Item label="Ngày đi">{selectedBookedDetails.ngayDi}</Descriptions.Item>
+                                    <Descriptions.Item label="Số lượng khách">{selectedBookedDetails.soLuongKhach}</Descriptions.Item>
+                                    <Descriptions.Item label="Tên phòng">{room && room.tenPhong}</Descriptions.Item>
+                                    <Descriptions.Item label="Tên người dùng">{user && user.name}</Descriptions.Item>
+                                </Descriptions>
+                            );
+                        })()}
                     </div>
                 )}
+
             </Modal>
+
             <div className="searchTableWrapper flex pb-3 w-full justify-center">
                 <input className="p-2 rounded-10 w-2/3 searchInputAdmin" placeholder="Nhập tên phòng đặt" value={keyword} onChange={handleSearchChange} />
             </div>
