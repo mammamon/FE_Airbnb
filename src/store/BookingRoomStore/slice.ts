@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { BookedRoom, BookingRoom } from "types";
-import { getBookedRoomListThunk, postBookingRoomThunk } from ".";
-import {  setLocalStorage } from "utils";
+import { getBookedRoomListThunk, postBookingRoomThunk, getBookedRoomByUserThunk } from ".";
+import { setLocalStorage } from "utils";
 
 
 type BookingRoomState = {
   bookedRoomList?: BookedRoom[];
   bookingRoom?: BookingRoom;
-//   isFetchingChairList?: boolean;
+  //   isFetchingChairList?: boolean;
   isFetchingBookingRoom?: boolean;
 };
 
 const initialState: BookingRoomState = {
-//   isFetchingChairList: false,
-isFetchingBookingRoom: true,
+  //   isFetchingChairList: false,
+  isFetchingBookingRoom: false,
 };
 
 const bookingRoomSlice = createSlice({
@@ -22,22 +22,37 @@ const bookingRoomSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getBookedRoomListThunk.pending, (state) => {
+        state.isFetchingBookingRoom = true;
+      })
       .addCase(getBookedRoomListThunk.fulfilled, (state, action) => {
         state.bookedRoomList = action.payload;
+        state.isFetchingBookingRoom = false;
+      })
+      .addCase(getBookedRoomListThunk.rejected, (state) => {
+        state.isFetchingBookingRoom = false;
+      })
+      .addCase(postBookingRoomThunk.pending, (state) => {
+        state.isFetchingBookingRoom = true
+      })
+      .addCase(postBookingRoomThunk.fulfilled, (state, action) => {
+        state.bookingRoom = action.payload
+        state.isFetchingBookingRoom = false
+        setLocalStorage("userBookedRoom", action.payload)
+      })
+      .addCase(postBookingRoomThunk.rejected, (state) => {
+        state.isFetchingBookingRoom = false
+      })
+      .addCase(getBookedRoomByUserThunk.pending, (state) => {
+        state.isFetchingBookingRoom = true;
+      })
+      .addCase(getBookedRoomByUserThunk.fulfilled, (state, action) => {
+        state.bookingRoom = action.payload;
+        state.isFetchingBookingRoom = false;
+      })
+      .addCase(getBookedRoomByUserThunk.rejected, (state) => {
+        state.isFetchingBookingRoom = false;
       });
-    builder
-    .addCase(postBookingRoomThunk.pending,(state)=>{
-      state.isFetchingBookingRoom=true
-    })
-  .addCase(postBookingRoomThunk.rejected,(state)=>{
-    state.isFetchingBookingRoom=false
-  })
-  .addCase(postBookingRoomThunk.fulfilled,(state,action)=>{
-    state.bookingRoom=action.payload
-    state.isFetchingBookingRoom=false
-    setLocalStorage("userBookedRoom",action.payload)
-    
-  })
   },
 });
 

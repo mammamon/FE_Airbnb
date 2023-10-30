@@ -7,5 +7,7 @@ const api = apiInstance({
 
 export const bookingRoomServices = {
     getBookedRoomList: () => api.get<ApiResponse<BookedRoom[]>>(''),
-    postBookingRoom: (data:BookingRoom) => api.post<ApiResponse<BookingRoom>>('',data),
+    postBookingRoom: (data: BookingRoom) => api.post<ApiResponse<BookingRoom>>('', data),
+    getBookedRoomByUser: (id: string) => api.get<ApiResponse<BookedRoom>>(`/${id}`),
+
 }

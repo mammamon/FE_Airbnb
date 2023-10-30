@@ -5,11 +5,13 @@ import { loginThunk } from ".";
 type InitialState = {
   userLogin?: UserLogin
   isFetchingLogin?: boolean;
+  userBooked: string | null;
 };
 
 const initialState: InitialState = {
   userLogin: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}') : undefined,
   isFetchingLogin: false,
+  userBooked: null,
 };
 const userSlice = createSlice({
   name: "userManage",

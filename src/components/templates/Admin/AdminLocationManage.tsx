@@ -205,13 +205,13 @@ export const AdminLocationManage = () => {
                     <Button
                         className="me-4"
                         onClick={() => handleEditLocation(record)}
-                        disabled={record.id <= 10}
+                        disabled={record.id}
                     >
                         Sửa
                     </Button>
                     <Button
                         onClick={() => handleDeleteLocation(record)}
-                        disabled={record.id <= 10}
+                        disabled={record.id}
                     >
                         Xóa
                     </Button>

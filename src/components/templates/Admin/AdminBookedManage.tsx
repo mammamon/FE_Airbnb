@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BookedAddSchema, BookedEditSchema, BookedSchemaType } from "schema";
 import { useState, useEffect } from "react";
-import { handleError, useSearch, sortFilterTable, deleteItem, editItem, formatDate, tongTienDisplay } from "utils";
+import { handleError, sortFilterTable, deleteItem, editItem, formatDate, tongTienDisplay } from "utils";
 
 export const AdminBookedManage = () => {
     const api = apiInstance({ baseURL: import.meta.env.VITE_API });
@@ -15,13 +15,13 @@ export const AdminBookedManage = () => {
     const [users, setUsers] = useState<{ id: number, name: string }[]>([]);
     const [rooms, setRooms] = useState<{ id: number, tenPhong: string, giaTien: number }[]>([]);
     const [loading, setLoading] = useState(false);
-    const { keyword, handleSearchChange } = useSearch('dat-phong/search');
     const [editingBooked, setEditingBooked] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
     const [selectedBookedDetails, setselectedBookedDetails] = useState(null);
     const [selectedMaNguoiDung, setSelectedMaNguoiDung] = useState(null);
     const [selectedMaPhong, setSelectedMaPhong] = useState(null);
+
     const findMatchingUserAndRoom = (dataItem) => {
         const user = users.find(user => user.id === dataItem.maNguoiDung);
         const room = rooms.find(room => room.id === dataItem.maPhong);
@@ -367,10 +367,10 @@ export const AdminBookedManage = () => {
                                         <Descriptions.Item label="Tên phòng">{room && room.tenPhong}</Descriptions.Item>
                                         <Descriptions.Item label="Người đặt phòng">{user && user.name}</Descriptions.Item>
                                         <Descriptions.Item label="Số lượng khách">{selectedBookedDetails.soLuongKhach}</Descriptions.Item>
-                                        <Descriptions.Item label="Giá tiền">${room && room.giaTien}/ đêm</Descriptions.Item>
-                                        <Descriptions.Item label="Tổng tiền">${tongTienDisplay(room.giaTien, selectedBookedDetails.ngayDen, selectedBookedDetails.ngayDi)}</Descriptions.Item>
                                         <Descriptions.Item label="Ngày đến">{moment(selectedBookedDetails.ngayDen).format('DD/MM/YYYY')}</Descriptions.Item>
                                         <Descriptions.Item label="Ngày đi">{moment(selectedBookedDetails.ngayDi).format('DD/MM/YYYY')}</Descriptions.Item>
+                                        <Descriptions.Item label="Giá tiền">${room && room.giaTien}/ đêm</Descriptions.Item>
+                                        <Descriptions.Item label="Tổng tiền">${tongTienDisplay(room.giaTien, selectedBookedDetails.ngayDen, selectedBookedDetails.ngayDi)}</Descriptions.Item>
                                     </Descriptions>
                                 </div>
 
@@ -382,7 +382,7 @@ export const AdminBookedManage = () => {
             </Modal>
 
             <div className="searchTableWrapper flex pb-3 w-full justify-center">
-                <input className="p-2 rounded-10 w-2/3 searchInputAdmin" placeholder="Nhập tên phòng đặt" value={keyword} onChange={handleSearchChange} />
+                <input className="p-2 rounded-10 w-2/3 searchInputAdmin" placeholder="Nhập đơn đặt phòng"/>
             </div>
             <Table
                 columns={columns}
