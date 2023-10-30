@@ -1,23 +1,41 @@
 .ant-pagination {
     justify-content: center !important;
 }
+
 .ant-pagination-options {
     display: none !important;
 }
+
 .ant-table-column-title {
     font-family: sans-serif;
 }
+
 .ant-modal-content .ant-modal-close {
     display: none !important;
 }
+
 .ant-modal .ant-modal-title {
-    @include font-style ('Roboto'!important,24px!important, $primaryColor!important, 400!important);
+    @include font-style ('Roboto' !important, 24px !important, $primaryColor !important, 400 !important);
     text-transform: capitalize;
 }
+
 .css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-filter-trigger {
     display: none !important;
 }
 
-.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-up, .css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-down {
+.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-up,
+.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-down {
     font-size: 13px;
+}
+
+
+.css-dev-only-do-not-override-1qg4o3q.ant-avatar {
+    display: flex;
+    align-items: center;
+    @include mp-0;
+    .ant-avatar-string img {
+        @include square(120px);
+        border-radius: 50%;
+        transform: scaleX(2);
+    }
 }

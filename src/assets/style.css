@@ -127,7 +127,7 @@ ul li p .svg-inline--fa {
   top: 100px !important;
 }
 .ant-popover .ant-popover-inner .content-login.popover-home {
-  top: 60px !important;
+  top: 75px !important;
   right: 15px !important;
 }
 .ant-popover .ant-popover-inner .content-login.popover-home.scroll {
@@ -156,7 +156,7 @@ ul li p .svg-inline--fa {
   outline: 2px solid #ff385c;
   padding: 15px 30px !important;
   border-radius: 50px;
-  flex-wrap: nowrap;
+  flex-direction: flex-start;
   justify-content: space-between;
   align-items: start;
   background-color: white !important;
@@ -641,6 +641,20 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   display: none !important;
 }
 
-.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-up, .css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-down {
+.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-up,
+.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-down {
   font-size: 13px;
 }
+
+.css-dev-only-do-not-override-1qg4o3q.ant-avatar {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.css-dev-only-do-not-override-1qg4o3q.ant-avatar .ant-avatar-string img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  transform: scaleX(2);
+}/*# sourceMappingURL=style.css.map */

@@ -1,6 +1,6 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { Avatar, Button, Popover} from "components";
+import { Avatar, Button, Popover } from "components";
 import { PATH } from "constant";
 import { useAuth } from "hooks";
 import { useAppDispatch } from "store";
@@ -18,8 +18,8 @@ export const Header2 = () => {
   const [scroll, setScroll] = useState<boolean>(false);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
-  // const [localChoose,setLocalChoose] = useState( {...getLocalStorage("local")})
-  const isChooseLocal = Object.keys(param).length ? true : false
+  const isHomePage = Object.keys(param).length ? false : true
+
   const handleScroll = () => {
     if (window.pageYOffset > 500) {
       setScroll(true);
@@ -61,7 +61,7 @@ export const Header2 = () => {
         className={cn({
           "header-fixed": scroll,
           "header-hidden": !isHeaderVisible && isSmallScreen,
-          "header-local": isChooseLocal,
+          "header-not-home": !isHomePage,
         })}
       >
         <div className="header-content">
@@ -71,11 +71,16 @@ export const Header2 = () => {
             src="/images/airbnb.svg"
             alt="logo"
           />
-          {!isChooseLocal && <nav>
+
+          {isHomePage && <nav>
             <NavLink to="">Nơi ở</NavLink>
             <NavLink to="">Trải nghiệm</NavLink>
             <NavLink to="">Trải nghiệm thực tế</NavLink>
           </nav>}
+          {/* <div className={cn({ "form-home": isHomePage, "form-scroll": scroll, "form-not-home": !isHomePage })}>
+            <Search name="search-form" scroll={scroll} />
+          </div> */}
+
           <div className="header-user">
             <nav>
               <NavLink to="">
@@ -123,23 +128,21 @@ export const Header2 = () => {
             {!!user && (
               <Popover
                 content={
-                  <div className="p-10 w-auto !inset-[ 50px 0px 0px 0px]">
-                    <p className="text-16">Xin chào</p>
-                    <p className="font-600 text-16 mb-4 text=[#ff385c]">{user?.user.name}</p>
-                    <hr className="my-16" />
+                  <div className={cn({ "scroll": scroll, "popover-home": isHomePage }, "content-login p-10 w-auto")} >
+                    <p className=" text-16 border-b-2"> Xin chào <span className="font-600">{user?.user.name} !</span></p>
                     <p
-                      className="text-16 mb-3 cursor-pointer"
+                      className="text-16 cursor-pointer border-b-2 mb-2 py-2 hover:text-[#ff385c]"
                       onClick={() => navigate(PATH.account)}
                     >
                       Thông tin tài khoản
                     </p>
                     <p
-                      className="text-16 cursor-pointer"
+                      className="text-16 cursor-pointer mb-2 hover:text-[#ff385c]"
                       onClick={() => navigate(PATH.admin)}
                     >
                       Đến trang Admin
                     </p>
-                    <hr className="my-16" />
+
                     <Button
                       className="!h-[46px]"
                       type="primary"
@@ -159,18 +162,21 @@ export const Header2 = () => {
                     TÀI KHOẢN
                   </p>
                 ) : (
-                  <Avatar
-                    size="large"
-                    className="!bg-[var(--primary-color)] cursor-pointer !containeritems-center"
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                      <img
-                        src={user?.user.avatar}
-                        alt="User Avatar"
-                        style={{ borderRadius: '50%', objectFit: 'cover', width: '40px', height: '40px' }}
-                      />
-                    </div>
-                  </Avatar>
+                  <div id="user-avatar">
+                    <Avatar
+                      size="large"
+                      className="!bg-[var(--primary-color)] cursor-pointer !containeritems-center"
+                      src={user?.user.avatar}
+                    >
+                      {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <img
+                      src={user?.user.avatar}
+                      alt="User Avatar"
+                      style={{ borderRadius: '50%', objectFit: 'cover', width: '40px', height: '40px' }}
+                    />
+                  </div> */}
+                    </Avatar>
+                  </div>
                 )}
               </Popover>
 
@@ -178,32 +184,39 @@ export const Header2 = () => {
             )}
           </div>
         </div>
+        {/* {isInputVisible  && (
+          
+        )} */}
+
       </Container>
     </>
   );
 };
 
 const Container = styled.header`
-  height: 80px !important;
+  height: 80px;
+  padding-bottom:0px;
   box-shadow: 0px 16px 10px -5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   background: #fff;
   font-family: "Circular-bold";
+  transition: all 0.2s;
   
   @media (max-width: 768px) {
     height: 280px;
     position: fixed;
-    z-index: 999;
+    z-index: 800;
     // box-shadow: none;
     background: transparent;
   }
-  &.header-local{
+  &.header-not-home{
     padding-bottom:0px!important;
-    height: 100px;
+    height: 130px;
   }
 
   &.header-fixed {
     position: fixed;
+    height:150px;
     width: 100%;
     z-index: 999;
   }
@@ -216,7 +229,7 @@ const Container = styled.header`
   .header-content {
     padding: 0 60px;
     max-width: var(--max-width);
-    height: 100%;
+    height: 80px;
     margin: auto;
     display: flex;
     align-items: center;
@@ -230,15 +243,6 @@ const Container = styled.header`
       margin: 0;
       background-color: #efefef;
     }
-    .form-home{
-      position:absolute;
-      top:110px;
-      left:300px;
-    }
-
-    .form-not-home{
-      width:60%;
-        }
     .brand {
       width: 150px;
       &:hover {
@@ -319,52 +323,54 @@ const Container = styled.header`
       }
     }
 
-    .search {
-      display: flex;
-      align-items: center;
-      border-radius: 8px;
-      height: 40px;
-      overflow: hidden;
-      max-width: 200px;
+    // .search {
+    //   display: flex;
+    //   align-items: center;
+    //   border-radius: 8px;
+    //   height: 40px;
+    //   overflow: hidden;
+    //   max-width: 200px;
 
-      button {
-        height: 40px;
-        width: 40px;
-        border: none;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #111;
-        cursor: pointer;
-        outline: none;
-        color: #fff;
+    //   button {
+    //     height: 40px;
+    //     width: 40px;
+    //     border: none;
+    //     border-radius: 50%;
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     background: #111;
+    //     cursor: pointer;
+    //     outline: none;
+    //     color: #fff;
 
-        &:hover {
-          color: var(--primary-color) !important;
-        }
+    //     &:hover {
+    //       color: var(--primary-color) !important;
+    //     }
 
-        i {
-          font-size: 20px;
-          line-height: 40px;
-        }
+    //     i {
+    //       font-size: 20px;
+    //       line-height: 40px;
+    //     }
 
-        @media (max-width: 768px) {
-          scale: 0.7;
-        }
-      }
+    //     @media (max-width: 768px) {
+    //       scale: 0.7;
+    //     }
+    //   }
 
-      @media (max-width: 768px) {
-        &:before {
-          content: "TÌM PHIM";
-          margin-right: 4px;
-          font-size: 17px;
-          cursor: pointer;
-        }
-      }
-    }
+    //   @media (max-width: 768px) {
+    //     &:before {
+    //       content: "TÌM PHIM";
+    //       margin-right: 4px;
+    //       font-size: 17px;
+    //       cursor: pointer;
+    //     }
+    //   }
+    // }
   }
+
 `;
+
 
 const ToggleButton = styled.button`
   position: absolute;

@@ -307,14 +307,23 @@ export const AdminRoomManage = () => {
                 onCancel={handleCancel}
                 footer={null}
             >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between px-4">
                     <h2>{editingRoom ? "Cập nhật phòng" : "thêm phòng mới"}</h2>
-                    <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
+                    <img src="../../../images/airbnb.svg" className="w-[100px] h-[2px]" />
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap">
-
-
                     <div className="w-full px-4 mt-4 flex items-center">
+                        <label htmlFor="tenPhong" className="pb-[14px] pe-[10px]">Tên Phòng:</label>
+                        <Input
+                            className="me-5"
+                            id="tenPhong"
+                            name="tenPhong"
+                            error={errors?.tenPhong?.message}
+                            register={register}
+                        />
+                    </div>
+                    <div className="w-1/3 px-4 ">
+                    <label htmlFor="maViTri">Chọn địa điểm:</label>
                         <Input
                             id="maViTri"
                             name="maViTri"
@@ -324,14 +333,6 @@ export const AdminRoomManage = () => {
                                 label: location.tenViTri,
                                 value: location.id,
                             }))}
-                        />
-
-                        <label htmlFor="tenPhong" className="w-1/3 pb-[14px]">Tên Phòng:</label>
-                        <Input
-                            id="tenPhong"
-                            name="tenPhong"
-                            error={errors?.tenPhong?.message}
-                            register={register}
                         />
                     </div>
 
@@ -520,20 +521,12 @@ export const AdminRoomManage = () => {
                     {editingRoom && (
                         <div className="flex flex-column items-center w-full px-4">
                             <label htmlFor="hinhAnh">Url ảnh hiện tại:</label>
-                            <Input
-                                className=""
-                                placeholder="Hình ảnh"
-                                disabled={true}
-                                id="hinhAnh"
-                                name="hinhAnh"
-                                register={register}
-                            />
                             <h3 className="mb-3">Chọn ảnh khác (tải lên)</h3>
                             <Input type="file" onChange={(event) => onFileChange(event, editingRoom.id)} />
                         </div>
                     )}
                     <div className="w-full px-4  items-center">
-                        <label htmlFor="moTa" className="w-1/3 pb-[14px]">Mô Tả:</label>
+                        <label htmlFor="moTa" className="w-1/3`">Mô Tả:</label>
                         <Input
                             id="moTa"
                             name="moTa"

@@ -90,7 +90,7 @@ export const AccountInfo = () => {
   }, [reset, userLogin]);
 
   return (
-    <div className="acountInfoWrapper flex ">
+    <div className="acountInfoWrapper flex mt-5">
       <div className="w-1/2 flex flex-column items-center">
         <div className="bg-gray-300 rounded-full flex items-center mb-3">
           <Avatar
