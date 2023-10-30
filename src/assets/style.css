@@ -414,11 +414,6 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   font-weight: 500;
 }
 
-.ant-spin-container::after {
-  opacity: 1;
-  background-color: red;
-}
-
 .btn-filter button {
   text-transform: uppercase;
   font-size: 16px;

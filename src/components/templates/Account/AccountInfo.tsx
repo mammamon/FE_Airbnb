@@ -8,6 +8,7 @@ import { AccountSchema, AccountSchemaType } from 'schema/AccountSchema'
 import { AppDispatch, RootState } from 'store'
 import { updateThunk } from 'store/UserStore'
 import { userServices } from 'services/userServices'
+import { UserOutlined } from '@ant-design/icons'
 
 export const AccountInfo = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -96,12 +97,9 @@ export const AccountInfo = () => {
             className="cursor-pointer"
             size={120}
             onClick={() => fileInputRef.current?.click()}
+            src={userLogin?.user.avatar}
+            icon={!userLogin?.user.avatar&&<UserOutlined />}
           >
-            {userLogin?.user.avatar ? ( 
-              <img src={userLogin?.user.avatar} alt="User Avatar" />
-            ) : (
-              <i className="fas fa-user"></i>
-            )}
           </Avatar>
 
           <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={handleFileChange} />
