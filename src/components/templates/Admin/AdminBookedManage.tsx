@@ -7,13 +7,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BookedAddSchema, BookedEditSchema, BookedSchemaType } from "schema";
 import { useState, useEffect } from "react";
-import { handleError, useSearch, sortFilterTable, deleteItem, editItem, formatDate } from "utils";
+import { handleError, useSearch, sortFilterTable, deleteItem, editItem, formatDate, tongTienDisplay } from "utils";
 
 export const AdminBookedManage = () => {
     const api = apiInstance({ baseURL: import.meta.env.VITE_API });
     const [data, setData] = useState([]);
-    const [users, setUsers] = useState<{ id: number, name: string }[]>([]);
-    const [rooms, setRooms] = useState<{ id: number, tenPhong: string }[]>([]);
+    const [users, setUsers] = useState<{ id: number, name: string}[]>([]);
+    const [rooms, setRooms] = useState<{ id: number, tenPhong: string, giaTien: number }[]>([]);
     const [loading, setLoading] = useState(false);
     const { keyword, handleSearchChange } = useSearch('dat-phong/search');
     const [editingBooked, setEditingBooked] = useState(null);
@@ -27,10 +27,6 @@ export const AdminBookedManage = () => {
         const room = rooms.find(room => room.id === dataItem.maPhong);
         return { user, room };
     };
-
-
-
-
 
     const handleSelectedMaNguoiDungChange = (value) => {
         setSelectedMaNguoiDung(value);
@@ -366,13 +362,16 @@ export const AdminBookedManage = () => {
                             const { user, room } = findMatchingUserAndRoom(selectedBookedDetails);
                             return (
                                 <Descriptions column={1}>
-                                    <Descriptions.Item label="ID">{selectedBookedDetails.id}</Descriptions.Item>
-                                    <Descriptions.Item label="Ngày đến">{selectedBookedDetails.ngayDen}</Descriptions.Item>
-                                    <Descriptions.Item label="Ngày đi">{selectedBookedDetails.ngayDi}</Descriptions.Item>
-                                    <Descriptions.Item label="Số lượng khách">{selectedBookedDetails.soLuongKhach}</Descriptions.Item>
+                                    <Descriptions.Item label="Đơn đặt phòng ID số">{selectedBookedDetails.id}</Descriptions.Item>
+                                    <Descriptions.Item label="Người đặt phòng">{user && user.name}</Descriptions.Item>
                                     <Descriptions.Item label="Tên phòng">{room && room.tenPhong}</Descriptions.Item>
-                                    <Descriptions.Item label="Tên người dùng">{user && user.name}</Descriptions.Item>
+                                    <Descriptions.Item label="Giá tiền">${room && room.giaTien}/ ngày</Descriptions.Item>
+                                    <Descriptions.Item label="Tổng tiền">${tongTienDisplay(room.giaTien, selectedBookedDetails.ngayDen, selectedBookedDetails.ngayDi)}</Descriptions.Item>
+                                    <Descriptions.Item label="Ngày đến">{moment(selectedBookedDetails.ngayDen).format('DD/MM/YYYY')}</Descriptions.Item>
+                                    <Descriptions.Item label="Ngày đi">{moment(selectedBookedDetails.ngayDi).format('DD/MM/YYYY')}</Descriptions.Item>
+                                    <Descriptions.Item label="Số lượng khách">{selectedBookedDetails.soLuongKhach}</Descriptions.Item>
                                 </Descriptions>
+
                             );
                         })()}
                     </div>
