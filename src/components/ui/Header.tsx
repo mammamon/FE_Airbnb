@@ -19,7 +19,7 @@ export const Header = () => {
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
   const isHomePage = Object.keys(param).length ? false : true
- 
+
   const handleScroll = () => {
     if (window.pageYOffset > 50) {
       setScroll(true);
@@ -63,7 +63,7 @@ export const Header = () => {
           "header-hidden": !isHeaderVisible && isSmallScreen,
           "header-not-home": !isHomePage,
         })}
-      >  
+      >
         <div className="header-content">
           <img
             className="brand"
@@ -71,16 +71,16 @@ export const Header = () => {
             src="/images/airbnb.svg"
             alt="logo"
           />
-          
+
           {isHomePage && <nav>
             <NavLink to="">Nơi ở</NavLink>
             <NavLink to="">Trải nghiệm</NavLink>
             <NavLink to="">Trải nghiệm thực tế</NavLink>
           </nav>}
-          <div className={cn({"form-home":isHomePage,"form-scroll":scroll,"form-not-home":!isHomePage})}>
-      <Search name="search-form" scroll={scroll}  />
-      </div>
-          
+          <div className={cn({ "form-home": isHomePage, "form-scroll": scroll, "form-not-home": !isHomePage })}>
+            <Search name="search-form" scroll={scroll} />
+          </div>
+
           <div className="header-user">
             <nav>
               <NavLink to="">
@@ -128,15 +128,21 @@ export const Header = () => {
             {!!user && (
               <Popover
                 content={
-                  <div className={cn({"scroll":scroll, "popover-home":isHomePage},"content-login p-10 w-auto")} >
-                    <p className=" text-16 border-b-2"> Xin chào <span className="font-600">{user?.user.name}</span></p>
+                  <div className={cn({ "scroll": scroll, "popover-home": isHomePage }, "content-login p-10 w-auto")} >
+                    <p className=" text-16 border-b-2"> Xin chào <span className="font-600">{user?.user.name} !</span></p>
                     <p
-                      className="text-16 cursor-pointer border-b-2 mb-2"
+                      className="text-16 cursor-pointer border-b-2 mb-2 py-2 hover:text-[#ff385c]"
                       onClick={() => navigate(PATH.account)}
                     >
                       Thông tin tài khoản
                     </p>
-                    
+                    <p
+                      className="text-16 cursor-pointer mb-2 hover:text-[#ff385c]"
+                      onClick={() => navigate(PATH.admin)}
+                    >
+                      Đến trang Admin
+                    </p>
+
                     <Button
                       className="!h-[46px]"
                       type="primary"
@@ -157,19 +163,19 @@ export const Header = () => {
                   </p>
                 ) : (
                   <div id="user-avatar">
-                  <Avatar
-                    size="large"
-                    className="!bg-[var(--primary-color)] cursor-pointer !containeritems-center"
-                    src={user?.user.avatar}
-                  >
-                    {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Avatar
+                      size="large"
+                      className="!bg-[var(--primary-color)] cursor-pointer !containeritems-center"
+                      src={user?.user.avatar}
+                    >
+                      {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                       <img
                         src={user?.user.avatar}
                         alt="User Avatar"
                         style={{ borderRadius: '50%', objectFit: 'cover', width: '40px', height: '40px' }}
                       />
                     </div> */}
-                  </Avatar>
+                    </Avatar>
                   </div>
                 )}
               </Popover>
@@ -188,8 +194,8 @@ export const Header = () => {
 };
 
 const Container = styled.header`
-  height: 130px;
-  padding-bottom:50px;
+  height: 100px;
+  padding-bottom:0px;
   box-shadow: 0px 16px 10px -5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   background: #fff;
