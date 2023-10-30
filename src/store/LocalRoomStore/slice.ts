@@ -6,10 +6,12 @@ type LocalRoomInitialState = {
   localRoomList?: localRoomListType[];
   pageLocalRoomList?:DataByLocalType;
   isFetchingLocalRoomList?: boolean;
+  isFetchingPageLocalRoomList?: boolean;
 };
 
 const initialState: LocalRoomInitialState = {
   isFetchingLocalRoomList: false,
+  isFetchingPageLocalRoomList: false,
 };
 
 const localRoomSlice = createSlice({
@@ -28,8 +30,15 @@ const localRoomSlice = createSlice({
         state.localRoomList = action.payload;
         state.isFetchingLocalRoomList = false;
       });
-    builder.addCase(getSearchPageThunk.fulfilled, (state,action)=>{
+    builder.addCase(getSearchPageThunk.pending, (state)=>{
+      state.isFetchingPageLocalRoomList=true
+    })
+    .addCase(getSearchPageThunk.rejected, (state)=>{
+      state.isFetchingPageLocalRoomList=false
+    })
+    .addCase(getSearchPageThunk.fulfilled, (state,action)=>{
       state.pageLocalRoomList=action.payload
+      state.isFetchingPageLocalRoomList=false
     })
   },
 });

@@ -1,0 +1,7 @@
+.ant-spin-container{
+	&::after{
+		opacity: 1;
+		background-color: red;
+
+	}
+}

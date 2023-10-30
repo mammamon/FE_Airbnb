@@ -120,7 +120,7 @@ ul li p .svg-inline--fa {
   border: #ff385c solid 1px;
   border-radius: 10px;
   position: fixed !important;
-  top: 75px !important;
+  top: 90px !important;
   right: 15px !important;
 }
 .ant-popover .ant-popover-inner .content-login.scroll {
@@ -139,6 +139,7 @@ ul li p .svg-inline--fa {
   width: 60%;
   top: 80px;
   left: 20%;
+  z-index: 999;
 }
 .form-home.form-scroll {
   top: 105px;
@@ -158,8 +159,8 @@ ul li p .svg-inline--fa {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: start;
-  background-color: white;
-  z-index: 999;
+  background-color: white !important;
+  z-index: 999 !important;
 }
 #search-form .ant-form-item {
   width: 35%;
@@ -413,6 +414,11 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   font-weight: 500;
 }
 
+.ant-spin-container::after {
+  opacity: 1;
+  background-color: red;
+}
+
 .btn-filter button {
   text-transform: uppercase;
   font-size: 16px;
@@ -642,4 +648,4 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
 
 .css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-up, .css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-down {
   font-size: 13px;
-}/*# sourceMappingURL=style.css.map */
+}

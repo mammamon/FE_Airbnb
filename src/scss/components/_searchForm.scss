@@ -3,6 +3,7 @@
 	width: 60%;
 	top: 80px;
 	left: 20%;
+  z-index: 999;
 	&.form-scroll{
 		top:105px
 	}
@@ -20,8 +21,8 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: start;
-    background-color: white;
-    z-index: 999;
+    background-color: white!important;
+    z-index: 999!important;
     .ant-form-item{
       width: 35%;
       border-right: 2px solid $secondaryColor;

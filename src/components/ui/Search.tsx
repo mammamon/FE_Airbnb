@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "store";
 import { getLocalRoomListThunk } from "store/LocalRoomStore";
 import { RangePickerProps } from "antd/es/date-picker";
-import { generatePath, useNavigate, useParams } from "react-router-dom";
+import { generatePath, useNavigate} from "react-router-dom";
 import { PATH } from "constant";
 import cn from "classnames";
 import {  removeLocalStorage, setLocalStorage} from "utils";
@@ -26,6 +26,7 @@ type FormProps = {
   onClickEvent?:boolean,
   idRoom?:number,
   scroll?:boolean,
+  isHomePage?:boolean
 };
 
 export const Search = ({
@@ -36,10 +37,9 @@ export const Search = ({
   costRent=0,
   onClickEvent=true,
   idRoom,
+  isHomePage=false,
   scroll=false,
 }: FormProps) => {
-  const param = useParams();
-  const isRoomDetail = Object.keys(param).length ? true : false;
   const { localRoomList} = useSelector((state: RootState) => state.localRoom);
   const dispatch = useAppDispatch();
   const { Option } = Select;
@@ -229,7 +229,7 @@ export const Search = ({
       {isSearchHeader && (
         <Form.Item
           name="localInput"
-          label={isRoomDetail ? "" : "Địa điểm"}
+          label={isHomePage ?"Địa điểm": ""}
           {...config}
         >
           <Select
@@ -237,7 +237,7 @@ export const Search = ({
             id="local"
             placeholder="Bạn muốn đi đâu?"
             optionFilterProp="name"
-            popupClassName={cn({"form-home-page":!isRoomDetail,"scroll":scroll})}
+            popupClassName={cn({"form-home-page":!isHomePage,"scroll":scroll})}
           >
             {localRoomList?.map((local) => (
               <Option
@@ -257,12 +257,12 @@ export const Search = ({
       )}
       <Form.Item
         name="rangePicker"
-        label={isRoomDetail ? "" : "Ngày nhận - Ngày trả"}
+        label={isHomePage ?"Ngày đến - Ngày đi": "" }
         {...rangeConfig}
       >
         <RangePicker
           placeholder={["Nhận phòng", "Trả phòng"]}
-          popupClassName={cn({"form-home-page":!isRoomDetail,"scroll":scroll})}
+          popupClassName={cn({"form-home-page":!isHomePage,"scroll":scroll})}
           format={dateFormat}
           disabledDate={disabledDate}
           // onBlur={numberDayHandle()}
@@ -273,7 +273,7 @@ export const Search = ({
         // validateDebounce={1000}
         validateTrigger="onChange"
         name="amountGuest"
-        label={isRoomDetail ? "" : "Khách"}
+        label={isHomePage ?"Khách": "" }
         {...amountConfig}
       >
         <InputNumber min={1} max={100} {...amountConfig} />
