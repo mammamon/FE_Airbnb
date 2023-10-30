@@ -8,18 +8,26 @@ type RoomRentInitialState = {
   roomRentById?:RoomRentListByIdType;
   // cinemaSchedule?: HeThongRap[];
   // movieDetail?: ThongTinPhim | undefined;
-  isRoomRentList?: boolean;
+  isFetchingRoomRentList?: boolean;
 };
 
-const initialState:  RoomRentInitialState = {};
+const initialState:  RoomRentInitialState = {
+  isFetchingRoomRentList: false,
+};
 const roomRentSlice = createSlice({
   name: 'roomRent',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getRoomRentThunk.fulfilled, (state, action) => {
+    builder.addCase(getRoomRentThunk.pending, (state) => {
+      state.isFetchingRoomRentList = true;
+    }).addCase(getRoomRentThunk.rejected, (state) => {
+      state.isFetchingRoomRentList = false;
+    }).addCase(getRoomRentThunk.fulfilled, (state, action) => {
       state.roomRentList = action.payload;
-    });
+      state.isFetchingRoomRentList = false;
+    })
+    ;
     builder.addCase(getRoomRentByIdThunk.fulfilled, (state, action) => {
       state.roomRentById = action.payload;
     });

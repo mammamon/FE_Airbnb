@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { roomRentServices } from 'services';
+import { sleep } from 'utils';
 
 export const getRoomRentThunk = createAsyncThunk(
   'roomRent/getRoomDetail',
   async (maViTri:number, { rejectWithValue }) => {
     try {
       const data = await roomRentServices.getRoomRentListDetail(maViTri);
+      await sleep(500)
       return data.data.content;
     } catch (err) {
       return rejectWithValue(err);

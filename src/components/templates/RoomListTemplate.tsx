@@ -3,7 +3,7 @@ import {
   HeartFilled,
   HeartOutlined,
 } from "@ant-design/icons";
-import { Avatar, Col, List, Row } from "antd";
+import { Avatar, Col, List, Row, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "store";
@@ -19,7 +19,7 @@ export const RoomListTemplate = () => {
   const navigate = useNavigate()
   const param=useParams()
   const dispatch = useAppDispatch();
-  const { roomRentList } = useSelector((state: RootState) => state.roomRent);
+  const { roomRentList,isFetchingRoomRentList } = useSelector((state: RootState) => state.roomRent);
   const [like, setLike] = useState<number[]>(getLocalStorage("roomLike") || []);
   const  furniture = {
     banLa: "Bàn là",
@@ -55,6 +55,7 @@ export const RoomListTemplate = () => {
   }, [dispatch,param]);
   return (
     <div className="room-list-template py-10">
+      <Spin tip="Loading" size="large" spinning={isFetchingRoomRentList}>
       <Row gutter={16}>
         <Col className="gutter-row" span={16}>
           <List
@@ -152,6 +153,8 @@ export const RoomListTemplate = () => {
           }
         </Col>
       </Row>
+      
+      </Spin>
     </div>
   );
 };

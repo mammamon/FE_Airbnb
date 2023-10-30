@@ -1,4 +1,4 @@
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import { Avatar, Button, Popover, Search } from "components";
 import { PATH } from "constant";
@@ -11,15 +11,14 @@ import { Badge } from "antd";
 import { GlobalOutlined } from '@ant-design/icons';
 
 export const Header = () => {
-  const param = useParams();
+  const pathname = window.location.pathname;
   const navigate = useNavigate();
   const { user } = useAuth();
   const dispatch = useAppDispatch();
   const [scroll, setScroll] = useState<boolean>(false);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState<boolean>(true);
-  const isHomePage = Object.keys(param).length ? false : true
-
+  const isHomePage = pathname==="/"?true:false
   const handleScroll = () => {
     if (window.pageYOffset > 50) {
       setScroll(true);
@@ -77,10 +76,9 @@ export const Header = () => {
             <NavLink to="">Trải nghiệm</NavLink>
             <NavLink to="">Trải nghiệm thực tế</NavLink>
           </nav>}
-          <div className={cn({ "form-home": isHomePage, "form-scroll": scroll, "form-not-home": !isHomePage })}>
-            <Search name="search-form" scroll={scroll} />
+          <div className={cn({"form-home":isHomePage,"form-scroll":scroll,"form-not-home":!isHomePage})}>
+      <Search name="search-form" scroll={scroll} isHomePage={isHomePage}/>
           </div>
-
           <div className="header-user">
             <nav>
               <NavLink to="">
