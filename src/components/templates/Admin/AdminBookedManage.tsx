@@ -111,7 +111,7 @@ export const AdminBookedManage = () => {
                         Booked = response.data;
                     } else {
                         Booked.push(response.data);
-                 }
+                    }
                 } else {
                     throw new Error('Data không hợp lệ');
                 }
@@ -186,22 +186,31 @@ export const AdminBookedManage = () => {
             title: 'ID', dataIndex: 'id', width: 100,
         },
         {
-            title: 'Mã Người Dùng', dataIndex: 'maNguoiDung',
+            title: 'Mã người dùng', dataIndex: 'maNguoiDung',
+            className: 'text-center',
+
         },
         {
-            title: 'Mã Phòng', dataIndex: 'maPhong',
+            title: 'Mã phòng', dataIndex: 'maPhong',
+            className: 'text-center',
+
         },
         {
-            title: 'Ngày Đến', dataIndex: 'ngayDen',
+            title: 'Ngày đến', dataIndex: 'ngayDen',
+            render: (text) => moment(text).format('DD/MM/YYYY')
+
         },
         {
-            title: 'Ngày Đi', dataIndex: 'ngayDi',
+            title: 'Ngày đi', dataIndex: 'ngayDi',
+            render: (text) => moment(text).format('DD/MM/YYYY')
+
         },
         {
-            title: 'Số Lượng Khách', dataIndex: 'soLuongKhach',
+            title: 'Số lượng khách', dataIndex: 'soLuongKhach',
+            className: 'text-center',
         },
         {
-            title: 'Quản Lý', width: 300,
+            title: 'Quản Lý', width: 320,
             className: 'text-center',
             render: (_, record) => (
                 <>
@@ -250,41 +259,47 @@ export const AdminBookedManage = () => {
                 onCancel={handleCancel}
                 footer={null}
             >
-                <div className="flex items-center justify-between">
-                    <h2>{editingBooked ? "Cập nhật đặt phòng" : "Thêm lịch đặt phòng"}</h2>
-                    <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
+                <div className="flex items-center justify-between px-4">
+                    <h2>{editingBooked ? "Sửa lịch đặt phòng" : "Thêm lịch đặt phòng"}</h2>
+                    <img src="../../../images/airbnb.svg" className="w-[100px] h-[20px]" />
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Input
-                        className="mt-16"
-                        placeholder="Chọn người dùng"
-                        id="maNguoiDung"
-                        name="maNguoiDung"
-                        error={errors?.maNguoiDung?.message}
-                        register={register}
-                        selectOptions={users.map(user => ({
-                            label: `${user.id}: ${user.name}`,
-                            value: user.id.toString(),
-                        }))}
-                        value={selectedMaNguoiDung}
-                        onChange={(e) => handleSelectedMaNguoiDungChange(e.target.value)}
-                    />
-                    <Input
-                        className="mt-16"
-                        placeholder="Chọn phòng"
-                        id="maPhong"
-                        name="maPhong"
-                        error={errors?.maPhong?.message}
-                        register={register}
-                        selectOptions={rooms.map(room => ({
-                            label: `${room.id}: ${room.tenPhong}`,
-                            value: room.id.toString(),
-                        }))}
-                        value={selectedMaPhong}
-                        onChange={(e) => handleSelectedMaPhongChange(e.target.value)}
-                    />
-                    <div className="flex">
-                        <label className="p-10 w-1/2 text-black">Ngày đến:</label>
+                <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
+                    <div className="px-4">
+                        <label htmlFor="maNguoiDung">Người đặt phòng: </label>
+                        <Input
+                            className="mt-16"
+                            placeholder="Chọn người dùng"
+                            id="maNguoiDung"
+                            name="maNguoiDung"
+                            error={errors?.maNguoiDung?.message}
+                            register={register}
+                            selectOptions={users.map(user => ({
+                                label: `${user.id}: ${user.name}`,
+                                value: user.id.toString(),
+                            }))}
+                            value={selectedMaNguoiDung}
+                            onChange={(e) => handleSelectedMaNguoiDungChange(e.target.value)}
+                        />
+                    </div>
+                    <div className="px-4">
+                        <label htmlFor="maPhong">Chọn phòng đặt: </label>
+                        <Input
+                            className="mt-16"
+                            placeholder="Chọn phòng"
+                            id="maPhong"
+                            name="maPhong"
+                            error={errors?.maPhong?.message}
+                            register={register}
+                            selectOptions={rooms.map(room => ({
+                                label: `${room.id}: ${room.tenPhong}`,
+                                value: room.id.toString(),
+                            }))}
+                            value={selectedMaPhong}
+                            onChange={(e) => handleSelectedMaPhongChange(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex px-3">
+                        <label className="p-10 w-2/5 text-black">Ngày đến:</label>
                         <Input
                             type="date"
                             className="mt-16"
@@ -295,8 +310,8 @@ export const AdminBookedManage = () => {
                             register={register}
                         />
                     </div>
-                    <div className="flex">
-                        <label className="p-10 w-1/2 text-black">Ngày đi:</label>
+                    <div className="flex px-3">
+                        <label className="p-10 w-2/5 text-black">Ngày đi:</label>
                         <Input
                             type="date"
                             className="mt-16"
@@ -308,8 +323,8 @@ export const AdminBookedManage = () => {
 
                         />
                     </div>
-                    <div className="w-1/3 px-4 ">
-                        <label htmlFor="soLuongKhach">Số lượng khách:</label>
+                    <div className="px-4 flex justify-between w-3/4">
+                        <label className="me-[58px]" htmlFor="soLuongKhach">Số lượng khách:</label>
                         <Input
                             id="soLuongKhach"
                             name="soLuongKhach"
@@ -328,7 +343,6 @@ export const AdminBookedManage = () => {
                 </form>
             </Modal>
             <Modal
-                title="Thông tin chi tiết"
                 visible={isDetailsModalVisible}
                 onCancel={handleDetailsModalCancel}
                 footer={null}

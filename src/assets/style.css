@@ -579,4 +579,12 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   color: #ff385c !important;
   font-weight: 400 !important;
   text-transform: capitalize;
+}
+
+.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-filter-trigger {
+  display: none !important;
+}
+
+.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-up, .css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-down {
+  font-size: 13px;
 }/*# sourceMappingURL=style.css.map */
