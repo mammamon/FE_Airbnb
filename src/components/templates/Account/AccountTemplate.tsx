@@ -10,9 +10,9 @@ export const AccountTemplate = () => {
     }, []);
     const { user } = useAuth()
 
-    // if (!user) {
-    //     return <Navigate to="/" />
-    // }
+    if (!user) {
+        return <Navigate to="/" />
+    }
     return (
         <div>
             <Tabs

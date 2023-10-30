@@ -278,15 +278,7 @@ export const AdminLocationManage = () => {
                     {/* input upload hình */}
                     {editingLocation && (
                         <div>
-                            <Input
-                                className="mt-16"
-                                placeholder="Hình ảnh"
-                                disabled={true}
-                                id="hinhAnh"
-                                name="hinhAnh"
-                                register={register}
-                            />
-                            <h3 className="mb-3">Tải ảnh lên (tự chọn)</h3>
+                            <h3 className="mb-3">Chọn ảnh khác (tải lên)</h3>
                             <Input type="file" onChange={(event) => onFileChange(event, editingLocation.id)} />
                         </div>
 
@@ -301,7 +293,6 @@ export const AdminLocationManage = () => {
                 </form>
             </Modal>
             <Modal
-                title="Thông tin chi tiết"
                 visible={isDetailsModalVisible}
                 onCancel={handleDetailsModalCancel}
                 footer={null}
@@ -309,14 +300,14 @@ export const AdminLocationManage = () => {
             >
                 {selectedLocationDetails && (
                     <div className="detailsModal flex flex-column justify-center items-center">
+                        <h2>{selectedLocationDetails.tenViTri}</h2>
                         <img
                             src={selectedLocationDetails.hinhAnh || '../../../../images/no-image.jpg'}
                             style={{ width: '90%', height: '240px' }}
                             alt="vị trí"
                             className="mb-3"
                         />
-                        <Descriptions column={2}>
-                            <Descriptions.Item label="Tên Vị Trí">{selectedLocationDetails.tenViTri}</Descriptions.Item>
+                        <Descriptions column={1} className="px-4">
                             <Descriptions.Item label="ID - Mã vị trí">{selectedLocationDetails.id}</Descriptions.Item>
                             <Descriptions.Item label="Tỉnh Thành">{selectedLocationDetails.tinhThanh}</Descriptions.Item>
                             <Descriptions.Item label="Quốc Gia">{selectedLocationDetails.quocGia}</Descriptions.Item>

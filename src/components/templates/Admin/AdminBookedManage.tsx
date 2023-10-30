@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import moment from "moment";
 import { Input, Button } from "components";
 import { Modal, Table, Descriptions } from "antd";
 import { apiInstance } from "constant";
@@ -6,13 +7,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BookedAddSchema, BookedEditSchema, BookedSchemaType } from "schema";
 import { useState, useEffect } from "react";
-import { handleError, useSearch, sortFilterTable, deleteItem, editItem } from "utils";
+import { handleError, useSearch, sortFilterTable, deleteItem, editItem, formatDate, tongTienDisplay } from "utils";
 
 export const AdminBookedManage = () => {
     const api = apiInstance({ baseURL: import.meta.env.VITE_API });
     const [data, setData] = useState([]);
-    const [rooms, setRooms] = useState([]);
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<{ id: number, name: string}[]>([]);
+    const [rooms, setRooms] = useState<{ id: number, tenPhong: string, giaTien: number }[]>([]);
     const [loading, setLoading] = useState(false);
     const { keyword, handleSearchChange } = useSearch('dat-phong/search');
     const [editingBooked, setEditingBooked] = useState(null);
@@ -21,6 +22,11 @@ export const AdminBookedManage = () => {
     const [selectedBookedDetails, setselectedBookedDetails] = useState(null);
     const [selectedMaNguoiDung, setSelectedMaNguoiDung] = useState(null);
     const [selectedMaPhong, setSelectedMaPhong] = useState(null);
+    const findMatchingUserAndRoom = (dataItem) => {
+        const user = users.find(user => user.id === dataItem.maNguoiDung);
+        const room = rooms.find(room => room.id === dataItem.maPhong);
+        return { user, room };
+    };
 
     const handleSelectedMaNguoiDungChange = (value) => {
         setSelectedMaNguoiDung(value);
@@ -42,6 +48,7 @@ export const AdminBookedManage = () => {
             setLoading(false);
         }
     };
+
 
     const fetchUsers = async () => {
         try {
@@ -77,14 +84,21 @@ export const AdminBookedManage = () => {
         mode: "onChange",
         resolver: zodResolver(editingBooked ? BookedEditSchema : BookedAddSchema),
     });
+
+    const registerNumber = (name) => {
+        return {
+            ...register(name, {
+                setValueAs: value => parseFloat(value)
+            })
+        };
+    };
+
     const onSubmit = async (values) => {
-        values.maNguoiDung = parseInt(selectedMaNguoiDung);
-        values.maPhong = parseInt(selectedMaPhong);
         try {
             if (editingBooked) {
                 // handle edit
-                const updatedLocation = await editItem('dat-phong', editingBooked.id, values);
-                console.log("Updated Location:", updatedLocation);
+                const updatedBooked = await editItem('dat-phong', editingBooked.id, values);
+                console.log("Updated :", updatedBooked);
                 toast.success('Cập nhật phòng đặt thành công!', {
                     position: 'top-center',
                     autoClose: 800,
@@ -96,31 +110,26 @@ export const AdminBookedManage = () => {
             } else {
                 // handle add
                 const response = await api.get('/dat-phong');
-                let locations = [];
+                let Booked = [];
                 if (response.data && typeof response.data === 'object') {
                     if (Array.isArray(response.data)) {
-                        locations = response.data;
+                        Booked = response.data;
                     } else {
-                        locations.push(response.data);
+                        Booked.push(response.data);
                     }
                 } else {
                     throw new Error('Data không hợp lệ');
                 }
 
-                const locationDitto = locations.some((location) => location.tenViTri === values.tenViTri);
-                if (locationDitto) {
-                    throw new Error('phòng đặt đã tồn tại');
-                }
-
-                const addedLocation = await api.get('dat-phong', { params: values });
-                toast.success('thêm đơn đặt phòng thành công!', {
+                const addedBooked = await api.get('dat-phong', { params: values });
+                toast.success('thêm lịch đặt phòng thành công!', {
                     position: 'top-center',
                     autoClose: 800,
                 });
 
                 setIsModalVisible(false);
                 reset();
-                console.log("Added Location ID:", addedLocation.data.id);
+                console.log("Added ID:", addedBooked.data.id);
             }
         } catch (err) {
             handleError(err);
@@ -158,15 +167,18 @@ export const AdminBookedManage = () => {
         reset({
             maNguoiDung: "1",
             maPhong: "1",
+            soLuongKhach: 1,
+            ngayDen: moment().format('YYYY-MM-DD'),
+            ngayDi: moment().format('YYYY-MM-DD'),
         });
-    };
-
+    }
     const showModal = () => {
         setIsModalVisible(true);
     };
 
-    const showDetailsModal = (location) => {
-        setselectedBookedDetails(location);
+    const showDetailsModal = (record) => {
+        const { user, room } = findMatchingUserAndRoom(record);
+        setselectedBookedDetails({ ...record, user, room });
         setIsDetailsModalVisible(true);
     };
 
@@ -175,27 +187,38 @@ export const AdminBookedManage = () => {
         setselectedBookedDetails(null);
     };
 
+
+
     const columns = data ? sortFilterTable([
         {
             title: 'ID', dataIndex: 'id', width: 100,
         },
         {
-            title: 'Mã Người Dùng', dataIndex: 'maNguoiDung',
+            title: 'Mã người dùng', dataIndex: 'maNguoiDung',
+            className: 'text-center',
+
         },
         {
-            title: 'Mã Phòng', dataIndex: 'maPhong',
+            title: 'Mã phòng', dataIndex: 'maPhong',
+            className: 'text-center',
+
         },
         {
-            title: 'Ngày Đến', dataIndex: 'ngayDen',
+            title: 'Ngày đến', dataIndex: 'ngayDen',
+            render: (text) => moment(text).format('DD/MM/YYYY')
+
         },
         {
-            title: 'Ngày Đi', dataIndex: 'ngayDi',
+            title: 'Ngày đi', dataIndex: 'ngayDi',
+            render: (text) => moment(text).format('DD/MM/YYYY')
+
         },
         {
-            title: 'Số Lượng Khách', dataIndex: 'soLuongKhach',
+            title: 'Số lượng khách', dataIndex: 'soLuongKhach',
+            className: 'text-center',
         },
         {
-            title: 'Quản Lý', width: 300,
+            title: 'Quản Lý', width: 320,
             className: 'text-center',
             render: (_, record) => (
                 <>
@@ -227,55 +250,64 @@ export const AdminBookedManage = () => {
         if (editingBooked) {
             reset({
                 ...editingBooked,
+                ngayDen: formatDate(editingBooked.ngayDen),
+                ngayDi: formatDate(editingBooked.ngayDi),
             });
         }
     }, [editingBooked, reset]);
 
+
     return (
         <div>
             <Button className="mb-3 !p-10 !h-[48px]" type="primary" onClick={showModal}>
-                thêm đơn đặt phòng
+                thêm lịch đặt phòng
             </Button>
             <Modal
                 visible={isModalVisible}
                 onCancel={handleCancel}
                 footer={null}
             >
-                <div className="flex items-center justify-between">
-                    <h2>{editingBooked ? "Cập nhật đặt phòng" : "Thêm đơn đặt phòng"}</h2>
-                    <img src="../../../images/airbnb.svg" className="w-[130px] h-[32px]" />
+                <div className="flex items-center justify-between px-4">
+                    <h2>{editingBooked ? "Sửa lịch đặt phòng" : "Thêm lịch đặt phòng"}</h2>
+                    <img src="../../../images/airbnb.svg" className="w-[100px] h-[20px]" />
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Input
-                        className="mt-16"
-                        placeholder="Chọn người dùng"
-                        id="maNguoiDung"
-                        name="maNguoiDung"
-                        error={errors?.maNguoiDung?.message}
-                        register={register}
-                        selectOptions={users.map(user => ({
-                            label: `${user.id}: ${user.name}`,
-                            value: user.id.toString(),
-                        }))}
-                        value={selectedMaNguoiDung}
-                        onChange={(e) => handleSelectedMaNguoiDungChange(e.target.value)}
-                    />
-                    <Input
-                        className="mt-16"
-                        placeholder="Chọn phòng"
-                        id="maPhong"
-                        name="maPhong"
-                        error={errors?.maPhong?.message}
-                        register={register}
-                        selectOptions={rooms.map(room => ({
-                            label: `${room.id}: ${room.tenPhong}`,
-                            value: room.id.toString(),
-                        }))}
-                        value={selectedMaPhong}
-                        onChange={(e) => handleSelectedMaPhongChange(e.target.value)}
-                    />
-                    <div className="flex">
-                        <label className="p-10 w-1/2 text-black">Ngày đến:</label>
+                <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
+                    <div className="px-4">
+                        <label htmlFor="maNguoiDung">Người đặt phòng: </label>
+                        <Input
+                            className="mt-16"
+                            placeholder="Chọn người dùng"
+                            id="maNguoiDung"
+                            name="maNguoiDung"
+                            error={errors?.maNguoiDung?.message}
+                            register={register}
+                            selectOptions={users.map(user => ({
+                                label: `${user.id}: ${user.name}`,
+                                value: user.id.toString(),
+                            }))}
+                            value={selectedMaNguoiDung}
+                            onChange={(e) => handleSelectedMaNguoiDungChange(e.target.value)}
+                        />
+                    </div>
+                    <div className="px-4">
+                        <label htmlFor="maPhong">Chọn phòng đặt: </label>
+                        <Input
+                            className="mt-16"
+                            placeholder="Chọn phòng"
+                            id="maPhong"
+                            name="maPhong"
+                            error={errors?.maPhong?.message}
+                            register={register}
+                            selectOptions={rooms.map(room => ({
+                                label: `${room.id}: ${room.tenPhong}`,
+                                value: room.id.toString(),
+                            }))}
+                            value={selectedMaPhong}
+                            onChange={(e) => handleSelectedMaPhongChange(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex px-3">
+                        <label className="p-10 w-2/5 text-black">Ngày đến:</label>
                         <Input
                             type="date"
                             className="mt-16"
@@ -286,8 +318,8 @@ export const AdminBookedManage = () => {
                             register={register}
                         />
                     </div>
-                    <div className="flex">
-                        <label className="p-10 w-1/2 text-black">Ngày đi:</label>
+                    <div className="flex px-3">
+                        <label className="p-10 w-2/5 text-black">Ngày đi:</label>
                         <Input
                             type="date"
                             className="mt-16"
@@ -296,15 +328,17 @@ export const AdminBookedManage = () => {
                             name="ngayDi"
                             error={errors?.ngayDi?.message}
                             register={register}
+
                         />
                     </div>
-                    <div className="w-full px-4  items-center">
-                        <label htmlFor="soLuongKhach" className="w-1/3 pb-[14px]">Mô Tả:</label>
+                    <div className="px-4 flex justify-between w-3/4">
+                        <label className="me-[58px]" htmlFor="soLuongKhach">Số lượng khách:</label>
                         <Input
                             id="soLuongKhach"
                             name="soLuongKhach"
+                            type='number'
                             error={errors?.soLuongKhach?.message}
-                            register={register}
+                            register={registerNumber}
                         />
                     </div>
                     <div className="flex justify-center w-full">
@@ -317,7 +351,6 @@ export const AdminBookedManage = () => {
                 </form>
             </Modal>
             <Modal
-                title="Thông tin chi tiết"
                 visible={isDetailsModalVisible}
                 onCancel={handleDetailsModalCancel}
                 footer={null}
@@ -325,21 +358,27 @@ export const AdminBookedManage = () => {
             >
                 {selectedBookedDetails && (
                     <div className="detailsModal flex flex-column justify-center items-center">
-                        <img
-                            src={selectedBookedDetails.hinhAnh || '../../../../images/no-image.jpg'}
-                            style={{ width: '90%', height: '240px' }}
-                            alt="phòng đặt"
-                            className="mb-3"
-                        />
-                        <Descriptions column={2}>
-                            <Descriptions.Item label="Tên phòng đặt">{selectedBookedDetails.tenViTri}</Descriptions.Item>
-                            <Descriptions.Item label="ID - Đơn đặt phòng số">{selectedBookedDetails.id}</Descriptions.Item>
-                            <Descriptions.Item label="Tỉnh Thành">{selectedBookedDetails.tinhThanh}</Descriptions.Item>
-                            <Descriptions.Item label="Quốc Gia">{selectedBookedDetails.quocGia}</Descriptions.Item>
-                        </Descriptions>
+                        {(() => {
+                            const { user, room } = findMatchingUserAndRoom(selectedBookedDetails);
+                            return (
+                                <Descriptions column={1}>
+                                    <Descriptions.Item label="Đơn đặt phòng ID số">{selectedBookedDetails.id}</Descriptions.Item>
+                                    <Descriptions.Item label="Người đặt phòng">{user && user.name}</Descriptions.Item>
+                                    <Descriptions.Item label="Tên phòng">{room && room.tenPhong}</Descriptions.Item>
+                                    <Descriptions.Item label="Giá tiền">${room && room.giaTien}/ ngày</Descriptions.Item>
+                                    <Descriptions.Item label="Tổng tiền">${tongTienDisplay(room.giaTien, selectedBookedDetails.ngayDen, selectedBookedDetails.ngayDi)}</Descriptions.Item>
+                                    <Descriptions.Item label="Ngày đến">{moment(selectedBookedDetails.ngayDen).format('DD/MM/YYYY')}</Descriptions.Item>
+                                    <Descriptions.Item label="Ngày đi">{moment(selectedBookedDetails.ngayDi).format('DD/MM/YYYY')}</Descriptions.Item>
+                                    <Descriptions.Item label="Số lượng khách">{selectedBookedDetails.soLuongKhach}</Descriptions.Item>
+                                </Descriptions>
+
+                            );
+                        })()}
                     </div>
                 )}
+
             </Modal>
+
             <div className="searchTableWrapper flex pb-3 w-full justify-center">
                 <input className="p-2 rounded-10 w-2/3 searchInputAdmin" placeholder="Nhập tên phòng đặt" value={keyword} onChange={handleSearchChange} />
             </div>

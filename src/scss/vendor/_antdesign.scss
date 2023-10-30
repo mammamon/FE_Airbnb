@@ -14,3 +14,10 @@
     @include font-style ('Roboto'!important,24px!important, $primaryColor!important, 400!important);
     text-transform: capitalize;
 }
+.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-filter-trigger {
+    display: none !important;
+}
+
+.css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-up, .css-dev-only-do-not-override-1qg4o3q.ant-table-wrapper .ant-table-column-sorter-down {
+    font-size: 13px;
+}

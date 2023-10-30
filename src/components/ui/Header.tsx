@@ -166,7 +166,7 @@ export const Header = () => {
                       <img
                         src={user?.user.avatar}
                         alt="User Avatar"
-                        style={{ borderRadius: '50%', objectFit: 'cover', width:'40px', height:'40px'}}
+                        style={{ borderRadius: '50%', objectFit: 'cover', width: '40px', height: '40px' }}
                       />
                     </div> */}
                   </Avatar>

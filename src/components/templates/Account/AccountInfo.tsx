@@ -97,10 +97,10 @@ export const AccountInfo = () => {
             size={120}
             onClick={() => fileInputRef.current?.click()}
           >
-            {userLogin?.user.avatar ? (
+            {userLogin?.user.avatar ? ( 
               <img src={userLogin?.user.avatar} alt="User Avatar" />
             ) : (
-              <i className="fas fa-x"></i>
+              <i className="fas fa-user"></i>
             )}
           </Avatar>
 
