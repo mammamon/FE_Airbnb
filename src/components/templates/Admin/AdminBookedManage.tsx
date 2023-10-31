@@ -360,9 +360,11 @@ export const AdminBookedManage = () => {
                             const { user, room } = findMatchingUserAndRoom(selectedBookedDetails);
                             return (
                                 <div>
-                                    <h2>Lịch đặt phòng số: {selectedBookedDetails.id}</h2>
-                                    <Descriptions column={1}>
+                                    <h2 className="!text-x2l">Lịch đặt phòng số: {selectedBookedDetails.id}</h2>
+                                    <Descriptions>
                                         <Descriptions.Item label="Tên phòng">{room && room.tenPhong}</Descriptions.Item>
+                                    </Descriptions>
+                                    <Descriptions column={2}>
                                         <Descriptions.Item label="Người đặt phòng">{user && user.name}</Descriptions.Item>
                                         <Descriptions.Item label="Số lượng khách">{selectedBookedDetails.soLuongKhach}</Descriptions.Item>
                                         <Descriptions.Item label="Ngày đến">{moment(selectedBookedDetails.ngayDen).format('DD/MM/YYYY')}</Descriptions.Item>
@@ -380,7 +382,7 @@ export const AdminBookedManage = () => {
             </Modal>
 
             <div className="searchTableWrapper flex pb-3 w-full justify-center">
-                <input className="p-2 rounded-10 w-2/3 searchInputAdmin" placeholder="Nhập đơn đặt phòng"/>
+                <input className="p-2 rounded-10 w-2/3 searchInputAdmin" placeholder="Nhập đơn đặt phòng" />
             </div>
             <Table
                 columns={columns}
