@@ -231,13 +231,11 @@ export const AdminBookedManage = () => {
                     <Button
                         className="me-4"
                         onClick={() => handleEditBooked(record)}
-                        disabled={record.id <= 10}
                     >
                         Sửa
                     </Button>
                     <Button
                         onClick={() => handleDeleteBooked(record)}
-                        disabled={record.id <= 10}
                     >
                         Xóa
                     </Button>
@@ -362,7 +360,7 @@ export const AdminBookedManage = () => {
                             const { user, room } = findMatchingUserAndRoom(selectedBookedDetails);
                             return (
                                 <div>
-                                    <h2>Đơn đặt phòng số: {selectedBookedDetails.id}</h2>
+                                    <h2>Lịch đặt phòng số: {selectedBookedDetails.id}</h2>
                                     <Descriptions column={1}>
                                         <Descriptions.Item label="Tên phòng">{room && room.tenPhong}</Descriptions.Item>
                                         <Descriptions.Item label="Người đặt phòng">{user && user.name}</Descriptions.Item>

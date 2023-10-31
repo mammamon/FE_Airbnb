@@ -2,6 +2,7 @@ import { apiInstance } from 'constant/apiInstance'
 import { AccountSchemaType } from 'schema'
 import { LoginSchemaType, RegisterSchemaType } from 'schema'
 import { UserLogin } from 'types';
+import { handleError } from 'utils';
 const api = apiInstance({
     baseURL: import.meta.env.VITE_API,
 })
@@ -17,7 +18,7 @@ export const userServices = {
         const response = await api.put(`/users/${id}`, updatedData);
         return response;
     },
-    
+
     delete: async (id: number) => {
         const response = await api.delete(`/users?id=${id}`);
         return response.data;
@@ -25,5 +26,19 @@ export const userServices = {
     pagination: (pageIndex: number, pageSize: number, keyword: string) =>
         api.get(`users/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`),
     search: (keyword: string) => api.get(`users/search/${keyword}`),
-    uploadAvatar: (data: FormData) => api.post(`users/upload-avatar/`, data), 
+    uploadAvatar: async (formData) => {
+        try {
+            const response = await api.post('/users/upload-avatar', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            const imageUrl = response.data.content.hinhAnh;
+            return imageUrl;
+        } catch (err) {
+            handleError(err);
+            return null;
+        }
+    },
 };
+

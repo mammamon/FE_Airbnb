@@ -15,14 +15,14 @@
 
 # Các lỗi chưa sửa
 ## User Side (Tùng)
-- .....
+- { để report ở đây }
 ## Admin Side (Quang)
 - Server tự đổi role admin sang user khi tạo acc mới. chỉ có edit mới lên admin được
 - Tạo phòng và vị trí mới, server nhận nhưng không tự động assign ID => không lưu mới trong server
 - API GET đặt phòng kèm id người dùng bị lỗi 404 (trên swagger cũng bị), không lấy danh sách theo người dùng được
-- Có một số phòng, vị trí không sửa xóa được (chủ yếu ID nhỏ, chắc là data cứng), up hình cũng lỗi lỗi 403`
-
-
+- Có một số phòng, vị trí không sửa xóa được (chủ yếu ID nhỏ, chắc là data cứng), up hình cũng lỗi 403 hoặc 500
+- Config API Instance gắn 2 token không thể pass các api cần 2 token. Đã thử thêm xóa prefix (token, Bearer) các kiểu nhưng vẫn không pass, lỗi 403
+- Các nút submit không tự động lấy value được điền sẵn (lưu sẵn) trong trình duyệt, phải nhấp chuột vô nút vài lần hoặc tự gõ lại input
 # Install Package
 1. TailwindCSS
 2. React-router-dom

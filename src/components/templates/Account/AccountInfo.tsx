@@ -9,14 +9,16 @@ import { AppDispatch, RootState } from 'store'
 import { updateThunk } from 'store/UserStore'
 import { userServices } from 'services/userServices'
 import { UserOutlined } from '@ant-design/icons'
+import { handleError } from 'utils'
 
 export const AccountInfo = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const userLogin = useSelector((state: RootState) => state.userManage.userLogin)
-  console.log("userLogin: ", userLogin);
+  // console.log("userLogin: ", userLogin);
   const {
     reset,
     register,
+    setValue,
     formState: { errors },
     handleSubmit,
   } = useForm<AccountSchemaType>({
@@ -28,50 +30,63 @@ export const AccountInfo = () => {
   const onSubmit: SubmitHandler<AccountSchemaType> = async (value) => {
     try {
       if (userLogin?.user) {
-        console.log('User:', userLogin.user);
         const fileInput = fileInputRef.current;
         if (fileInput?.files && fileInput.files.length > 0) {
           const file = fileInput.files[0];
           const formData = new FormData();
           formData.append('avatar', file);
-          await userServices.uploadAvatar(formData);
+          const imageUrl = await userServices.uploadAvatar(formData);
+          //avatar upload thất bại = avatar hiện tại
+          if (imageUrl) { 
+            value.avatar = imageUrl;
+          } else {
+            value.avatar = userLogin.user.avatar; 
+          }
         }
         await dispatch(updateThunk({ id: userLogin.user.id, data: value }));
-        toast.success('cập nhật thành công', {
+        toast.success('Cập nhật thành công', {
           position: 'top-center',
           autoClose: 800,
         });
       }
     } catch (err) {
-      toast.error('cập nhật thât bại  ', {
+      toast.error('Cập nhật thất bại', {
         position: 'top-center',
         autoClose: 800,
       });
       console.error(err);
     }
-  };
+};
+
+
 
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       if (event.target.files && event.target.files.length > 0) {
         const file = event.target.files[0];
-        const formData = new FormData();
-        formData.append('avatar', file);
-        await userServices.uploadAvatar(formData);
-        toast.success('Avatar upload thành công!', {
-          position: 'top-center',
-          autoClose: 800,
-        });
+        try {
+          const imageUrl = await userServices.uploadAvatar(file);
+          setValue('avatar', imageUrl);
+          toast.success('Avatar upload thành công!', {
+            position: 'top-center',
+            autoClose: 800,
+          });
+        } catch (err) {
+          setValue('avatar', '');
+          toast.error('Avatar Upload thất bại', {
+            position: 'top-center',
+            autoClose: 800,
+          });
+          console.error(err);
+        }
       }
     } catch (err) {
-      toast.error('Avatar Upload thất bại', {
-        position: 'top-center',
-        autoClose: 800,
-      });
-      console.error(err);
+      handleError(err);
     }
   };
+
+
 
 
   useEffect(() => {
@@ -92,21 +107,29 @@ export const AccountInfo = () => {
   return (
     <div className="acountInfoWrapper flex mt-5">
       <div className="w-1/2 flex flex-column items-center">
+
+        <h3>cập nhật hình ảnh</h3>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className='w-1/2'>
         <div className="bg-gray-300 rounded-full flex items-center mb-3">
           <Avatar
             className="cursor-pointer"
             size={120}
             onClick={() => fileInputRef.current?.click()}
             src={userLogin?.user.avatar}
-            icon={!userLogin?.user.avatar&&<UserOutlined />}
+            icon={!userLogin?.user.avatar && <UserOutlined />}
           >
           </Avatar>
-
-          <input type="file" ref={fileInputRef} style={{ display: 'none' }} accept="image/*" onChange={handleFileChange} />
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            accept="image/*"
+            onChange={handleFileChange}
+            id="avatar"
+            name="avatar"
+          />
         </div>
-        <h3>cập nhật hình ảnh</h3>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)} className='w-1/2'>
         <Input
           className="mt-16"
           placeholder="Họ tên"

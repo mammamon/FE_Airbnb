@@ -24,6 +24,6 @@ dist-ssr
 *.sw?
 
 # Ignore Specific Files
-/src/assets/style.css
+# /src/assets/style.css
 # /package-lock.json
 # /yarn.lock

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidUrlSchema } from "utils";
 
 export const RoomSchema = z.object({
     tenPhong: z.string().nonempty("Vui lòng nhập tên phòng"),
@@ -45,7 +46,9 @@ export const RoomSchema = z.object({
         path: ["banUi"],
     }),
     maViTri:z.string().nonempty("Vui lòng nhập tên phòng"),
-    hinhAnh: z.string().optional(),
+    hinhAnh: z.string().refine((value) => value === "" || isValidUrlSchema(value), {
+        message: "Vui lòng nhập đúng định dạng URL hoặc để trống",
+      }).optional(),
 });
 
 export type RoomSchemaType = z.infer<typeof RoomSchema>;
