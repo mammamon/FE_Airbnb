@@ -84,7 +84,7 @@ export const uploadFile = async (endpoint, itemID, file) => {
             },
         });
 
-        const imageUrl = response.data.content.hinhAnh.url;
+        const imageUrl = response.data.content.hinhAnh;
         return imageUrl;
     } catch (err) {
         handleError(err);

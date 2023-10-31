@@ -8,7 +8,7 @@
 
 # Phân chia công việc
 ## Tùng
-- Thiết kế giao diện và chức năng phía web người dùng: trang chủ, danh sách phòng, chi tiết phòng,
+- Thiết kế giao diện và chức năng phía web người dùng: trang chủ, danh sách phòng, chi tiết phòng, trang cá nhân
 ## Quang
 - Thiết kế giao diện và chức năng phía web quản trị: đăng nhập, đăng kí, quản lý người dùng, quản lý vị trí, quản lý phòng, quản lý đặt phòng, từ chối truy cập...
 
@@ -20,8 +20,9 @@
 - Server tự đổi role admin sang user khi tạo acc mới. chỉ có edit mới lên admin được
 - Tạo phòng và vị trí mới, server nhận nhưng không tự động assign ID => không lưu mới trong server
 - API GET đặt phòng kèm id người dùng bị lỗi 404 (trên swagger cũng bị), không lấy danh sách theo người dùng được
-- Có một số phòng, vị trí không sửa xóa được (chủ yếu ID nhỏ, chắc là data cứng), up hình cũng lỗi 403 hoặc 500
-- Config API Instance gắn 2 token không thể pass các api cần 2 token. Đã thử thêm xóa prefix (token, Bearer) các kiểu nhưng vẫn không pass, lỗi 403
+- Có một số phòng, vị trí không sửa xóa được (chủ yếu ID số nhỏ, chắc là data cứng), up hình cũng lỗi 403 hoặc 500
+- Check login & logout bằng user data lưu ở local (ko an toàn) do hồi đầu mình bị ngáo cứ tưởng server ko có token trả về, sau này lấy về rồi thử sửa lại thì ảnh hưởng code khác nhiều quá nên để nguyên @@, chỉ dùng token gọi api
+- Config API Instance gắn token + tokenCybersoft vào header không thể pass các api cần token. Đã thử thêm xóa prefix (token, Bearer) các kiểu nhưng vẫn không pass, up hình lỗi 403, 500
 - Các nút submit không tự động lấy value được điền sẵn (lưu sẵn) trong trình duyệt, phải nhấp chuột vô nút vài lần hoặc tự gõ lại input
 # Install Package
 1. TailwindCSS

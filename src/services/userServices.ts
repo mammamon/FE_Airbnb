@@ -33,7 +33,8 @@ export const userServices = {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            const imageUrl = response.data.content.hinhAnh;
+            const imageUrl = response.data.content.avatar;
+            console.log("imageUrl: ", imageUrl);
             return imageUrl;
         } catch (err) {
             handleError(err);

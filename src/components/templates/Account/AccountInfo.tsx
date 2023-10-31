@@ -94,8 +94,6 @@ export const AccountInfo = () => {
       reset({
         name: userLogin.user.name,
         email: userLogin.user.email,
-        password: '',
-        confirmPassword: '',
         phone: userLogin.user.phone,
         birthday: userLogin.user.birthday,
         gender: userLogin.user.gender === undefined ? undefined : userLogin.user.gender.toString(),
