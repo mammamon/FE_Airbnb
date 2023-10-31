@@ -26,9 +26,7 @@ const userSlice = createSlice({
       state.userLogin = undefined;
     },
     setUserFromLocalStorage: (state, action: PayloadAction<UserLogin>) => {
-      console.log('Action payload:', action.payload);
       state.userLogin = action.payload;
-      console.log('New state:', state);
     },
   }, // xử lý action đồng bộ
   extraReducers(builder) {
@@ -41,7 +39,6 @@ const userSlice = createSlice({
         state.isFetchingLogin = false;
       })
       .addCase(loginThunk.fulfilled, (state, { payload }) => {
-        console.log("payload: ", payload);
         // set lại user
         state.userLogin = payload;
         state.isFetchingLogin = false;

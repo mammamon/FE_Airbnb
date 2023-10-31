@@ -686,4 +686,8 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   height: 120px;
   border-radius: 50%;
   transform: scaleX(2);
+}
+
+.yWUNx.header-fixed {
+  height: 100px !important;
 }/*# sourceMappingURL=style.css.map */

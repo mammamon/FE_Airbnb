@@ -37,10 +37,10 @@ export const AccountInfo = () => {
           formData.append('avatar', file);
           const imageUrl = await userServices.uploadAvatar(formData);
           //avatar upload thất bại = avatar hiện tại
-          if (imageUrl) { 
+          if (imageUrl) {
             value.avatar = imageUrl;
           } else {
-            value.avatar = userLogin.user.avatar; 
+            value.avatar = userLogin.user.avatar;
           }
         }
         await dispatch(updateThunk({ id: userLogin.user.id, data: value }));
@@ -56,7 +56,7 @@ export const AccountInfo = () => {
       });
       console.error(err);
     }
-};
+  };
 
 
 
@@ -105,16 +105,12 @@ export const AccountInfo = () => {
   }, [reset, userLogin]);
 
   return (
-    <div className="acountInfoWrapper flex mt-5">
-      <div className="w-1/2 flex flex-column items-center">
-
-        <h3>cập nhật hình ảnh</h3>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)} className='w-1/2'>
-        <div className="bg-gray-300 rounded-full flex items-center mb-3">
+    <div className="acountInfoWrapper flex justify-center mt-5">
+      <form onSubmit={handleSubmit(onSubmit)} className='md:w-full lg:w-1/2'>
+        <div className="bg-gray rounded-full flex flex-column items-center justify-center mb-3">
           <Avatar
             className="cursor-pointer"
-            size={120}
+            size={150}
             onClick={() => fileInputRef.current?.click()}
             src={userLogin?.user.avatar}
             icon={!userLogin?.user.avatar && <UserOutlined />}
