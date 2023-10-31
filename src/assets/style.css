@@ -142,7 +142,7 @@ ul li p .svg-inline--fa {
   z-index: 999;
 }
 .form-home.form-scroll {
-  top: 105px;
+  top: 80px;
 }
 
 .form-not-home {
@@ -686,4 +686,8 @@ form .input-wrapper.input-invalid .tooltipError .tooltipErrorText,
   height: 120px;
   border-radius: 50%;
   transform: scaleX(2);
+}
+
+.yWUNx.header-fixed {
+  height: 100px !important;
 }/*# sourceMappingURL=style.css.map */
